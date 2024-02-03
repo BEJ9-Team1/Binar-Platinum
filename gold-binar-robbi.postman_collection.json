@@ -1,0 +1,1163 @@
+{
+	"info": {
+		"_postman_id": "e673a2a9-3c35-4854-97cb-fd805c6bf46a",
+		"name": "gold-binar",
+		"description": "Seeders Just Users And Shipments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24910748",
+		"_collection_link": "https://universal-zodiac-296389.postman.co/workspace/arro~791065f0-8577-4915-a9a3-00daf9c752e2/collection/24910748-e673a2a9-3c35-4854-97cb-fd805c6bf46a?action=share&source=collection_link&creator=24910748"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody); postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"name\": \"Kapal Lawd\",\n    \"password\": \"secret123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/updateUser/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"updateUser",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a8a53552-f22f-4958-8410-948cdbe8268b",
+									"description": "userID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/auth/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "43e633cc-a511-448a-a2ed-b7eb161c5dae",
+									"description": "userID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get History Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/history",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Gel All Users => Get information from Users\n\nUpdate User => Update User by ID\n\nGet One User => Get One by ID\n\nGet History Order => Auto Get History by id logged in"
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin1\",\n    \"name\": \"Arrofirizky\",\n    \"password\": \"secret123!\",\n    \"confirmPassword\": \"secret123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody); postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//1st account\n{\n    \"username\": \"arro\",\n    \"password\": \"secret123!\"\n}\n\n//2nd account\n// {\n//     \"username\": \"Siregar\",\n//     \"password\": \"secret\"\n// }\n\n\n//2nd account updated\n// {\n//     \"username\": \"admin1\",\n//     \"password\": \"secret123!\"\n// }\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Register User => Create new User\n\nLogin => Authentication"
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Get All Items",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/items",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/items/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "b80bd85e-3d99-40a2-8203-c677cf8308e9",
+									"description": "itemID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Mouse pad\",\n    \"Qty\": 10000,\n    \"price\": 50000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/items",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Printer\",\n    \"Qty\": 12000,\n    \"price\": 2000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/items/updateItem/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"items",
+								"updateItem",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "b80bd85e-3d99-40a2-8203-c677cf8308e9",
+									"description": "itemID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Get All Items => Get All data Items (Qty will decrease while there is order)\n\nGet One Item => Get One by ID\n\nCreate Item => Create\n\nUpdate Item => Patch"
+		},
+		{
+			"name": "Sellers",
+			"item": [
+				{
+					"name": "Get All Sellers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/sellers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Seller",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/sellers/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"sellers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1a5793f2-238e-41fa-9e58-6a390af11be1",
+									"description": "sellerID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sellers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Morethan\",\n    \"location\": \"Jogjakarta\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/sellers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Seller",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ibox\",\n    \"location\": \"Jakarta\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/sellers/updateSeller/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"sellers",
+								"updateSeller",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1a5793f2-238e-41fa-9e58-6a390af11be1",
+									"description": "sellerID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Get All Seller => Get All data Seller\n\nGet One Seller => Get One by ID\n\nCreate Seller=> Create\n\nUpdate Seller => Patch"
+		},
+		{
+			"name": "Shipment",
+			"item": [
+				{
+					"name": "Get All Shipment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/shipment",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Shipment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/shipment/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"shipment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "21e79419-b1e3-4cbd-84db-624205990642",
+									"description": "idStatus"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shipment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isDelivered\": \"On Hold\"    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/shipment",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Shipment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isDelivered\": \"Shipped\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/shipment/updateShipment/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"shipment",
+								"updateShipment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "402b4da5-1714-497a-9ca6-593c1d1f7c79",
+									"description": "shipmentID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Get All Shipment => Get All data Shipment\n\nGet One Shipment => Get One by ID\n\nCreate Shipment=> Create\n\nUpdate Shipment => Patch"
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/orders/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3a076342-5603-48cf-889a-b464518e76a6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Status Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isDelivered\": \"Delivered to Costumer\",\n    \"isPaid\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/orders/status/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders",
+								"status",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ac0ee676-1679-463d-8ab3-0906f4aaf980",
+									"description": "orderId"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/orders/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "10d7333a-4731-4c41-927a-2f881e0c36ae",
+									"description": "orderId"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item_name\": \"Printer\",\n    \"seller_name\": \"Ibox\",\n    \"total_qty\": 10,\n    \"isPaid\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Create Order => set value all key as name (string), ID is auto fill in service as logged in user\n\nGet All Orders => Get All order and detail as needed to show at relation\n\nDelete Order => Delete by ID\n\nUpdate Status Order => Updating status shipment and payment\n\nGet One Order => Get One by ID order and detail as needed to show at relation"
+		},
+		{
+			"name": "Order Schema",
+			"item": [
+				{
+					"name": "Login Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody); postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//1st account\n// {\n//     \"username\": \"robbi\",\n//     \"password\": \"secret123!\"\n// }\n\n//2nd account\n{\n    \"username\": \"arro\",\n    \"password\": \"secret123!\"\n}\n\n\n//2nd account updated\n// {\n//     \"username\": \"Budi\",\n//     \"password\": \"secret123!\"\n// }\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody); postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Items Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/items",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Sellers Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/sellers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Shipment Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/shipment",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item_name\": \"printer\",\n    \"seller_name\": \"Ibox\",\n    \"total_qty\": 111,\n    \"isPaid\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Status Order Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isDelivered\": \"Delivered to Costumer\",\n    \"isPaid\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/orders/status/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"orders",
+								"status",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ac0ee676-1679-463d-8ab3-0906f4aaf980",
+									"description": "orderId"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Use this folder to check each table data and create the order"
+		}
+	]
+}
