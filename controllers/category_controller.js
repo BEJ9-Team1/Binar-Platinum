@@ -1,5 +1,6 @@
 const categoryService = require('../services/category_services')
 const { StatusCodes } = require('http-status-codes');
+const {BadRequestError, NotFoundError} = require('../errors')
 
 const index = async (req, res) => {
     try {
@@ -23,7 +24,7 @@ const index = async (req, res) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await categoryService.lookup(req.params);
+        const result = await categoryService.lookup(req.params.name);
         res.status(StatusCodes.OK).json({
             data: result,
         });
@@ -37,10 +38,22 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const result = await categoryService.createCategory(req);
+        // console.log(req.body.name);
+        const payload = {
+            name: req.body.name
+        } 
+
+        const lookup = await categoryService.lookup(payload.name)
+
+        if(lookup) throw new BadRequestError(`${lookup.name} has been added`)
+        if(!payload.name) throw new BadRequestError('Name Must Provided')
+
+        const result = await categoryService.createCategory(payload.name);
         res.status(StatusCodes.CREATED).json({
-            data: result,
+            message: "Success",
+            payload: result.dataValues
         });
+        
     } catch (err) {
         next(err);
     }
@@ -54,6 +67,21 @@ const update = async(req, res, next) => {
         }
         const result = await categoryService.update(item_id ,newData)
         res.status(StatusCodes.OK).json({
+            message: "Success",
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const destroy = async(req, res, next) => {
+    try {
+        const categoryId = req.params.id
+        const result = await categoryService.destroy(categoryId)
+        if(!result) throw new NotFoundError("Category Has Deleted")
+        res.status(StatusCodes.OK).json({
+            message: "Success",
             data: result,
         });
     } catch (err) {
@@ -62,10 +90,10 @@ const update = async(req, res, next) => {
 };
 
 
-
 module.exports = {
     create,
     index,
     update,
-    find
+    find,
+    destroy
 }

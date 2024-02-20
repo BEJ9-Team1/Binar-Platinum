@@ -7,6 +7,12 @@ const categoryController = require('../controllers/category_controller')
 //CATEGORY//
 router.get('/category', categoryController.index)
 router.post('/category', categoryController.create)
+router.patch('/category/:id', categoryController.update)
+router.get('/category/:name', categoryController.find)
+router.delete('/category/:id', categoryController.destroy)
+
+
+
 
 
 

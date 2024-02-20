@@ -2,11 +2,8 @@ const { Category } = require('../models')
 const {BadRequestError, NotFoundError} = require('../errors/');
 
 const lookup = async (payload) => {
-    const {id} = payload
-    const category = await Category.findOne({ where: { id: id } })
-    if (!category) {
-        throw new NotFoundError(`Invalid Category id = ${id}`);
-    }
+    const name = payload
+    const category = await Category.findOne({ where: { name: name } })
     return category  
 }
 
@@ -16,15 +13,9 @@ const getAll = async (qParams) => {
 }
 
 
-const createCategory = async (req, res) => {
-    const { name } = req.body;
-    const check = await Category.findOne({ where: { name: name } });
-    if (check){
-        throw new BadRequestError('Category has been added, you can update the quantity')
-    } 
-
+const createCategory = async (payload) => {
     const category = await Category.create({
-        name
+        name: payload
     });
 
     return category;
@@ -33,8 +24,17 @@ const createCategory = async (req, res) => {
 
 
 const update = async (CategoryId, payload) => {
-    console.log(CategoryId);
     const result = await Category.update(payload, {
+        where: {
+            id: CategoryId,
+        },
+        individualHooks: true
+    })
+    return result
+};
+
+const destroy = async (CategoryId, payload) => {
+    const result = await Category.destroy({
         where: {
             id: CategoryId,
         },
@@ -48,7 +48,8 @@ module.exports = {
     lookup,
     getAll,
     createCategory,
-    update
+    update,
+    destroy
     // updateMenu,
     // deleteMenu
 }
