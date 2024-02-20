@@ -1,10 +1,10 @@
-const itemServices = require('../services/item_service')
+const categoryService = require('../services/category_services')
 const { StatusCodes } = require('http-status-codes');
 
 const index = async (req, res) => {
     try {
         const params = req.qs
-        const data = await itemServices.getAll(params)
+        const data = await categoryService.getAll(params)
 
         return res.status(200).json({
             status: 200,    
@@ -23,12 +23,11 @@ const index = async (req, res) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await itemServices.lookup(req.params);
+        const result = await categoryService.lookup(req.params);
         res.status(StatusCodes.OK).json({
             data: result,
         });
     } catch (error) {
-        console.log(error)
         if (error.message) {
             next({status: 400, message: error.message, data: {}})
         }
@@ -38,7 +37,7 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const result = await itemServices.createItem(req);
+        const result = await categoryService.createCategory(req);
         res.status(StatusCodes.CREATED).json({
             data: result,
         });
@@ -52,10 +51,8 @@ const update = async(req, res, next) => {
         const item_id = req.params.id
         const newData = {
             name: req.body.name,
-            Qty: req.body.Qty,
-            price: req.body.price,
         }
-        const result = await itemServices.update(item_id ,newData)
+        const result = await categoryService.update(item_id ,newData)
         res.status(StatusCodes.OK).json({
             data: result,
         });
