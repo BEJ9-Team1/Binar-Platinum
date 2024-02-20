@@ -1,5 +1,4 @@
 const { Category } = require('../models')
-const {BadRequestError, NotFoundError} = require('../errors/');
 
 const lookup = async (payload) => {
     const name = payload
@@ -33,7 +32,7 @@ const update = async (CategoryId, payload) => {
     return result
 };
 
-const destroy = async (CategoryId, payload) => {
+const destroy = async (CategoryId) => {
     const result = await Category.destroy({
         where: {
             id: CategoryId,

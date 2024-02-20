@@ -14,7 +14,6 @@ const index = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
         if (error.message) {
             next({status: 400, message: error.message, data: {}})
         }
@@ -38,7 +37,7 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        // console.log(req.body.name);
+        
         const payload = {
             name: req.body.name
         } 
