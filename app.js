@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-// const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser')
 const routes = require('./routers/index')
@@ -14,8 +13,7 @@ app.use('/uploads', express.static("upload"))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', (req, res) => {
