@@ -13,11 +13,12 @@ const getAll = async (qParams) => {
 
 
 const createCategory = async (payload) => {
-    const category = await Category.create({
-        name: payload
+    const { ...category } = payload
+    const createCategory = await Category.create({
+        ...category
     });
 
-    return category;
+    return createCategory;
 
 };
 
