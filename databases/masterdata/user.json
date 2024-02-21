@@ -1,0 +1,14 @@
+[
+    {
+        "username": "Siregar",
+        "name": "Budi Siregar",
+        "password": "secret",
+        "isDeleted": false
+    },
+    {
+        "username": "admin",
+        "name": "admin",
+        "password": "secret",
+        "isDeleted": false
+    }
+]

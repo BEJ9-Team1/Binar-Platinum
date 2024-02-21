@@ -1,0 +1,11 @@
+[
+    {
+        "isDelivered": "In Pickup"
+    },
+    {
+        "isDelivered": "On Transit"
+    },
+    {
+        "isDelivered": "Delivered to Costumer"
+    }
+]
