@@ -8,8 +8,8 @@ const userRoutes = require('./user_route');
 // const adminRoutes = require('./admin_routes');
 
 // router.use("/auth", authRoutes);
-app = '/api/v1.0'
-router.use(app, userRoutes);
+apiv1 = '/api/v1.0'
+router.use(apiv1, userRoutes);
 
 
 module.exports = router;

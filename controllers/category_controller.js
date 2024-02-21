@@ -1,4 +1,5 @@
 const categoryService = require('../services/category_services')
+const createCategoryDTO = require('../validators/category_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
 
@@ -37,17 +38,16 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        const categoryDTO = await createCategoryDTO.validateAsync(req.body)
         
         const payload = {
-            name: req.body.name
+            name: categoryDTO.name
         } 
 
         const lookup = await categoryService.lookup(payload.name)
-
         if(lookup) throw new BadRequestError(`${lookup.name} has been added`)
-        if(!payload.name) throw new BadRequestError('Name Must Provided')
 
-        const result = await categoryService.createCategory(payload.name);
+        const result = await categoryService.createCategory(payload);
         res.status(StatusCodes.CREATED).json({
             message: "Success",
             payload: result.dataValues
