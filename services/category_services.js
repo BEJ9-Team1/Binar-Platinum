@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const { Category } = require('../models')
 
 const lookup = async (payload) => {
@@ -7,7 +8,13 @@ const lookup = async (payload) => {
 }
 
 const getAll = async (qParams) => {
-    const category = await Category.findAndCountAll()
+    const category = await Category.findAndCountAll(
+        {
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        }
+    )
     return category
 }
 

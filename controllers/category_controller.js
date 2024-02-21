@@ -60,11 +60,12 @@ const create = async (req, res, next) => {
 
 const update = async(req, res, next) => {
     try {
-        const item_id = req.params.id
+        const categoryDTO = await createCategoryDTO.validateAsync(req.body)
+        const categoryId = req.params.id
         const newData = {
-            name: req.body.name,
+            name: categoryDTO.name,
         }
-        const result = await categoryService.update(item_id ,newData)
+        const result = await categoryService.update(categoryId ,newData)
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: result,
