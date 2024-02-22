@@ -1,5 +1,4 @@
 'use strict';
-const bcrypt = require('bcrypt');
 const {
   Model
 } = require('sequelize');
@@ -20,48 +19,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey:true
-    },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    name: DataTypes.STRING,
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-     },
-     isDeleted: DataTypes.BOOLEAN
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    userName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
+    password: DataTypes.STRING,
+    role: DataTypes.INTEGER,
+    isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',
-    hooks: {
-      beforeBulkCreate: (Users) => {
-        Users.forEach((User) => {
-          // to see the properties added by sequelize
-          console.table(User);
-          // now modify the "dataValues" property
-          User.dataValues.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
-        });
-        return Users
-      },
-      beforeCreate: (User) => {
-        User.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
-        return User
-      },
-      beforeUpdate:async (user) => {
-        if (user.password) {
-          console.log(user.password);
-          const salt =  +process.env.SALT_ROUNDS
-          user.password = bcrypt.hashSync(user.password, salt);
-        }
-      }
-    }
-
   });
   return User;
 };
