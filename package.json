@@ -12,7 +12,6 @@
     "pg-hstore": "^2.3.4",
     "pg-promise": "^11.5.4",
     "sequelize": "^6.35.1",
-    "sequelize-cli": "^6.6.2",
     "uuid": "^9.0.1"
   },
   "name": "gold-challange",
@@ -35,5 +34,8 @@
     "url": "https://github.com/arrorobbi/gold-challange/issues"
   },
   "homepage": "https://github.com/arrorobbi/gold-challange#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
 }
