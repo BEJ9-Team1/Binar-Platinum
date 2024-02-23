@@ -1,7 +1,7 @@
 const { Payment } = require('../models')
 
 const getAll = async(none)=>{
-    const payment = await Payment.findAll()
+    const payment = await Payment.findAndCountAll()
     return payment
 }
 
