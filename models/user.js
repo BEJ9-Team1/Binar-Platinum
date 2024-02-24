@@ -28,32 +28,22 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     role: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN
-  }, {
+  },
+  {
     sequelize,
     modelName: 'User',
     hooks: {
-      beforeBulkCreate: (Users) => {
-        Users.forEach((User) => {
-          // to see the properties added by sequelize
-          console.table(User);
-          // now modify the "dataValues" property
-          User.dataValues.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
-        });
-        return Users
-      },
-      beforeCreate: (User) => {
+      beforeCreate:async (User) => {
         User.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
         return User
       },
-      beforeUpdate:async (user) => {
-        if (user.password) {
-          console.log(user.password);
+      beforeUpdate:async (User) => {
+        if (User.password) {
           const salt =  +process.env.SALT_ROUNDS
-          user.password = bcrypt.hashSync(user.password, salt);
+          User.password = bcrypt.hashSync(User.password, salt);
         }
       }
     }
-
   });
   return User;
 };

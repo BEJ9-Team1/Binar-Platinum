@@ -1,7 +1,12 @@
 const { Address } = require('../models')
 
-const lookup = async (id) => {
-    const address = await Address.findByPk( id )
+const lookup = async (userId) => {
+    const address = await Address.findAll( 
+        { 
+            where: { userId: userId },
+            // include: [{ model: Address, as: 'address' }]
+        }        
+     )
     return address  
 }
 
@@ -13,7 +18,7 @@ const getAll = async (qParams) => {
 
 const add = async (payload) => {
     const { ...address } = payload
-    const createAddress = await Address.create({
+    const createAddress = await Address.bulkCreate({
         ...address
     });
     // const { userId, address, isUsed } = payload

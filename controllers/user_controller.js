@@ -39,7 +39,7 @@ const create = async (req, res, next) => {
     try {
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
-        const lookup = await userService.lookup(userDTO.email)
+        const lookup = await userService.emailIsExists(userDTO.email)
         if (lookup){
             throw new BadRequestError(`${lookup.email} has been registered before`)
         } else if(userDTO.password !== userDTO.confirmPassword){
@@ -67,18 +67,20 @@ const create = async (req, res, next) => {
         });
         
     } catch (err) {
+        console.error(err);
         next(err);
     }
 };
 
 const update = async(req, res, next) => {
     try {
-        const user_id = req.params.id
+        const userId = req.params.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
-        const lookup = await userService.lookup(userDTO.email)
-        if(!lookup) throw new NotFoundError(`Account with email ${userDTO.email} Not Found`)
-        
+
+        const oldDataUser = await userService.lookup(userId)
+        if(!oldDataUser) throw new NotFoundError(`Account with email ${oldDataUser.email} Not Found`)
+
         const newData = {
             firstName: userDTO.firstName,
             lastName: userDTO.lastName ?? lookup.dataValues.name,
@@ -91,7 +93,8 @@ const update = async(req, res, next) => {
             address: userDTO.address
         }
 
-        const result = await userService.update(user_id ,newData)
+
+        const result = await userService.update(userId, oldAddress, oldDataUser ,newData)
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: result,
