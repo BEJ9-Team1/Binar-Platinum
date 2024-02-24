@@ -88,9 +88,9 @@ const destroy = async(req, res, next) => {
 
 module.exports=
 {
-    lookup,
-    getAll,
-    createPayment,
+    index,
+    find,
+    create,
     update,
     destroy
 }
