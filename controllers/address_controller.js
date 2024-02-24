@@ -1,5 +1,5 @@
 const addressService = require('../services/address_services')
-const addressDataValidator = require('../validators/address_validator')
+const {addressDataDTO,editAddressDataDTO} = require('../validators/address_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors');
 const address = require('../models/address');
@@ -27,6 +27,7 @@ const index = async (req, res) => {
 const find = async (req, res, next) => {
     try {
         const result = await addressService.lookup(req.params.id);
+        console.log(req.params.id)
         res.status(StatusCodes.OK).json({
             data: result,
         });
@@ -40,16 +41,17 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-         const addressData = await addressDataValidator.validateAsync(req.body)
+         const addressData = await addressDataDTO.validateAsync(req.body)
         
         const payload = {
             userId: addressData.userId,
             address:addressData.address,
+            name: addressData.name,
             isUsed:addressData.isUsed
         } 
 
-        const lookup = await addressService.lookup(payload.address)
-        if(lookup) throw new BadRequestError(`${lookup.address} has been added`)
+        // const lookup = await addressService.lookup(payload.address)
+        // if(lookup) throw new BadRequestError(`${lookup.address} has been added`)
 
         const result = await addressService.add(payload);
         res.status(StatusCodes.CREATED).json({
@@ -63,12 +65,18 @@ const create = async (req, res, next) => {
 };
 const update = async(req, res, next) => {
     try {
+        const addressData = await editAddressDataDTO.validateAsync(req.body)
+        const lookup = await addressService.lookup(req.params.id)
+        if(!lookup)  throw new BadRequestError(`Address not found`)
+
         const address_id = req.params.id
         const newData = {
-            userid: req.body.userid,
-            address: req.body.address,
-            isUsed: req.body.isUsed
+            userid: addressData.userid,
+            address: addressData.address,
+            name: addressData.name,
+            isUsed: addressData.isUsed
         }
+
 
         const result = await addressService.update(address_id ,newData)
         res.status(StatusCodes.OK).json({

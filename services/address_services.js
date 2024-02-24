@@ -1,8 +1,7 @@
 const { Address } = require('../models')
 
-const lookup = async (payload) => {
-    const id = payload
-    const address = await Address.findOne({ where: { address: id } })
+const lookup = async (id) => {
+    const address = await Address.findByPk( id )
     return address  
 }
 

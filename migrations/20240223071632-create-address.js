@@ -7,13 +7,17 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
       userId: {
         type: Sequelize.INTEGER
       },
       address: {
         type: Sequelize.STRING
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       isUsed: {
         type: Sequelize.BOOLEAN
