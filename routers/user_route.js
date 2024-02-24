@@ -15,7 +15,7 @@ router.delete('/category/:id', categoryController.destroy)
 
 router.get('/payment', paymentController.index)
 router.post('/payment', paymentController.create)
-router.get('/payment/:id', paymentController.find)
+router.get('/payment/:name', paymentController.find)
 router.put('/payment/:id', paymentController.update)
 router.delete('/payment/:id', paymentController.destroy)
 
