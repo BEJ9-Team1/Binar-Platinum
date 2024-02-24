@@ -1,32 +1,33 @@
-const { Product } = require('../models')
+const { Product, Category } = require('../models')
+const productServices = require('../services/productServices')
+const productValidator = require('../validators/productValidator')
+const { Op } = require("sequelize");
+
 
 class ProductController {
 
     static index = async (req, res) => {
 
-        let statusCode = 200
-        let status = 'success'
         let message = ''
+        let payload = {}
 
         try {
 
-            const products = await Product.findAll({
-                attributes: ['name', 'price']
-            })
+            const products = await productServices.getAll()
 
             if (!products) {
-                statusCode = 404
-                status = 'failed'
                 message = 'no products found'
+                throw error
             }
 
-            return res.status(200).json({ status: 'status', payload: products })
+            payload.dataProducts = products
+
+            return res.status(200).json({ responseMessage: 'success', payload: payload })
 
         } catch (error) {
 
-            console.log('ada error ==> ', error)
-
-            return res.status(statusCode).json({ status: status, message: message })
+            console.log('Error Occur On ==> ', error)
+            return res.status(404).json({ responseMessage: 'failed', message: message })
 
         }
 
@@ -35,35 +36,26 @@ class ProductController {
     static findById = async (req, res) => {
 
         const id = +req.params.id
-        let statusCode = 200
-        let status = 'success'
         let message = ''
+        let payload = {}
 
         try {
 
-            // const product = await Product.findOne({
-            //     where: {
-            //         id: id
-            //     },
-            //     attributes: ['name', 'price', 'description', 'qty']
-            // })
-
-            const product = await Product.findByPk(id, {
-                attributes : ['name', 'price', 'description', 'stock', 'merchantId']
-            })
+            const product = await productServices.findById(id)
 
             if (!product) {
-                statusCode = 404
                 message = `product with id ${id} not found`
                 throw error
             }
 
-            return res.status(200).json({ status: 'success', payload: product })
+            payload.dataProduct = product
+
+            return res.status(200).json({ responseMessage: 'success', payload: payload })
 
         } catch (error) {
 
-            status = 'failed'
-            return res.status(statusCode).json({status: status, message: message ?? error.message})
+            responseMessage = 'failed'
+            return res.status(404).json({ responseMessage: 'failed', message: message ?? error })
 
         }
 
@@ -71,28 +63,37 @@ class ProductController {
 
     static create = async (req, res) => {
 
-        const { name, categoryId, merchantId, description, price, stock } = req.body
+        let message = ''
 
         try {
 
+            const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
+
             const payload = {
-                name: name ?? '',
-                categoryId: categoryId ?? '',
-                merchantId: merchantId ?? '',
-                description: description ?? '',
-                price: price ?? 0,
-                stock: stock ?? 0
+                name: productDTO.name,
+                categoryId: productDTO.categoryId,
+                merchantId: 1,
+                description: productDTO.description,
+                price: productDTO.price,
+                stock: productDTO.stock
+            }
+
+            const category = await Category.findByPk(payload.categoryId)
+
+            if (!category) {
+                message = `category with id ${payload.categoryId} is not available`
+                throw error
             }
 
             await Product.create(payload)
 
-            return res.status(201).json({ status: 'success', payload: payload })
+            return res.status(201).json({ responseMessage: 'success', payload: payload })
 
         } catch (error) {
 
-            console.log(error)
+            console.log("Error is occured here ==> ", error)
 
-            return res.status(400).json({ status: 'failed', message: 'gagal' ?? error.errors[0].message })
+            return res.status(400).json({ responseMessage: 'failed', message: message || error.details[0].message })
 
         }
 
@@ -100,43 +101,35 @@ class ProductController {
 
     static update = async (req, res) => {
 
-        const { name, description, price, stock } = req.body
+        const id = +req.params.id
 
-        const id = req.params
-
-        let statusCode = 200
-        let status = 'success'
         let message = ''
 
         try {
 
             const product = await Product.findByPk(id)
 
-            const payload = {
-                name: name ?? product.dataValues.name,
-                description: description ?? product.dataValues.description,
-                price: price ?? product.dataValues.price,
-                stock: stock ?? product.dataValues.stock
-            }
-
             if (!product) {
-                statusCode = 404
-                message = `product with id ${id} not found`
-                throw error
+                return res.status(404).json({ responseMessage: 'failed', message: `product with id ${id} not found` })
             }
 
-            await Product.update(payload, {
-                where: {
-                    id
-                }
-            })
+            const productDTO = await productValidator.updateProductDTO.validateAsync(req.body)
 
-            return res.status(statusCode).json({ status: status, payload: payload })
+            const payload = {
+                name: productDTO.name ?? product.dataValues.name,
+                description: productDTO.description ?? product.dataValues.description,
+                price: productDTO.price ?? product.dataValues.price,
+                stock: productDTO.stock ?? product.dataValues.stock
+            }
+
+            await productServices.updateProduct(id, payload)
+
+            return res.status(200).json({ responseMessage: 'success', payload: payload })
 
         } catch (error) {
 
-            status = 'failed'
-            return res.status(statusCode).json({ status: status, message: message ?? error.errors[0].message })
+            console.log("Error is here ==>> ", error);
+            return res.status(400).json({ responseMessage: 'failed', message: message || error.details[0].message })
 
         }
 
@@ -146,39 +139,24 @@ class ProductController {
 
         const id = +req.params.id
 
-        let statusCode = 200
-        let status = 'success'
         let message = ''
 
         try {
 
-            const product = await Product.findByPk(id)
+            const productDelete = await productServices.deleteProduct(id)
 
-            if (!product) {
-                statusCode = 404
-                status = 'failed'
-                message = `product with id ${id} not found`
+            console.log("product delete ==> ", productDelete)
+
+            if (productDelete == 0) {
+                message = 'no product was deleted'
                 throw error
             }
 
-            const productDeleted = await Product.destroy({
-                where: {
-                    id
-                }
-            })
-
-            if(productDeleted == 0) {
-                statusCode = 500
-                message = 'error occur while deleting product'
-                throw error
-            }
-            
-            return res.status(statusCode).json({ status: status, deleted: product })
+            return res.status(200).json({ responseMessage: 'success', payload: null })
 
         } catch (error) {
 
-            status = 'failed'
-            return res.status(statusCode).json({ status: status, message: message ?? error })
+            return res.status(400).json({ responseMessage: 'failed', message: message ?? error })
 
         }
 
