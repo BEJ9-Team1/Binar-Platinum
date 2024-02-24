@@ -36,5 +36,8 @@
     "url": "https://github.com/arrorobbi/gold-challange/issues"
   },
   "homepage": "https://github.com/arrorobbi/gold-challange#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
 }
