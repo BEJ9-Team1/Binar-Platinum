@@ -46,7 +46,6 @@ const create = async (req, res, next) => {
             throw new BadRequestError('Password NOT Match With Confirm Password')
         };
 
-        console.log(userDTO.confirmPassword);
 
         const payload = {
             firstName: userDTO.firstName,
@@ -56,7 +55,8 @@ const create = async (req, res, next) => {
             phoneNumber: userDTO.phoneNumber,
             password: userDTO.password,
             role: userDTO.role,
-            isActive: userDTO.isActive
+            isActive: userDTO.isActive,
+            address: userDTO.address
         } 
 
 
@@ -75,16 +75,20 @@ const update = async(req, res, next) => {
     try {
         const user_id = req.params.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
+
+        const lookup = await userService.lookup(userDTO.email)
+        if(!lookup) throw new NotFoundError(`Account with email ${userDTO.email} Not Found`)
         
         const newData = {
             firstName: userDTO.firstName,
-            lastName: userDTO.lastName,
+            lastName: userDTO.lastName ?? lookup.dataValues.name,
             userName: userDTO.userName,
             email: userDTO.email,
             phoneNumber: userDTO.phoneNumber,
             password: userDTO.password,
             role: userDTO.role,
-            isActive: userDTO.isActive
+            isActive: userDTO.isActive,
+            address: userDTO.address
         }
 
         const result = await userService.update(user_id ,newData)

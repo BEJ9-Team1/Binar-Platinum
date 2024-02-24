@@ -73,7 +73,7 @@ const update = async(req, res, next) => {
         const newData = {
             userid: addressData.userid,
             address: addressData.address,
-            name: addressData.name,
+            name: addressData.name ?? lookup.dataValues.name,
             isUsed: addressData.isUsed
         }
 

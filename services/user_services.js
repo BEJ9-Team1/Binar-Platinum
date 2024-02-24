@@ -12,22 +12,43 @@ const lookup = async (payload) => {
 }
 
 const registerUser = async (payload) => {
-    const { ...user } = payload
+    const { address, ...user } = payload
     const registerUser = await User.create({
-        ...user
-    });
+        ...user,
+        address: [
+            ...address
+        ]
+    },
+    {
+        include: [
+            'address'
+        ]
+    }
+    );
 
     return registerUser;
 }
 
-const update = async (userId, payload) => {
-    const result = await User.update(payload, {
+const update = async (userId, newData) => {
+    const { address, ...user} = newData
+    const oldData = await lookup(userId)
+
+    const updateUser = Object.assign(oldData, user)
+    await updateUser.save();
+
+    if(oldData){
+        const updateAddress = Object.assign(oldData.address, address)
+        await updateAddress.save();
+    }
+
+    const result = await User.update(newData, {
         where: {
             id: userId,
         },
         individualHooks: true
     })
-    return result
+    return updateUser.reload()
+
 };
 
 const destroy = async (userId) => {
