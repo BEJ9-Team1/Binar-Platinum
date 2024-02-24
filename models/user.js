@@ -12,30 +12,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Order, {
-        foreignKey: "user_id",
-        sourceKey: "id",
-        as: "order"
-      })
+      // User.hasMany(models.Order, {
+      //   foreignKey: "user_id",
+      //   sourceKey: "id",
+      //   as: "order"
+      // })
     }
   }
   User.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey:true
-    },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    name: DataTypes.STRING,
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-     },
-     isDeleted: DataTypes.BOOLEAN
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    userName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
+    password: DataTypes.STRING,
+    role: DataTypes.INTEGER,
+    isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',

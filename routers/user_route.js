@@ -1,12 +1,16 @@
 const router = require('express').Router();
-const categoryController = require('../controllers/category_controller');
+const categoryController = require('../controllers/category_controller')
+const userController = require('../controllers/user_controller')
 const ProductController = require('../controllers/productController');
 const paymentController = require('../controllers/payment_controller')
 const AddressController = require('../controllers/address_controller')
 
 // USER CONTROLLER //
-
-
+router.get('/user', userController.index)
+router.post('/user', userController.create)
+router.get('/user/:email', userController.find)
+router.patch('/user/:id', userController.update)
+router.delete('/user/:id', userController.destroy)
 
 //CATEGORY//
 router.get('/category', categoryController.index)
