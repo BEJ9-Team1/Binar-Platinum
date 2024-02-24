@@ -30,7 +30,7 @@ const findById = async (productId) => {
 const createProducts = async (payload) => {
     const { ...product } = payload
 
-    const createProduct = await Product.Create(
+    const createProduct = await Product.create(
         {
             ...product
         })

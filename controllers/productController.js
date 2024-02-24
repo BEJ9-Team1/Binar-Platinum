@@ -1,105 +1,80 @@
-const { Product, Category } = require('../models')
 const productServices = require('../services/productServices')
+const categoryServices = require('../services/category_services')
 const productValidator = require('../validators/productValidator')
-const { Op } = require("sequelize");
+const { NotFoundError } = require('../errors');
 
 
 class ProductController {
 
     static index = async (req, res) => {
 
-        let message = ''
-        let payload = {}
-
         try {
 
             const products = await productServices.getAll()
 
-            if (!products) {
-                message = 'no products found'
-                throw error
-            }
-
-            payload.dataProducts = products
-
-            return res.status(200).json({ responseMessage: 'success', payload: payload })
+            return res.status(200).json({ message: 'success', payload: products })
 
         } catch (error) {
 
-            console.log('Error Occur On ==> ', error)
-            return res.status(404).json({ responseMessage: 'failed', message: message })
+            return res.status(404).json({ message: 'failed', message: message })
 
         }
 
     }
 
-    static findById = async (req, res) => {
+    static findById = async (req, res, next) => {
 
         const id = +req.params.id
-        let message = ''
         let payload = {}
 
         try {
 
             const product = await productServices.findById(id)
 
-            if (!product) {
-                message = `product with id ${id} not found`
-                throw error
-            }
+            if (!product) throw new NotFoundError(`product with id ${id} not found`)
 
-            payload.dataProduct = product
-
-            return res.status(200).json({ responseMessage: 'success', payload: payload })
+            return res.status(200).json({ message: 'success', payload: product })
 
         } catch (error) {
 
-            responseMessage = 'failed'
-            return res.status(404).json({ responseMessage: 'failed', message: message ?? error })
+            next(error)
 
         }
 
     }
 
-    static create = async (req, res) => {
-
-        let message = ''
+    static create = async (req, res, next) => {
 
         try {
 
             const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
+            const category = await categoryServices.lookup(req.body.category)
+
+            if (!category) throw new NotFoundError(`category ${category} not found`)
+
             const payload = {
                 name: productDTO.name,
-                categoryId: productDTO.categoryId,
+                categoryId: category.id,
                 merchantId: 1,
                 description: productDTO.description,
                 price: productDTO.price,
                 stock: productDTO.stock
             }
 
-            const category = await Category.findByPk(payload.categoryId)
+            const product = await productServices.createProducts(payload)
 
-            if (!category) {
-                message = `category with id ${payload.categoryId} is not available`
-                throw error
-            }
-
-            await Product.create(payload)
-
-            return res.status(201).json({ responseMessage: 'success', payload: payload })
+            return res.status(201).json({ message: 'success', payload: product })
 
         } catch (error) {
 
-            console.log("Error is occured here ==> ", error)
-
-            return res.status(400).json({ responseMessage: 'failed', message: message || error.details[0].message })
+            next(error)
 
         }
 
     }
 
-    static update = async (req, res) => {
+    static update = async (req, res, next) => {
 
         const id = +req.params.id
 
@@ -107,11 +82,9 @@ class ProductController {
 
         try {
 
-            const product = await Product.findByPk(id)
+            const product = await productServices.findById(id)
 
-            if (!product) {
-                return res.status(404).json({ responseMessage: 'failed', message: `product with id ${id} not found` })
-            }
+            if (!product) throw new NotFoundError(`product with id ${id} not found`)
 
             const productDTO = await productValidator.updateProductDTO.validateAsync(req.body)
 
@@ -124,39 +97,31 @@ class ProductController {
 
             await productServices.updateProduct(id, payload)
 
-            return res.status(200).json({ responseMessage: 'success', payload: payload })
+            return res.status(200).json({ message: 'success', payload: payload })
 
         } catch (error) {
 
-            console.log("Error is here ==>> ", error);
-            return res.status(400).json({ responseMessage: 'failed', message: message || error.details[0].message })
+            next(error)
 
         }
 
     }
 
-    static delete = async (req, res) => {
+    static delete = async (req, res, next) => {
 
         const id = +req.params.id
-
-        let message = ''
 
         try {
 
             const productDelete = await productServices.deleteProduct(id)
 
-            console.log("product delete ==> ", productDelete)
+            if (productDelete == 0) throw new NotFoundError('no product was deleted')
 
-            if (productDelete == 0) {
-                message = 'no product was deleted'
-                throw error
-            }
-
-            return res.status(200).json({ responseMessage: 'success', payload: null })
+            return res.status(200).json({ message: 'success', payload: null })
 
         } catch (error) {
 
-            return res.status(400).json({ responseMessage: 'failed', message: message ?? error })
+            next(error)
 
         }
 
