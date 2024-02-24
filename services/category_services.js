@@ -1,8 +1,7 @@
 const { Category } = require('../models')
 
 const lookup = async (payload) => {
-    const name = payload
-    const category = await Category.findOne({ where: { name: name } })
+    const category = await Category.findOne({ where: { name: payload } })
     return category  
 }
 

@@ -38,7 +38,16 @@ const find = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
-        
+
+        const lookup = await userService.lookup(userDTO.email)
+        if (lookup){
+            throw new BadRequestError(`${lookup.email} has been registered before`)
+        } else if(userDTO.password !== userDTO.confirmPassword){
+            throw new BadRequestError('Password NOT Match With Confirm Password')
+        };
+
+        console.log(userDTO.confirmPassword);
+
         const payload = {
             firstName: userDTO.firstName,
             lastName: userDTO.lastName,
@@ -50,8 +59,6 @@ const create = async (req, res, next) => {
             isActive: userDTO.isActive
         } 
 
-        const lookup = await userService.lookup(payload.email)
-        if(lookup) throw new BadRequestError(`${lookup.email} has been registered before`)
 
         const result = await userService.registerUser(payload);
         res.status(StatusCodes.CREATED).json({

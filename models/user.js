@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcrypt');
 const {
   Model
 } = require('sequelize');
@@ -11,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Order, {
-        foreignKey: "user_id",
-        sourceKey: "id",
-        as: "order"
-      })
+      // User.hasMany(models.Order, {
+      //   foreignKey: "user_id",
+      //   sourceKey: "id",
+      //   as: "order"
+      // })
     }
   }
   User.init({
@@ -30,6 +31,29 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    hooks: {
+      beforeBulkCreate: (Users) => {
+        Users.forEach((User) => {
+          // to see the properties added by sequelize
+          console.table(User);
+          // now modify the "dataValues" property
+          User.dataValues.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
+        });
+        return Users
+      },
+      beforeCreate: (User) => {
+        User.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
+        return User
+      },
+      beforeUpdate:async (user) => {
+        if (user.password) {
+          console.log(user.password);
+          const salt =  +process.env.SALT_ROUNDS
+          user.password = bcrypt.hashSync(user.password, salt);
+        }
+      }
+    }
+
   });
   return User;
 };
