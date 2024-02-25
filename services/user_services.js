@@ -7,7 +7,8 @@ const getAll = async (qParams) => {
 }
 
 const lookup = async (userId) => {
-    const checkUser = await User.findByPk(userId)
+    const checkUser = await User.findByPk(userId,
+        {include: 'address'})
     return checkUser
 }
 
@@ -17,7 +18,7 @@ const emailIsExists = async (emailUser) => {
         include: [{ model: Address, as: 'address' }]
     }        
     )
-    return user ? true : false
+    return user
 }
 
 const registerUser = async (payload) => {
@@ -36,55 +37,29 @@ const registerUser = async (payload) => {
     );
 
     return registerUser;
-
-    //   const creatUser = await User.create({
-    //     ...user
-    //   })
-
-    //   for(let i = 0 ; i < address.length; i++){
-    //     address.userId[i] = creatUser.id
-    //   }
-    //   const createAddress = await Address.bulkCreate(address)
-
-    //   return {...creatUser, address: createAddress}
-    
    
 }
 
-const update = async (userId, oldData, newData) => {
+const update = async (userId, oldAddress, oldData, newData) => {
     const { address, ...user} = newData
-    // oldData.user = user
-    // await oldData.user.save()
-    // oldData.address = address
-    // await oldData.address.save
-    // const updateData = {
-    //     newData :{
-    //         ...user
-    //     },
-    //     address: [
-    //         ...address
-    //     ]
-    // }
-    // const checkUser = await User.findOne(
-    //     { where: { id: userId },
-    //     include: [ 'address']
-    // }     
-    // );
 
     const updateUser = Object.assign(oldData, user)
     await updateUser.save()
 
-    const deleteAddress = await Address.destroy(
-        {
-            where : {userId: userId}
+        // First try to find the record
+        for(let i = 0; i < address.length; i++){
+            if(i < oldAddress.length){
+            await Address.update(address[i],
+                    {
+                        where: {id: oldAddress[i].id}
+                    }
+                    )
+            }else {
+            const addNewAddress = await Address.create(address[i])
+            await updateUser.addAddress(addNewAddress)
+            }
         }
-    )
 
-    const recreateAddress = await Address.bulkCreate(
-       address
-       )
-        
-    await updateUser.addAddress(recreateAddress)
     return await updateUser.reload({include: 'address'})
    
 };

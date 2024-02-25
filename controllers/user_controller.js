@@ -1,4 +1,5 @@
 const userService = require('../services/user_services')
+const addressService = require('../services/address_services')
 const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
@@ -23,7 +24,7 @@ const index = async (req, res) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await userService.lookup(req.params.email);
+        const result = await userService.emailIsExists(req.params.email);
         res.status(StatusCodes.OK).json({
             data: result,
         });
@@ -77,7 +78,7 @@ const update = async(req, res, next) => {
         const userId = req.params.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
-
+        const oldAddress = await addressService.lookup(userId)
         const oldDataUser = await userService.lookup(userId)
         if(!oldDataUser) throw new NotFoundError(`Account with email ${oldDataUser.email} Not Found`)
 
