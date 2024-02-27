@@ -95,7 +95,7 @@ const update = async(req, res, next) => {
         }
 
 
-        const result = await userService.update(userId, oldAddress, oldDataUser ,newData)
+        const result = await userService.update(oldAddress, oldDataUser ,newData)
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: result,
