@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Address, {
         foreignKey: "userId",
         sourceKey: "id",
-        as: "address"
+        as: "address",
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       })
     }
   }

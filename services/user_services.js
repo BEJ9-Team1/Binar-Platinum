@@ -40,9 +40,9 @@ const registerUser = async (payload) => {
    
 }
 
-const update = async (userId, oldAddress, oldData, newData) => {
+const update = async ( oldAddress, oldData, newData) => {
     const { address, ...user} = newData
-
+    console.log(oldAddress);
     const updateUser = Object.assign(oldData, user)
     await updateUser.save()
 

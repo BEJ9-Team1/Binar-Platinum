@@ -16,10 +16,10 @@ const getAll = async (qParams) => {
 }
 
 
-const destroy = async (AddressId) => {
+const destroy = async (userId) => {
     const result = await Address.destroy({
         where: {
-            id: AddressId,
+            userId: userId,
         },
         individualHooks: true
     })

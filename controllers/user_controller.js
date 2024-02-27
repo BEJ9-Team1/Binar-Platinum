@@ -108,11 +108,12 @@ const update = async(req, res, next) => {
 const destroy = async(req, res, next) => {
     try {
         const userId = req.params.id
-        const result = await userService.destroy(userId)
-        if(!result) throw new NotFoundError("User Has Deleted")
+        const user = await userService.destroy(userId)
+        if(!user) throw new NotFoundError("User Has Been Deleted")
+        const address = await addressService.destroy(userId)
         res.status(StatusCodes.OK).json({
             message: "Success",
-            data: result,
+            data: user,
         });
     } catch (err) {
         next(err);
