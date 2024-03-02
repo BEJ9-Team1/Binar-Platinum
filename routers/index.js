@@ -1,15 +1,23 @@
 const express = require("express");
 const router = express.Router();
-// const authRoutes = require('./auth_routes');
-const userRoutes = require('./user_route');
-// const authRoutes = require('./auth_route');
-// const { JwtGuard } = require('../middlewares/auth-jwt')
+const authRoutes = require('./auth_route');
+const buyerRoutes = require('./buyer_route')
+const adminRoutes = require('./admin_route')
+const seller = require('./seller_route')
 
-// const adminRoutes = require('./admin_routes');
 
-// router.use("/auth", authRoutes);
+
 apiv1 = '/api/v1.0'
-router.use(apiv1, userRoutes);
+
+router.use(apiv1, authRoutes)
+router.use(apiv1, buyerRoutes)
+router.use(apiv1, adminRoutes)
+router.use(apiv1, seller)
+
+
+
+
+
 
 
 module.exports = router;
