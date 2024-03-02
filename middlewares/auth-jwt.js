@@ -7,16 +7,4 @@ const JWTAuth = passport.authenticate("jwt", {
 );
 
 
-function authorization(req, res, next) {
-    if (!req.user) {
-        return res.status(401).json({ message: "Please login first" });
-    } else {
-        if (req.user.isAdmin) {
-            next();
-        } else {
-            return res.status(401).json({ message: "You are not and Admin" });
-        }
-    }
-}
-
 module.exports = { JWTAuth, authorization };
