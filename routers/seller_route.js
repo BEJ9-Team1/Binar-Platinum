@@ -2,28 +2,29 @@ const router = require('express').Router();
 const userController = require('../controllers/user_controller')
 const ProductController = require('../controllers/productController');
 const AddressController = require('../controllers/address_controller')
-const  JWTGUARD = require('../middlewares/auth-jwt')
+const  {JWTAuth} = require('../middlewares/auth-jwt')
+const {RoleGuard} = require('../middlewares/role-guard')
 
 // PRODUCT //
-router.get('/products', ProductController.index)
-router.post('/products', ProductController.create)
-router.get('/products/:id', ProductController.findById)
-router.put('/products/:id', ProductController.update)
-router.delete('/products/:id', ProductController.delete)
+router.get('/merchant/products', ProductController.index)
+router.post('/merchant/products', JWTAuth, RoleGuard('merchant'), ProductController.create)
+router.get('/merchant/products/:id', ProductController.findById)
+router.put('/merchant/products/:id', JWTAuth, RoleGuard('merchant'), ProductController.update)
+router.delete('/merchant/products/:id', JWTAuth, RoleGuard('merchant'), ProductController.delete)
 
 //ADDRESS//
-router.get('/address', AddressController.index)
-router.post('/address', AddressController.create)
-router.get('/address/:id', AddressController.find)
-router.put('/address/:id', AddressController.update)
-router.delete('/address/:id', AddressController.destroy)
+router.get('/merchant/address', AddressController.index)
+router.post('/merchant/address', JWTAuth, RoleGuard('merchant'), AddressController.create)
+router.get('/merchant/address/:id', AddressController.find)
+router.put('/merchant/address/:id', JWTAuth, RoleGuard('merchant'), AddressController.update)
+router.delete('/merchant/address/:id', JWTAuth, RoleGuard('merchant'), AddressController.destroy)
 
 // USER CONTROLLER //
-router.get('/user', userController.index)
-router.post('/user', userController.create)
-router.get('/user/:email', userController.find)
-router.put('/user/:id', userController.update)
-router.delete('/user/:id', userController.destroy)
+router.get('/merchant', JWTAuth, RoleGuard('merchant'), userController.index)
+router.post('/merchant', JWTAuth, RoleGuard('merchant'), userController.create)
+router.get('/merchant/:email', JWTAuth, RoleGuard('merchant'), userController.find)
+router.put('/merchant/:id', JWTAuth, RoleGuard('merchant'), userController.update)
+router.delete('/merchant/:id', JWTAuth, RoleGuard('merchant'), userController.destroy)
 
 //IMAGE//
 
