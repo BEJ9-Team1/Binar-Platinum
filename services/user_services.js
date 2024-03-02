@@ -41,12 +41,12 @@ const registerUser = async (payload) => {
 }
 
 const update = async (oldAddress, oldData, newData) => {
-    const { address, ...user} = newData
+    const {address, ...user} = newData
 
     const updateUser = Object.assign(oldData, user)
     await updateUser.save()
 
-        // First try to find the record
+        // // First try to find the record
         for(let i = 0; i < address.length; i++){
             if(i < oldAddress.length){
             await Address.update(address[i],
