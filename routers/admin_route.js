@@ -6,11 +6,11 @@ const {RoleGuard} = require('../middlewares/role-guard')
 
 
 //CATEGORY//
-router.get('/admin/category', categoryController.index)
-router.post('/admin/category', JWTAuth, RoleGuard('admin'), categoryController.create)
-router.patch('/admin/category/:id', JWTAuth, RoleGuard('admin'), categoryController.update)
-router.get('/admin/category/:name', categoryController.find)
-router.delete('/admin/category/:id', JWTAuth, RoleGuard('admin'), categoryController.destroy)
+router.get('/category', categoryController.index)
+router.post('/category', JWTAuth, RoleGuard('admin'), categoryController.create)
+router.patch('/category/:id', JWTAuth, RoleGuard('admin'), categoryController.update)
+router.get('/category/:name', categoryController.find)
+router.delete('/category/:id', JWTAuth, RoleGuard('admin'), categoryController.destroy)
 //PAYMENT//
 router.get('/payment', paymentController.index)
 router.post('/payment', JWTAuth, RoleGuard('admin'), paymentController.create)

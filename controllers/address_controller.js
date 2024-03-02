@@ -1,5 +1,5 @@
 const addressService = require('../services/address_services')
-const {addressDataDTO,editAddressDataDTO} = require('../validators/address_validator')
+const {addressDataDTO} = require('../validators/address_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors');
 const address = require('../models/address');
@@ -65,7 +65,7 @@ const create = async (req, res, next) => {
 };
 const update = async(req, res, next) => {
     try {
-        const addressData = await editAddressDataDTO.validateAsync(req.body)
+        const addressData = await addressDataDTO.validateAsync(req.body)
         const lookup = await addressService.lookup(req.params.id)
         if(!lookup)  throw new BadRequestError(`Address not found`)
 
