@@ -3,7 +3,8 @@ const {UnauthorizedError} = require('../errors')
 // Middleware for role validation
 const RoleGuard = (requiredRole) => {
     return (req, res, next) => {
-      const userRole = req.user.role;
+      userData = req.user
+      const userRole = userData.role;
   
       if (userRole === requiredRole) {
         next(); // User has the required role, proceed to the next middleware or route handler

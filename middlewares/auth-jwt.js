@@ -7,4 +7,4 @@ const JWTAuth = passport.authenticate("jwt", {
 );
 
 
-module.exports = { JWTAuth, authorization };
+module.exports = { JWTAuth };
