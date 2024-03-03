@@ -64,6 +64,15 @@ const update = async (oldAddress, oldData, newData) => {
    
 };
 
+const updateRole = async (userId, newData) => {
+    const updateRole = await User.update(newData,{
+        where: {id: userId},
+        role: newData
+    })
+    return updateRole
+   
+};
+
 const destroy = async (userId) => {
     const result = await User.destroy({
         where: {
@@ -79,6 +88,7 @@ module.exports = {
     emailIsExists,
     lookup,
     registerUser,
+    updateRole,
     update,
     destroy
 }

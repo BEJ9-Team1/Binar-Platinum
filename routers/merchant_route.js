@@ -1,9 +1,16 @@
 const router = require('express').Router();
 const userController = require('../controllers/user_controller')
 const ProductController = require('../controllers/productController');
-const AddressController = require('../controllers/address_controller')
+const merchantController = require('../controllers/merchant_controller')
 const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
+
+
+//MERCHANT//
+router.get('/merchant', merchantController.index)
+router.post('/merchant', JWTAuth, RoleGuard('buyer'), merchantController.create)
+
+
 
 // PRODUCT //
 router.get('/products', ProductController.index)
