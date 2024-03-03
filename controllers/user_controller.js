@@ -4,10 +4,11 @@ const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
 
-const index = async (req, res) => {
+
+const index = async (req, res, next) => {
     try {
-        const params = req.qs
-        const data = await userService.getAll(params)
+        const userId = req.user.id
+        const data = await userService.getAll(userId)
 
         return res.status(StatusCodes.OK).json({  
             message: 'Request Success',
@@ -68,6 +69,7 @@ const create = async (req, res, next) => {
         });
         
     } catch (err) {
+        console.error(err);
         next(err);
     }
 };
