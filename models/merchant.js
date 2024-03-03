@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "address",
         onUpdate: 'cascade',
         onDelete: 'cascade',
-      })
+      }) //NOT WORKS, NEED RELATION TO GET MERCHANT ADDRESS
     }
   }
   Merchant.init({

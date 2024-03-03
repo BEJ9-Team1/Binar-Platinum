@@ -1,0 +1,922 @@
+{
+	"info": {
+		"_postman_id": "482b7115-b00f-4e4f-8093-fee6c3472b85",
+		"name": "platinum-binar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24910748",
+		"_collection_link": "https://universal-zodiac-296389.postman.co/workspace/arro~791065f0-8577-4915-a9a3-00daf9c752e2/collection/24910748-482b7115-b00f-4e4f-8093-fee6c3472b85?action=share&source=collection_link&creator=24910748"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Regist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.payload.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"robbi\",\n    \"lastName\": \"asdasdasda\", //should be not required\n    \"userName\": \"buyer\",\n    \"email\": \"buyer@mail.com\",\n    \"phoneNumber\": \"0819208489612\",\n    \"password\": \"kapallawd\",\n    \"confirmPassword\": \"kapallawd\",\n    \"role\": \"buyer\",\n    \"isActive\": true,\n    \"address\": [\n        {\n            \"address\": \"jogja\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        },\n        {\n            \"address\": \"jakarta\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        }\n    ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"merchant2\",\n    \"password\": \"kapallawd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Create Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"asdasd\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/category",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/category",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test edit\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/category/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindOne Category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/category/:name",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"category",
+										":name"
+									],
+									"variable": [
+										{
+											"key": "name",
+											"value": "test edit"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/category/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Passed tested Auth"
+				},
+				{
+					"name": "Payment",
+					"item": [
+						{
+							"name": "GetAll Payment",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/payment",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Payment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"gopay\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/payment",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"payment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Payment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"ovo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/payment/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"payment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Payment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/payment/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"payment",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Passed tested Auth"
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GetOne User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"userEmail\", jsonData.email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/user/:email",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"user",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "admin@mail.co"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"merchant2\",\n    \"lastName\": \"merchant2\", //should be not required\n    \"userName\": \"merchant2\",\n    \"email\": \"merchant2@mail.com\",\n    \"phoneNumber\": \"0819208489612\",\n    \"password\": \"kapallawd\",\n    \"confirmPassword\": \"kapallawd\",\n    \"role\": \"buyer\",\n    \"isActive\": true,\n    \"address\": [\n        {\n            \"address\": \"jogja\",\n            \"name\": \"office\",\n            \"isUsed\": false\n        },\n                {\n            \"address\": \"jakarta\",\n            \"name\": \"officeedit\",\n            \"isUsed\": true\n        },\n                {\n            \"address\": \"SURABAYA EDIT\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        },\n        {\n            \"address\": \"testadd\",\n            \"name\": \"officeedit\",\n            \"isUsed\": true\n        }\n        // {\n        //     \"address\": \"testadd10\",\n        //     \"name\": \"add terakhir nih\",\n        //     \"isUsed\": true\n        // },\n        // {\n        //     \"address\": \"testadd11\",\n        //     \"name\": \"harus banget terakhir nih\",\n        //     \"isUsed\": true\n        // }\n    ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/user/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/user/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "get address",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/address",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get address id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/address/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"address",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/address/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"address",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buyer",
+			"item": [
+				{
+					"name": "Order",
+					"item": []
+				},
+				{
+					"name": "Cart",
+					"item": []
+				},
+				{
+					"name": "Image",
+					"item": []
+				},
+				{
+					"name": "Cart",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Merchant",
+			"item": [
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "create product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"Celana Chinos\",\r\n    \"categoryId\" : 1,\r\n    \"merchantId\" : 2,\r\n    \"description\" : \"Celana yang sangat bagus\",\r\n    \"price\" : 325000,\r\n    \"stock\" : 15\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/merchant/products",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"merchant",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "fetch all products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/products",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "fetch product by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/merchant/products/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"merchant",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/merchant/products/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"merchant",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/products/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Image",
+					"item": []
+				},
+				{
+					"name": "GetAll Merchant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/merchant",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"merchant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade Buyer to Merchant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Olshop\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/merchant",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"merchant"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

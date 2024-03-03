@@ -5,7 +5,6 @@ const lookup = async (name) => {
     const merchant = await Merchant.findOne( 
         { 
             where: { name: name },
-            // include: [{ model: Address, as: 'address' }]
         }        
      )
     return merchant  
@@ -14,7 +13,8 @@ const lookup = async (name) => {
 const getAll = async (qParams) => {
     const merchant = await Merchant.findAndCountAll({
         include: [
-            'user', 'address'
+            'user', 'address'//DATA ADDRESS NOT WORKS, NEED RELATION TO GET MERCHANT ADDRESS (FROM USER ADDRESS)
+
         ]
     })
     return merchant
