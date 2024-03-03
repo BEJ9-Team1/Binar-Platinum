@@ -5,9 +5,8 @@ module.exports = {
     await queryInterface.createTable('Payments', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       name: {
         type: Sequelize.STRING,

@@ -5,12 +5,11 @@ module.exports = {
     await queryInterface.createTable('Addresses', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       address: {
         type: Sequelize.STRING

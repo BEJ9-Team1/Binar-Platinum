@@ -1,6 +1,5 @@
 [
     {
-        "id": 1,
         "firstName": "admin",
         "lastName": "admin",
         "userName": "admin",
@@ -11,7 +10,6 @@
         "isActive": true
     },
     {
-        "id": 2,
         "firstName": "buyer",
         "lastName": "buyer",
         "userName": "buyer",
@@ -22,7 +20,6 @@
         "isActive": true
     },
     {
-        "id": 3,
         "firstName": "merchant",
         "lastName": "merchant",
         "userName": "merchant",
