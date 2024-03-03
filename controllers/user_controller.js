@@ -76,7 +76,7 @@ const create = async (req, res, next) => {
 
 const update = async(req, res, next) => {
     try {
-        const userId = req.params.id
+        const userId = req.user.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
         const oldAddress = await addressService.lookup(userId)

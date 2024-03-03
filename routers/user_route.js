@@ -8,7 +8,7 @@ const {RoleGuard} = require('../middlewares/role-guard')
 router.get('/user', JWTAuth, userController.index)
 router.post('/user', userController.create)
 router.get('/user/:email', JWTAuth, userController.find)
-router.put('/user/:id', JWTAuth, userController.update)
+router.put('/user', JWTAuth, userController.update)
 router.delete('/user/:id', JWTAuth, userController.destroy)
 
 

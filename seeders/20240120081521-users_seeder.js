@@ -1,10 +1,12 @@
 'use strict';
 const datadAdmin = require('../databases/masterdata/user.json')
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
     const insert = datadAdmin.map((eachDatadAdmin) => {
+      eachDatadAdmin.id = uuidv4();
       eachDatadAdmin.password = bcrypt.hashSync(eachDatadAdmin.password, +process.env.SALT_ROUNDS);
       eachDatadAdmin.createdAt = new Date();
       eachDatadAdmin.updatedAt = new Date();
@@ -17,3 +19,4 @@ module.exports = {
     await queryInterface.bulkDelete('Users', null, { truncate: true, restartIdentity: true })
   }
 };
+
