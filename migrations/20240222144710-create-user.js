@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       isActive: {
         type: Sequelize.BOOLEAN

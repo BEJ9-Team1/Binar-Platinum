@@ -1,8 +1,8 @@
 const sequelize = require('sequelize')
 const { User, Address } = require('../models')
 
-const getAll = async (qParams) => {
-    const user = await User.findAndCountAll()
+const getAll = async (userId) => {
+    const user = await User.findAndCountAll({where: {id: userId}})
     return user
 }
 
