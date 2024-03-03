@@ -2,8 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models')
 const {BadRequestError} = require('../errors');
-const { token } = require('morgan');
-const { date } = require('joi');
+
 
 const login = async (req, res, next) => {
     try {
@@ -49,7 +48,23 @@ const logout = async (req, res, next) => {
     }
 
 }
+
+const refreshToken = async (userId, userName, role) => {
+    try {  
+        const payload = {
+            id: userId,
+            userName: userName,
+            role: role
+        }
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRED });
+        return token
+        
+    } catch (error) {
+        next(error)
+    }
+}
 module.exports = {
     login,
-    logout
+    logout,
+    refreshToken
 }

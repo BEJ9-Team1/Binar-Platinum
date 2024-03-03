@@ -8,6 +8,7 @@ const options = {
 };
 
 function decode(payload, done) {
+
     // if (payload.iat) {
     //     done("Session Ended", null)
     // } else {

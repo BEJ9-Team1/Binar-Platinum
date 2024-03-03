@@ -507,6 +507,18 @@
 				},
 				{
 					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -522,7 +534,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"merchant2\",\n    \"lastName\": \"merchant2\", //should be not required\n    \"userName\": \"merchant2\",\n    \"email\": \"merchant2@mail.com\",\n    \"phoneNumber\": \"0819208489612\",\n    \"password\": \"kapallawd\",\n    \"confirmPassword\": \"kapallawd\",\n    \"role\": \"buyer\",\n    \"isActive\": true,\n    \"address\": [\n        {\n            \"address\": \"jogja\",\n            \"name\": \"office\",\n            \"isUsed\": false\n        },\n                {\n            \"address\": \"jakarta\",\n            \"name\": \"officeedit\",\n            \"isUsed\": true\n        },\n                {\n            \"address\": \"SURABAYA EDIT\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        },\n        {\n            \"address\": \"testadd\",\n            \"name\": \"officeedit\",\n            \"isUsed\": true\n        }\n        // {\n        //     \"address\": \"testadd10\",\n        //     \"name\": \"add terakhir nih\",\n        //     \"isUsed\": true\n        // },\n        // {\n        //     \"address\": \"testadd11\",\n        //     \"name\": \"harus banget terakhir nih\",\n        //     \"isUsed\": true\n        // }\n    ]\n}\n\n",
+							"raw": "{\n    \"firstName\": \"merchant2\",\n    \"lastName\": \"merchant edit\", //should be not required\n    \"userName\": \"merchant2\",\n    \"email\": \"merchant2@mail.com\",\n    \"phoneNumber\": \"0819208489612\",\n    \"password\": \"kapallawd\",\n    \"confirmPassword\": \"kapallawd\",\n    \"role\": \"buyer\",\n    \"isActive\": true,\n    \"address\": [\n        {\n            \"address\": \"jogja\",\n            \"name\": \"office\",\n            \"isUsed\": false\n        },\n                {\n            \"address\": \"jakarta\",\n            \"name\": \"officeedit\",\n            \"isUsed\": true\n        },\n                {\n            \"address\": \"SURABAYA EDIT\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        },\n        {\n            \"address\": \"testadd\",\n            \"name\": \"officeedit\",\n            \"isUsed\": true\n        }\n        // {\n        //     \"address\": \"testadd10\",\n        //     \"name\": \"add terakhir nih\",\n        //     \"isUsed\": true\n        // },\n        // {\n        //     \"address\": \"testadd11\",\n        //     \"name\": \"harus banget terakhir nih\",\n        //     \"isUsed\": true\n        // }\n    ]\n}\n\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1062,7 +1074,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"OLLLSHOP test update\"\n}",
+							"raw": "{\n    \"name\": \"OLLLSHOP test asdas\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1092,6 +1104,20 @@
 				},
 				{
 					"name": "Upgrade Buyer to Merchant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"if(jsonData.refreshToken){",
+									"postman.setEnvironmentVariable(\"token\", jsonData.refreshToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1107,7 +1133,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"asdasdasdasa\"\n}",
+							"raw": "{\n    \"name\": \"asasdas\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

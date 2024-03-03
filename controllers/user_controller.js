@@ -1,3 +1,4 @@
+const authToken = require('../controllers/auth_controller')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
 const regsiterUserDTO = require('../validators/user_validator')
@@ -85,7 +86,7 @@ const update = async(req, res, next) => {
 
         const newData = {
             firstName: userDTO.firstName,
-            lastName: userDTO.lastName ?? lookup.dataValues.name,
+            lastName: userDTO.lastName,
             userName: userDTO.userName,
             email: userDTO.email,
             phoneNumber: userDTO.phoneNumber,
@@ -95,10 +96,12 @@ const update = async(req, res, next) => {
             address: userDTO.address
         }
 
-
         const result = await userService.update(oldAddress, oldDataUser ,newData)
+        const refreshToken = await authToken.refreshToken(result.id, result.userName, result.role)
+
         res.status(StatusCodes.OK).json({
             message: "Success",
+            refreshToken,
             data: result,
         });
     } catch (err) {

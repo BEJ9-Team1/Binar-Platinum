@@ -1,10 +1,10 @@
+const authToken = require('../controllers/auth_controller')
 const merchantService = require('../services/merchant_services')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
 const createMerchantDTO = require('../validators/merchant_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors');
-const address = require('../models/address');
 
 const index = async (req, res, next) => {
     try {
@@ -44,21 +44,23 @@ const create = async (req, res, next) => {
     try {
          const merchantDTO = await createMerchantDTO.validateAsync(req.body)
          const userId = req.user.id
-        
-        //update role in user
-        const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
-        if(checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
+     
+         //update role in user
+         
+         const dataUser = await userService.lookup(userId)
+         const isHaveMerchant = await merchantService.lookup(userId)
+         if(isHaveMerchant) throw new BadRequestError("Your Has Have Merchant, Go Update Your Merchant. 1 Account Just For 1 Merchant")
+         
+         const updateRoleUser = {
+             ...dataUser,
+             role: 'merchant'
+            }
 
-        const dataUser = await userService.lookup(userId)
-        if(dataUser.role === 'merchant') throw new BadRequestError("Your Account Is Merchant, Go Update Your Merchant. 1 Account Just For 1 Merchant")
-
-        const updateRoleUser = {
-            ...dataUser,
-            role: 'merchant'
-        }
         const userAddress = await addressService.lookup(userId)
         const updateRole = await userService.updateRole(userId, updateRoleUser)
         
+        const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
+        if(checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
 
         let addressId = []
         for(let i = 0; i < userAddress.length ; i++){
@@ -71,11 +73,12 @@ const create = async (req, res, next) => {
             address: addressId
         } 
 
-
         const result = await merchantService.createMerchant(newData)
+        const refreshToken = await authToken.refreshToken(userId, dataUser.userName, dataUser.role)
 
         res.status(StatusCodes.CREATED).json({
             message: "Success",
+            refreshToken: refreshToken,
             payload: result
         });
         
