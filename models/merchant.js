@@ -15,13 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user',
         foreignKey: 'userId',
         sourceKey: 'id'
-      }),
-      Merchant.hasMany(models.Address, {
-        foreignKey: "userId",
-        sourceKey: "id",
-        as: "address",
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
       }) //NOT WORKS, NEED RELATION TO GET MERCHANT ADDRESS
     }
   }
@@ -33,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: DataTypes.UUID,
     name: DataTypes.STRING,
+    address: DataTypes.ARRAY(DataTypes.JSON),
   }, {
     sequelize,
     modelName: 'Merchant',

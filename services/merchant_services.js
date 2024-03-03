@@ -12,9 +12,9 @@ const lookup = async (name) => {
 
 const getAll = async (qParams) => {
     const merchant = await Merchant.findAndCountAll({
+        attributes: ['id', 'name', 'address'],
         include: [
-            'user', 'address'//DATA ADDRESS NOT WORKS, NEED RELATION TO GET MERCHANT ADDRESS (FROM USER ADDRESS)
-
+            'user'
         ]
     })
     return merchant

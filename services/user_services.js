@@ -2,7 +2,12 @@ const sequelize = require('sequelize')
 const { User, Address } = require('../models')
 
 const getAll = async (userId) => {
-    const user = await User.findAndCountAll({where: {id: userId}})
+    const user = await User.findAndCountAll(
+        {
+            attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role'],
+            where: {id: userId},
+        }
+        )
     return user
 }
 

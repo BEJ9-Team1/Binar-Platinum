@@ -6,7 +6,7 @@ const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors');
 const address = require('../models/address');
 
-const index = async (req, res) => {
+const index = async (req, res, next) => {
     try {
         const params = req.qs
         const data = await merchantService.getAll(params)
@@ -54,13 +54,19 @@ const create = async (req, res, next) => {
             ...dataUser,
             role: 'merchant'
         }
-        
+        const userAddress = await addressService.lookup(userId)
         const updateRole = await userService.updateRole(userId, updateRoleUser)
         
+
+        let addressId = []
+        for(let i = 0; i < userAddress.length ; i++){
+            addressId.push(userAddress)
+        }
         
         const newData = {
             userId: userId,
             name: merchantDTO.name,
+            address: addressId
         } 
 
         const checkMerchant = await merchantService.lookup(newData.name)

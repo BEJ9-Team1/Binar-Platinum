@@ -8,7 +8,7 @@ const {RoleGuard} = require('../middlewares/role-guard')
 
 //MERCHANT//
 router.get('/merchant', merchantController.index)
-router.post('/merchant', JWTAuth, RoleGuard('buyer'), merchantController.create)
+router.post('/merchant', JWTAuth, RoleGuard('buyer', 'merchant'), merchantController.create)
 
 
 

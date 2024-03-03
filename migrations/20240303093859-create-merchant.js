@@ -14,9 +14,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      userId: {
-        type: Sequelize.UUID
-      },
+      address: {
+        type: Sequelize.ARRAY(Sequelize.JSON)
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

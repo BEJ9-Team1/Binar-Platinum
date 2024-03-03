@@ -37,6 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     isActive: DataTypes.BOOLEAN
   },
   {
+    defaultScope: {
+      attributes: { exclude: ['password'] },
+    },
     sequelize,
     modelName: 'User',
     hooks: {
