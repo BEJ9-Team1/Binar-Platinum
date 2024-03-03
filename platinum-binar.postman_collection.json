@@ -90,6 +90,48 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.message);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/auth/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -456,7 +498,7 @@
 							"variable": [
 								{
 									"key": "email",
-									"value": "admin@mail.co"
+									"value": "merchant2@mail.com"
 								}
 							]
 						}
@@ -570,105 +612,6 @@
 			]
 		},
 		{
-			"name": "Address",
-			"item": [
-				{
-					"name": "get address",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1.0/address",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"address"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get address id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1.0/address/:id",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"address",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete address",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1.0/address/:id",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"address",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Buyer",
 			"item": [
 				{
@@ -686,6 +629,105 @@
 				{
 					"name": "Cart",
 					"item": []
+				},
+				{
+					"name": "Address",
+					"item": [
+						{
+							"name": "get address",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/address",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get address id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/address/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"address",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete address",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/address/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"address",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -860,6 +902,105 @@
 					"item": []
 				},
 				{
+					"name": "Address",
+					"item": [
+						{
+							"name": "get address",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/address",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get address id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/address/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"address",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete address",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/address/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"address",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "GetAll Merchant",
 					"request": {
 						"method": "GET",
@@ -873,6 +1014,77 @@
 								"api",
 								"v1.0",
 								"merchant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne Merchant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1.0/merchant/:name",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"merchant",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "OLHSHOP"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Merchant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"OLLLSHOP test update\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/merchant/:name",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"merchant",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "OLHSHOP"
+								}
 							]
 						}
 					},
@@ -895,7 +1107,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Olshop\"\n}",
+							"raw": "{\n    \"name\": \"asdasdasdasa\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

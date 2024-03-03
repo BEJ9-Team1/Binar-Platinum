@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models')
-const {BadRequestError} = require('../errors')
+const {BadRequestError} = require('../errors');
+const { token } = require('morgan');
+const { date } = require('joi');
 
 const login = async (req, res, next) => {
     try {
@@ -37,6 +39,17 @@ const login = async (req, res, next) => {
 
 }
 
+const logout = async (req, res, next) => {
+    try {
+    return res.status(200).json({
+        message: 'logged out'
+    })
+    } catch (error) {
+        next(error)
+    }
+
+}
 module.exports = {
-    login
+    login,
+    logout
 }
