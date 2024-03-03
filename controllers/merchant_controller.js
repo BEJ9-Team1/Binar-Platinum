@@ -28,8 +28,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await addressService.lookup(req.params.id);
-        console.log(req.params.id)
+        const result = await merchantService.isMerchantExists(req.params.name);
         res.status(StatusCodes.OK).json({
             data: result,
         });
@@ -69,7 +68,7 @@ const create = async (req, res, next) => {
             address: addressId
         } 
 
-        const checkMerchant = await merchantService.lookup(newData.name)
+        const checkMerchant = await merchantService.isMerchantExists(newData.name)
         if(checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
 
         const result = await merchantService.createMerchant(newData)
@@ -83,22 +82,25 @@ const create = async (req, res, next) => {
         next(err);
     }
 };
+//NOT YET//
 const update = async(req, res, next) => {
     try {
-        const addressData = await addressDataDTO.validateAsync(req.body)
-        const lookup = await addressService.lookup(req.params.id)
-        if(!lookup)  throw new BadRequestError(`Address not found`)
+        const merchantDTO = await createMerchantDTO.validateAsync(req.body)
 
-        const address_id = req.params.id
+        const lookup = await merchantService.isMerchantExists(merchantDTO.name)
+        if(lookup)  throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
+
+        const oldData = await merchantService.lookup(req.user.id)
+        const reuseData = oldData.dataValues
+
         const newData = {
-            userid: addressData.userid,
-            address: addressData.address,
-            name: addressData.name ?? lookup.dataValues.name,
-            isUsed: addressData.isUsed
-        }
+            userId: reuseData.userId,
+            name: merchantDTO.name,
+            address: reuseData.address
+        } 
 
 
-        const result = await addressService.update(address_id ,newData)
+        const result = await merchantService.update(reuseData.id,newData)
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: result,
@@ -108,25 +110,11 @@ const update = async(req, res, next) => {
     }
 };
 
-const destroy = async(req, res, next) => {
-    try {
-        const addressId = req.params.id
-        const result = await addressService.destroy(addressId)
-        if(!result) throw new NotFoundError("Category Has Deleted")
-        res.status(StatusCodes.OK).json({
-            message: "Success",
-            data: result,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
 
 
 module.exports = {
     create,
     index,
     update,
-    find,
-    destroy
+    find
 }
