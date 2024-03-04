@@ -48,20 +48,20 @@ const create = async (req, res, next) => {
          //update role in user
          
          const dataUser = await userService.lookup(userId)
-         const isHaveMerchant = await merchantService.lookup(userId)
-         if(isHaveMerchant) throw new BadRequestError("Your Has Have Merchant, Go Update Your Merchant. 1 Account Just For 1 Merchant")
          
          const updateRoleUser = {
              ...dataUser,
              role: 'merchant'
             }
-
-        const userAddress = await addressService.lookup(userId)
-        const updateRole = await userService.updateRole(userId, updateRoleUser)
-        
-        const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
-        if(checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
-
+            
+            const userAddress = await addressService.lookup(userId)
+            const updateRole = await userService.updateRole(userId, updateRoleUser)
+            
+            const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
+            if(checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
+            const isHaveMerchant = await merchantService.lookup(userId)
+            if(isHaveMerchant) throw new BadRequestError(`You Has Have Merchant Named ${isHaveMerchant.name}, Go Update Your Merchant. 1 Account Just For 1 Merchant`)
+            
         let addressId = []
         for(let i = 0; i < userAddress.length ; i++){
             addressId.push(userAddress)
