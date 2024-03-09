@@ -1,8 +1,6 @@
 
 const router = require('express').Router();
 const categoryController = require('../controllers/category_controller')
-const mediaController = require('../controllers/media_controller');
-const { upload } = require('../services/media_services');
 const userController = require('../controllers/user_controller')
 const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
@@ -22,11 +20,7 @@ router.get('/category/:name', categoryController.find)
 router.delete('/category/:id', categoryController.destroy)
 
 
-//MEDIA
-router.get('/media',mediaController.index)
-router.get('/media/:id',mediaController.find)
-router.post('/media',upload.single("picture"),mediaController.create)
-router.put('/media/:id',upload.single("picture"),mediaController.updateImage)
+
 // PRODUCT //
 router.get('/products', ProductController.index)
 router.post('/products', ProductController.create)
