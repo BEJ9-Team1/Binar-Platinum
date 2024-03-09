@@ -1,4 +1,3 @@
-
 const router = require('express').Router();
 const categoryController = require('../controllers/category_controller')
 const userController = require('../controllers/user_controller')
