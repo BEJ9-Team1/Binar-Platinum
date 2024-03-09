@@ -4,7 +4,6 @@ const paymentController = require('../controllers/payment_controller')
 const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
 
-
 //CATEGORY//
 router.get('/category', categoryController.index)
 router.post('/category', JWTAuth, RoleGuard('admin'), categoryController.create)

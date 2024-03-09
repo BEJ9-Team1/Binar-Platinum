@@ -3,8 +3,6 @@ const cartController = require('../controllers/cart_controller')
 const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
 
-//ORDER//
-
 //CART//
 router.post('/cart', JWTAuth, RoleGuard('buyer'), cartController.create);
 router.get('/cart', JWTAuth, RoleGuard('buyer'), cartController.index);

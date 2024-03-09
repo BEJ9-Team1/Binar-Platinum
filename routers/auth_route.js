@@ -7,5 +7,4 @@ router.post('/auth/register', userController.create) // {url}/user/register
 router.post('/auth/login', authController.login)
 router.post('/auth/logout', JWTAuth, authController.logout)
 
-
 module.exports= router
