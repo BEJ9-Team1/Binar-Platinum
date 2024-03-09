@@ -41,7 +41,7 @@ const login = async (req, res, next) => {
 const logout = async (req, res, next) => {
     try {
     return res.status(200).json({
-        message: 'logged out'
+        message: `logged out at ${Date.now()}`
     })
     } catch (error) {
         next(error)

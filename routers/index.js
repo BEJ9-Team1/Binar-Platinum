@@ -19,12 +19,4 @@ router.use(apiv1,sellerRoutes)
 router.use(apiv1, userRoute)
 router.use(apiv1, addressRoute)
 
-
-
-
-
-
-
-
-
 module.exports = router;
