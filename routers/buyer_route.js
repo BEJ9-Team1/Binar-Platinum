@@ -8,9 +8,9 @@ const {RoleGuard} = require('../middlewares/role-guard')
 //ORDER//
 
 //CART//
-router.post('/cart', JWTAuth, cartController.create);
-router.get('/cart', cartController.index);
-router.get('/cart/:id', cartController.findCartItems);
-router.patch('/cart/:id', cartController.updateQty);
+router.post('/cart', JWTAuth, RoleGuard('buyer'), cartController.create);
+router.get('/cart', JWTAuth, RoleGuard('buyer'), cartController.index);
+router.get('/cart/:id', JWTAuth, RoleGuard('buyer'), cartController.findCartItems);
+router.patch('/cart/:id', JWTAuth, RoleGuard('buyer'),cartController.updateQty);
 
 module.exports= router
