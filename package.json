@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "cli-color": "^2.0.3",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
+    "cli-color": "^2.0.4",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
     "http-status-codes": "^2.3.0",
-    "joi": "^17.12.1",
+    "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
@@ -15,7 +15,6 @@
     "pg-hstore": "^2.3.4",
     "pg-promise": "^11.5.4",
     "sequelize": "^6.37.1",
-    "sequelize-cli": "^6.6.2",
     "uuid": "^9.0.1"
   },
   "name": "gold-challange",
