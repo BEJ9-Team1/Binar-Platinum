@@ -19,10 +19,8 @@ router.patch('/category/:id', categoryController.update)
 router.get('/category/:name', categoryController.find)
 router.delete('/category/:id', categoryController.destroy)
 
-router.get('/media',mediaController.index)
-router.get('/media/:id',mediaController.find)
-router.post('/media',upload.single("picture"),mediaController.create)
-router.put('/media/:id',upload.single("picture"),mediaController.updateImage)
+
+
 // PRODUCT //
 router.get('/products', ProductController.index)
 router.post('/products', ProductController.create)
