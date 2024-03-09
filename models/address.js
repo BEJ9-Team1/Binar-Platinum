@@ -11,16 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      
-
     }
   }
   Address.init({
-    userId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    userId: DataTypes.UUID,
     address: DataTypes.STRING,
     name: DataTypes.STRING,
     isUsed: DataTypes.BOOLEAN
-  }, {
+  }, 
+  {    
+    defaultScope: {
+      attributes: { exclude: ['createdAt','deletedAt', 'updatedAt'] },
+    },
     sequelize,
     modelName: 'Address',
     paranoid:true

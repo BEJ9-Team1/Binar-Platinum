@@ -1,8 +1,13 @@
 const sequelize = require('sequelize')
 const { User, Address } = require('../models')
 
-const getAll = async (qParams) => {
-    const user = await User.findAndCountAll()
+const getAll = async (userId) => {
+    const user = await User.findAndCountAll(
+        {
+            attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role'],
+            where: {id: userId},
+        }
+        )
     return user
 }
 
@@ -41,12 +46,12 @@ const registerUser = async (payload) => {
 }
 
 const update = async (oldAddress, oldData, newData) => {
-    const { address, ...user} = newData
+    const {address, ...user} = newData
 
     const updateUser = Object.assign(oldData, user)
     await updateUser.save()
 
-        // First try to find the record
+        // // First try to find the record
         for(let i = 0; i < address.length; i++){
             if(i < oldAddress.length){
             await Address.update(address[i],
@@ -61,6 +66,15 @@ const update = async (oldAddress, oldData, newData) => {
         }
 
     return await updateUser.reload({include: 'address'})
+   
+};
+
+const updateRole = async (userId, newData) => {
+    const updateRole = await User.update(newData,{
+        where: {id: userId},
+        role: newData
+    })
+    return updateRole
    
 };
 
@@ -79,6 +93,7 @@ module.exports = {
     emailIsExists,
     lookup,
     registerUser,
+    updateRole,
     update,
     destroy
 }

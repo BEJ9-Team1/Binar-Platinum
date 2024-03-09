@@ -38,7 +38,7 @@ const find = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
         const PaymentDTO = await createPaymentDTO.validateAsync(req.body)
-        const lookup = await paymentService.lookup(payload.name)
+        const lookup = await paymentService.lookup(PaymentDTO.name)
         if(lookup) throw new BadRequestError(`${lookup.name} has been added`)
         const payload = {
             name: PaymentDTO.name

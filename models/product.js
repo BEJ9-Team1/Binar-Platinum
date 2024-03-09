@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    merchantId: DataTypes.INTEGER,
+    merchantId: DataTypes.UUID,
     description: DataTypes.TEXT,
     stock: {
       type: DataTypes.INTEGER,

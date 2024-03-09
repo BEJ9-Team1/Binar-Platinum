@@ -1,13 +1,15 @@
+const authToken = require('../controllers/auth_controller')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
 const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
 
-const index = async (req, res) => {
+
+const index = async (req, res, next) => {
     try {
-        const params = req.qs
-        const data = await userService.getAll(params)
+        const userId = req.user.id
+        const data = await userService.getAll(userId)
 
         return res.status(StatusCodes.OK).json({  
             message: 'Request Success',
@@ -75,7 +77,7 @@ const create = async (req, res, next) => {
 
 const update = async(req, res, next) => {
     try {
-        const userId = req.params.id
+        const userId = req.user.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
         const oldAddress = await addressService.lookup(userId)
@@ -84,7 +86,7 @@ const update = async(req, res, next) => {
 
         const newData = {
             firstName: userDTO.firstName,
-            lastName: userDTO.lastName ?? lookup.dataValues.name,
+            lastName: userDTO.lastName,
             userName: userDTO.userName,
             email: userDTO.email,
             phoneNumber: userDTO.phoneNumber,
@@ -94,10 +96,12 @@ const update = async(req, res, next) => {
             address: userDTO.address
         }
 
-
         const result = await userService.update(oldAddress, oldDataUser ,newData)
+        const refreshToken = await authToken.refreshToken(result.id, result.userName, result.role)
+
         res.status(StatusCodes.OK).json({
             message: "Success",
+            refreshToken,
             data: result,
         });
     } catch (err) {

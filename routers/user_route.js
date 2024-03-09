@@ -1,14 +1,14 @@
+
 const router = require('express').Router();
 const categoryController = require('../controllers/category_controller')
 const mediaController = require('../controllers/media_controller');
 const { upload } = require('../services/media_services');
 const userController = require('../controllers/user_controller')
-const ProductController = require('../controllers/productController');
-const paymentController = require('../controllers/payment_controller')
-const AddressController = require('../controllers/address_controller')
+const  {JWTAuth} = require('../middlewares/auth-jwt')
+const {RoleGuard} = require('../middlewares/role-guard')
 
 // USER CONTROLLER //
-router.get('/user', userController.index)
+router.get('/user', JWTAuth, userController.index)
 router.post('/user', userController.create)
 router.get('/user/:email', userController.find)
 router.put('/user/:id', userController.update)

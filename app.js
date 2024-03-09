@@ -3,6 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser')
 const routes = require('./routers/index')
+const passportAuth = require('./config/passport-jwt')
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
     });
 });
 
+
+app.use(passportAuth.initialize());
 app.use(routes);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
