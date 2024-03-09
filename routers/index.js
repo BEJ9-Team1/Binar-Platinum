@@ -21,12 +21,4 @@ router.use(apiv1, addressRoute)
 router.use(apiv1,orderRoute)
 router.use(apiv1,imageRoute)
 
-
-
-
-
-
-
-
-
 module.exports = router;
