@@ -15,9 +15,11 @@ const lookupUserCart = async (userId) => {
 }
 
 
-const getAll = async () => {
-    const cart = await CartItem.findAndCountAll(
-        {include: ['Cart']}
+const getAll = async (userId) => {
+    const cart = await Cart.findAndCountAll(
+        {where:{
+            userId:userId
+        },include: ['Cartitem']}
     )
     return cart
 }

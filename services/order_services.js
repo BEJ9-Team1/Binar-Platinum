@@ -1,6 +1,7 @@
 const sequelize = require('sequelize')
 const { Order, OrderProduct } = require('../models')
 const { getStatusText } = require('http-status-codes')
+const order = require('../models/order')
 
 const getAll = async (userId) => {
     const orders = await Order.findAndCountAll( 
@@ -15,9 +16,9 @@ const getAll = async (userId) => {
     return orders
 }
 
-const findById = async (userId,id) => {
+const findById = async (id) => {
     const orders = await Order.findOne( 
-        { where: { userId: userId, id:id },
+        { where: { id: id },
         include: {
             model: OrderProduct,
             as: 'orderProduct',
@@ -29,7 +30,7 @@ const findById = async (userId,id) => {
     return orders
 }
 
-
+//include productid
 const createOrder = async (payload) => {
     const { ...order } = payload
     const createOrder = await Order.create({
@@ -38,7 +39,7 @@ const createOrder = async (payload) => {
     );
 
     return createOrder;
-      d
+    
 }
 
 const createOrderProduct = async (payload) => {
@@ -52,21 +53,16 @@ const createOrderProduct = async (payload) => {
    
 }
 
-const updateOrder = async (userId,id,newStatus) => {
-
-    const updateOrder = await Order.update(
-        { 
-            status:newStatus, 
-            updatedAt:new Date()
-        },
-        {
-            where: {
-                userId: userId,
-                id: id
-            }
-        })
-
-    return updateOrder
+const updateOrder = async (oldorder,newData) => {
+    const {status, ...order}=newData
+    const updateOldorder = Object.assign(oldorder,newData)
+    await oldorder.save()
+    if(oldorder.status){
+    oldorder.status= status
+    console.log(oldorder.status)
+    await oldorder.save();
+    }
+    return updateOldorder.reload()
 };
 
 

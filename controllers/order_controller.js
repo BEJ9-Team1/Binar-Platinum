@@ -5,13 +5,13 @@ const {createOrderDTO,updateOrderDTO} = require('../validators/order_validator')
 const { Product } = require('../models')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors');
-const ProductController = require('./productController');
 const cron = require('node-cron');
+const { message } = require('../validators/media_validator')
 
 
 const index = async (req, res, next) => {
     try {
-        const userId = req.params.userId
+        const userId = req.user.id
         const data = await orderService.getAll(userId)
         return res.status(200).json({
             message:'Request Success',
@@ -27,7 +27,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
-        const userId = req.params.userId
+        const userId = req.user.id
         const id = req.params.id
         const data = await orderService.findById(userId,id)
         if (!data) throw new NotFoundError(`order not found`)
@@ -47,35 +47,33 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        //let transaction = await sequelize.transaction();
-
         //reduce stock if available or send error when stock not available 
         const orderDTO = await createOrderDTO.validateAsync(req.body)
         const expiredAt = new Date(Date.now() + (60 * 60 * 1000)).toISOString()
         const productList = req.body.orderProducts
-         console.log(productList,"<<<< PRODUCT LIST >>>>>>>")
-
+        let availableStock=''
+        //check product and stock
         productList.forEach(async(product) => {
             const productStock = await productService.findById(product.productId)
             if(!productStock) throw new NotFoundError("Product not Found")
+            availableStock = productStock.stock
+            const newStock = availableStock - orderQty
+            if(newStock<0) throw new BadRequestError('Stock less than your order')
+        })
+
+        //update stock
+        productList.forEach(async(product) => {
             productId = product.productId
             orderQty = product.quantity
-            const availableStock = productStock.stock
             const newStock = availableStock - orderQty
-            //check stock
-            if(newStock > 0) {
-                const payload ={
-                    stock:newStock
+            const payload ={
+                stock:newStock
                 }
-                const updateStock = await productService.updateProduct(productId, payload)
-            }
-                else{
-                    throw new BadRequestError('stock less than your order')
-                }
+            const updateStock = await productService.updateProduct(productId, payload)
         });
 
         const payload = {
-            userId:orderDTO.userId,
+            userId:req.user.id,
             paymentMethodId:orderDTO.paymentMethodId,
             totalPrice:orderDTO.totalPrice,
             expiredAt: expiredAt,
@@ -104,19 +102,12 @@ const create = async (req, res, next) => {
         }
 
         )
-        //await transaction.commit();
-
         res.status(StatusCodes.CREATED).json({
             message: "Success",
             payload: result.dataValues
         });
         
     } catch (err) {
-       
-        // if(transaction) {
-        //     await transaction.rollback();
-        //  }
-
          console.error(err);
          next(err);
     }
@@ -125,46 +116,40 @@ const create = async (req, res, next) => {
 const update = async(req, res, next) => {
     try {
         //---status waiting_payment; processing; failed; done--//
-        //---when change status from waiting payment, check expired date--//
+        //---when change status
+        //--from waiting payment, check expired date--//
         //---if date > expired date, then set status to failed, else set status to processing/done--//
         const orderDTO = await updateOrderDTO.validateAsync(req.body)
-        const userId = req.params.userId
+        const userId = req.user.id
         const id = req.params.id
-        const order = await orderService.findById(userId, id)
+        const oldorder = await orderService.findById(id)
 
-        if (!order) throw new NotFoundError(`order with id ${id} not found`)
+        if (!oldorder) throw new NotFoundError(`order with id ${id} not found`)
         const newStatus =req.body.status
-        await orderService.updateOrder(userId, id, newStatus)
+        console.log(newStatus)
+        const newdata={
+            id:oldorder.id,
+            userId:userId,
+            paymentMethodId:oldorder.paymentMethodId,
+            totalPrice:oldorder.totalPrice,
+            expiredAt:oldorder.expiredAt,
+            status:newStatus
+        }
+        await orderService.updateOrder(oldorder,newdata)
       
-        const updatedOrder = await orderService.findById(userId, id)
+        const updatedOrder = await orderService.findById(id)
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: updatedOrder,
         });
     } catch (err) {
-         return res.status(404).json({ message: 'failed', message: message })
+         next(err)
 
-    }
-};
-
-const destroy = async(req, res, next) => {
-    try {
-        const userId = req.params.id
-        const user = await userService.destroy(userId)
-        if(!user) throw new NotFoundError("User Has Been Deleted")
-        const address = await addressService.destroy(userId)
-        res.status(StatusCodes.OK).json({
-            message: "Success",
-            data: user,
-        });
-    } catch (err) {
-        next(err);
     }
 };
 
 const crontab = async(req,res, next)=>{
     try {
-
         const orderStatus = await orderService.getAllStatus()
         orderStatus.forEach(async(order) => {
             const orderId =  order.id
@@ -192,7 +177,7 @@ const crontab = async(req,res, next)=>{
 
 };
 
-cron.schedule('* 5 * * * *', async() => {
+cron.schedule('* * 1 * * *', async() => {
     await crontab()
 });
 
@@ -201,6 +186,5 @@ module.exports = {
     find,
     create,
     update,
-    destroy,
     crontab
 }

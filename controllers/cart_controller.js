@@ -6,7 +6,7 @@ const { error } = require('../validators/address_validator');
 
 const index = async (req, res, next) => {
     try {
-        const data = await cartServices.getAll()
+        const data = await cartServices.getAll(req.user.id)
 
         return res.status(200).json({
             status: 200,    
@@ -64,7 +64,7 @@ const create = async (req, res, next) => {
 
         const newCartItems = await cartServices.createCartItems(payload);
         
-        res.status(StatusCodes.CREATED).json({
+        res.status(200).json({
             message: "Success",
             payload: newCartItems.dataValues
         });
