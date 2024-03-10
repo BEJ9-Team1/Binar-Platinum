@@ -9,6 +9,11 @@ const lookup = async (cartId) => {
     return cartItem  
 }
 
+const lookupUserCart = async (userId) => {
+    const cart = await Cart.findOne({ where: { userId: userId } })   
+    return cart
+}
+
 
 const getAll = async () => {
     const cart = await CartItem.findAndCountAll(
@@ -50,6 +55,7 @@ const update = async (cartItemId, payload) => {
 
 module.exports = {
     lookup,
+    lookupUserCart,
     getAll,
     createCart,
     createCartItems,

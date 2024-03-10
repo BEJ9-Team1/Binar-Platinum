@@ -41,12 +41,13 @@ const create = async (req, res, next) => {
         const cartDTO = await createCartDTO.validateAsync(req.body)
 
         const payload = {
-            cartId: req.body.cartId,
             productId: cartDTO.productId,
             qty: cartDTO.qty,
         } 
 
-        if (!payload.cartId){
+        const lookup = await cartServices.lookupUserCart(req.user.id);
+
+        if (!lookup){
             // create cart first and create cartItems and store it into the cart
             try{
                 const newCart = await cartServices.createCart(req.user.id);
@@ -56,6 +57,9 @@ const create = async (req, res, next) => {
                 console.error(err);
                 next(err);
             }
+        }
+        else{
+            payload.cartId = lookup.id;
         }
 
         const newCartItems = await cartServices.createCartItems(payload);
