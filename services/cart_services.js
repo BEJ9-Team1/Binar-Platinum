@@ -1,29 +1,26 @@
 const { Cart, CartItem } = require('../models')
 
 const lookup = async (cartId) => {
-    const cartItem = await CartItem.findAll( 
+    const cartItem = await CartItem.findByPk( cartId,
         { 
-            where: { cartId: cartId },
+            include: ['Cart']
         }        
      )
     return cartItem  
 }
 
 
-const getAll = async (qParams) => {
-    const cart = await Cart.findAndCountAll(
-        // {
-        //     include: [{ model: CartItem, as: 'Cart Items' }]
-        // }
+const getAll = async () => {
+    const cart = await CartItem.findAndCountAll(
+        {include: ['Cart']}
     )
     return cart
 }
 
-const createCart = async (payload) => {
-    const { ...cart } = payload
+const createCart = async (userId) => {
     const registerCart = await Cart.create({
-        ...cart,
-    },
+        userId: userId
+    }
     );
 
     return registerCart;
