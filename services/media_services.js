@@ -11,7 +11,7 @@ cloudinary.config({
 
 const storage = multer.diskStorage({
     destination: function (req,file,cb){
-        cb(null,"./uploads")
+        cb(null,"./")
     },
     filename: function (req,file,cb){
         cb(null,file.originalname)
@@ -79,6 +79,16 @@ const update = async (MediaId, payload) => {
     })
     return result
 };
+
+const destroy = async (mediaId) => {
+    const result = await Media.destroy({
+        where: {
+            id: mediaId,
+        },
+        individualHooks: true
+    })
+    return result
+};
 module.exports = {
     lookup,
     getAll,
@@ -86,5 +96,6 @@ module.exports = {
     uploadImage,
     rollbackUploadCloudinary,
     upload,
-    update
+    update,
+    destroy
 }

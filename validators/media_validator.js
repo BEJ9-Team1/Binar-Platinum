@@ -1,9 +1,8 @@
 const Joi = require('joi'); 
+const ImageRolesEnum = require('../config/enum/media_type_enum');
 
 const createMediaDTO = Joi.object({ 
-    url: Joi.string().trim().lowercase().min(5).required(),
-    ParentId:Joi.integer().trim().required(),
-    Role: Joi.string().trim().lowercase().min(4).required(),
+    role: Joi.string().valid(...ImageRolesEnum)
 })
 
 module.exports = createMediaDTO

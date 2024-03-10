@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Media.init({
     url: DataTypes.STRING,
     publicId: DataTypes.STRING,
-    parentId: DataTypes.INTEGER,
-    type: DataTypes.STRING
+    parentId: DataTypes.STRING,
+    role: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Media',
