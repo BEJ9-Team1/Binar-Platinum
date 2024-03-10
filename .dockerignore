@@ -1,0 +1,9 @@
+# compiled output
+node_modules
+*.txt
+.vscode
+coverage
+*.jpg
+# Ignore Mac DS_Store files
+**/.DS_Store.DS_Store
+.DS_Store

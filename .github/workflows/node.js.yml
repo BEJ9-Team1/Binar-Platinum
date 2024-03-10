@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - run: npm install --silent
 
-  deploy:
+   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
