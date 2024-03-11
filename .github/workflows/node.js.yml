@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.SSHPORT }}
           source: '.'
-          target: ./Binar-platinum/
+          target: ./Binar-Platinum/
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -50,6 +50,5 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.SSHPORT }}
           script: |
-            sudo su -
-            cd Binar-platinum/
+            cd Binar-Platinum/
             npm restart
