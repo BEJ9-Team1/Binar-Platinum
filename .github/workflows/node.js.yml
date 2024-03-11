@@ -51,6 +51,6 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           script: |
             sudo su -
-            pm2 stop 1
             cd Binar-Platinum/
+            pm2 stop 1
             npm start
