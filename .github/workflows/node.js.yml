@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.SSHPORT }}
           source: '.'
-          target: ./latihan-cicd/
+          target: ./Binar-platinum/
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
         with:
