@@ -10,8 +10,10 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+build:
+
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [20.x]
@@ -25,6 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install --silent
+
 
    deploy:
     runs-on: ubuntu-latest
