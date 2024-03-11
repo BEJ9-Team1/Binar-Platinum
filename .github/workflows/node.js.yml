@@ -52,4 +52,7 @@ jobs:
           script: |
             sudo su -
             cd Binar-Platinum/
+            npx sequelize db:migrate:undo:all
+            npx sequelize db:migrate
+            npx sequelize db:seed:all
             npm restart

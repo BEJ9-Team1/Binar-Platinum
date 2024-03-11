@@ -2,25 +2,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Addresses', {
+    await queryInterface.createTable('Merchants', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID
       },
       userId: {
-        type: Sequelize.UUID
-      },
-      address: {
-        type: Sequelize.STRING
+        type: Sequelize.UUID,
+        references: {
+          key: "id",
+          model: "Users"
+        }
       },
       name: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
-      isUsed: {
-        type: Sequelize.BOOLEAN
-      },
+      address: {
+        type: Sequelize.ARRAY(Sequelize.JSON)
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -28,13 +28,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      deletedAt: {
-        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Addresses');
+    await queryInterface.dropTable('Merchants');
   }
 };
