@@ -50,7 +50,6 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.SSHPORT }}
           script: |
-            sudo su -
             cd Binar-platinum/
             npm install
             npm restart
