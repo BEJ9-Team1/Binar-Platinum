@@ -12,10 +12,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Order, {
-        foreignKey: "user_id",
+      User.hasMany(models.Address, {
+        foreignKey: "userId",
         sourceKey: "id",
-        as: "order"
+        as: "address",
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       })
     }
   }
@@ -23,45 +25,32 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey:true
+      primaryKey: true,
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    name: DataTypes.STRING,
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-     },
-     isDeleted: DataTypes.BOOLEAN
-  }, {
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    userName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
+    password: DataTypes.STRING,
+    role: DataTypes.STRING,
+    isActive: DataTypes.BOOLEAN
+  },
+  {
     sequelize,
     modelName: 'User',
     hooks: {
-      beforeBulkCreate: (Users) => {
-        Users.forEach((User) => {
-          // to see the properties added by sequelize
-          console.table(User);
-          // now modify the "dataValues" property
-          User.dataValues.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
-        });
-        return Users
-      },
-      beforeCreate: (User) => {
+      beforeCreate:async (User) => {
         User.password = bcrypt.hashSync(User.password, +process.env.SALT_ROUNDS);
         return User
       },
-      beforeUpdate:async (user) => {
-        if (user.password) {
-          console.log(user.password);
+      beforeUpdate:async (User) => {
+        if (User.password) {
           const salt =  +process.env.SALT_ROUNDS
-          user.password = bcrypt.hashSync(user.password, salt);
+          User.password = bcrypt.hashSync(User.password, salt);
         }
       }
     }
-
   });
   return User;
 };

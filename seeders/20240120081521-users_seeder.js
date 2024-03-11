@@ -1,6 +1,6 @@
 'use strict';
 const datadAdmin = require('../databases/masterdata/user.json')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
@@ -19,3 +19,4 @@ module.exports = {
     await queryInterface.bulkDelete('Users', null, { truncate: true, restartIdentity: true })
   }
 };
+

@@ -1,14 +1,35 @@
 [
     {
-        "username": "Siregar",
-        "name": "Budi Siregar",
-        "password": "secret",
-        "isDeleted": false
+        "firstName": "admin",
+        "lastName": "admin",
+        "userName": "admin",
+        "email": "admin@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "admin",
+        "isActive": true
     },
     {
-        "username": "admin",
-        "name": "admin",
-        "password": "secret",
-        "isDeleted": false
+        "firstName": "buyer",
+        "lastName": "buyer",
+        "userName": "buyer",
+        "email": "buyer@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "buyer",
+        "isActive": true
+    },
+    {
+        "firstName": "merchant",
+        "lastName": "merchant",
+        "userName": "merchant",
+        "email": "merchant@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "merchant",
+        "isActive": true
     }
+    
+    
 ]
+

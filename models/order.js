@@ -11,46 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Order.belongsTo(models.User, {
-        foreignKey: "user_id",
-        as: "user"
-      }),
-      Order.belongsTo(models.Item, {
-        foreignKey: "item_id",
-        as: "item"
-      }),
-      Order.belongsTo(models.Seller, {
-        foreignKey: "seller_id",
-        as: "seller"
-      }),
-      Order.belongsTo(models.Shipment, {
-        foreignKey: "shipment_id",
-        as: "shipment"
-      })
+      Order.hasMany(models.OrderProduct, {
+        foreignKey: "orderId",
+        sourceKey: "id",
+         as: "orderProduct",
+   
+       })
     }
   }
   Order.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey:true
-    },
-    user_id: DataTypes.UUID,
-    item_id: DataTypes.UUID,
-    seller_id: DataTypes.UUID,
-    shipment_id: DataTypes.UUID,
-    total_qty: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-     },
-    total_price:{
-      type: DataTypes.FLOAT,
-      allowNull: false,
-     },
-    isPaid: {
-      type: DataTypes.STRING,
-      allowNull: false,
-     },
+    userId: DataTypes.UUID,
+    paymentMethodId: DataTypes.INTEGER,
+    totalPrice: DataTypes.FLOAT,
+    expiredAt: DataTypes.STRING,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Order',

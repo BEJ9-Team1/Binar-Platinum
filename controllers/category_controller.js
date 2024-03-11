@@ -3,7 +3,7 @@ const createCategoryDTO = require('../validators/category_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
 
-const index = async (req, res) => {
+const index = async (req, res,next) => {
     try {
         const params = req.qs
         const data = await categoryService.getAll(params)
@@ -60,11 +60,12 @@ const create = async (req, res, next) => {
 
 const update = async(req, res, next) => {
     try {
-        const item_id = req.params.id
+        const categoryDTO = await createCategoryDTO.validateAsync(req.body)
+        const categoryId = req.params.id
         const newData = {
-            name: req.body.name,
+            name: categoryDTO.name,
         }
-        const result = await categoryService.update(item_id ,newData)
+        const result = await categoryService.update(categoryId ,newData)
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: result,
