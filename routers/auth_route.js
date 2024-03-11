@@ -1,21 +1,12 @@
 const router = require('express').Router();
-const userController = require("../controllers/user_controller")
 const authController = require('../controllers/auth_controller')
-const { JwtGuard } = require('../middlewares/auth-jwt')
-
-
-
-//USER//
-router.get('/', userController.index)  // {url}/user
-router.get('/:id', JwtGuard, userController.find)
-router.patch('/updateUser/:id', JwtGuard, userController.update)
-// router.delete('/deleteUser/:id', userController.destroy)
-
-
+const userController = require('../controllers/user_controller')
+const  {JWTAuth} = require('../middlewares/auth-jwt')
+const {RoleGuard} = require('../middlewares/role-guard')
 
 //AUTH//
-router.post('/register', userController.create) // {url}/user/register
-router.post('/login', authController.login)
-
+router.post('/auth/register', userController.create) // {url}/user/register
+router.post('/auth/login', authController.login)
+router.post('/auth/logout', JWTAuth, authController.logout)
 
 module.exports= router

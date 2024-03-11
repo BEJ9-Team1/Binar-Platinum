@@ -1,19 +1,14 @@
+
 const router = require('express').Router();
-const categoryController = require('../controllers/category_controller')
+const userController = require('../controllers/user_controller')
+const  {JWTAuth} = require('../middlewares/auth-jwt')
+
 // USER CONTROLLER //
-
-
-
-//CATEGORY//
-router.get('/category', categoryController.index)
-router.post('/category', categoryController.create)
-router.patch('/category/:id', categoryController.update)
-router.get('/category/:name', categoryController.find)
-router.delete('/category/:id', categoryController.destroy)
-
-
-
-
+router.get('/user', JWTAuth, userController.index)
+router.post('/user', userController.create)
+router.get('/user/:email', userController.find)
+router.put('/user/',JWTAuth, userController.update)
+router.delete('/user/:id', userController.destroy)
 
 
 
