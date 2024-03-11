@@ -52,5 +52,4 @@ jobs:
           script: |
             sudo su -
             cd Binar-Platinum/
-            pm2 stop 1
-            npm start
+            npm restart
