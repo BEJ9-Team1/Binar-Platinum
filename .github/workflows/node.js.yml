@@ -51,5 +51,4 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           script: |
             cd Binar-Platinum/
-            npm install
             npm restart
