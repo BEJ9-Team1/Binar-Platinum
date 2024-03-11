@@ -50,4 +50,6 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.SSHPORT }}
           script: |
-            pm2 restart 1
+            pm2 stop 1
+            cd /Binar-Platinum
+            npm start
