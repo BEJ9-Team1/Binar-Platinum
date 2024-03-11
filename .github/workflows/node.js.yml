@@ -52,4 +52,5 @@ jobs:
           script: |
             sudo su -
             cd Binar-platinum/
+            npm install
             npm restart
