@@ -22,12 +22,12 @@ module.exports = {
         },
       },
       merchantId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
-        // references: {
-        //   key: "id",
-        //   model: "Merchants"
-        // },
+        references: {
+          key: "id",
+          model: "Merchants"
+        },
       },
       description: {
         type: Sequelize.TEXT,

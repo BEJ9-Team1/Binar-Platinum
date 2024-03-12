@@ -61,6 +61,7 @@ const create = async (req, res, next) => {
             if(newStock<0) throw new BadRequestError('Stock less than your order')
         })
 
+        let error = ''
         //update stock
         productList.forEach(async(product) => {
             productId = product.productId

@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'categoryId',
         sourceKey: 'id'
       })
-    }
+    }//need relation to media
+      //include in return service get etc
   }
   Product.init({
     name: {

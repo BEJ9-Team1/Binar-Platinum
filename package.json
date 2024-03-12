@@ -28,7 +28,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start ./bin/www",
-    "restart": "pm2 restart ./bin/www"
+    "restart": "pm2 restart ./bin/www",
+    "stop": "pm2 stop www"
   },
   "repository": {
     "type": "git",

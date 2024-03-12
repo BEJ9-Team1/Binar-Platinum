@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         as: "address",
         onUpdate: 'cascade',
         onDelete: 'cascade',
-      })
+      })//need relation to media
+      //include in return service get etc
     }
   }
   User.init({
