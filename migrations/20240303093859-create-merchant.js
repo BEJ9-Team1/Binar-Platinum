@@ -9,7 +9,11 @@ module.exports = {
         type: Sequelize.UUID
       },
       userId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        references: {
+          key: "id",
+          model: "Users"
+        },
       },
       name: {
         type: Sequelize.STRING

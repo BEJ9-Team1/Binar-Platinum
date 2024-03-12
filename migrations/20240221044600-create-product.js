@@ -15,11 +15,19 @@ module.exports = {
       },
       categoryId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          key: "id",
+          model: "Categories"
+        },
       },
       merchantId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        // references: {
+        //   key: "id",
+        //   model: "Merchants"
+        // },
       },
       description: {
         type: Sequelize.TEXT,

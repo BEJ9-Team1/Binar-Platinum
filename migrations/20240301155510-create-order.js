@@ -10,10 +10,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        references: {
+          key: "id",
+          model: "Users"
+        },
       },
       paymentMethodId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        references: {
+          key: "id",
+          model: "Payments"
+        },
       },
       totalPrice: {
         type: Sequelize.FLOAT
