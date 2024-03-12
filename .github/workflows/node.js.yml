@@ -61,7 +61,6 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.SSHPORT }}
           script: |
-            sudo su -
             cd Binar-Platinum/
             npm run undodb
             npm run migrate
