@@ -52,4 +52,7 @@ jobs:
           script: |
             sudo su -
             cd Binar-Platinum/
+            npm run undodb
+            npm run migrate
+            npm run seed
             npm restart
