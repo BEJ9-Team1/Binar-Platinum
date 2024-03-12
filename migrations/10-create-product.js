@@ -13,13 +13,21 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      merchantId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        // references: {
+        //   key: "id",
+        //   model: "Merchants"
+        // }
+      },
       categoryId: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      merchantId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          key: "id",
+          model: "Categories"
+        }
       },
       description: {
         type: Sequelize.TEXT,

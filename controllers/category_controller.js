@@ -3,7 +3,7 @@ const createCategoryDTO = require('../validators/category_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
 
-const index = async (req, res) => {
+const index = async (req, res,next) => {
     try {
         const params = req.qs
         const data = await categoryService.getAll(params)

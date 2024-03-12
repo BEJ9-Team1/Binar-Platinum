@@ -18,13 +18,7 @@ router.use(apiv1, adminRoutes)
 router.use(apiv1,sellerRoutes)
 router.use(apiv1, userRoute)
 router.use(apiv1, addressRoute)
-
-
-
-
-
-
-
-
+router.use(apiv1,orderRoute)
+router.use(apiv1,imageRoute)
 
 module.exports = router;

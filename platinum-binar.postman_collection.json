@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "482b7115-b00f-4e4f-8093-fee6c3472b85",
+		"_postman_id": "9e921be0-47f5-4edc-b933-5ee91ab30990",
 		"name": "platinum-binar",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24910748",
-		"_collection_link": "https://universal-zodiac-296389.postman.co/workspace/arro~791065f0-8577-4915-a9a3-00daf9c752e2/collection/24910748-482b7115-b00f-4e4f-8093-fee6c3472b85?action=share&source=collection_link&creator=24910748"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19149184"
 	},
 	"item": [
 		{
@@ -36,17 +35,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/api/v1.0/user",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"user"
-							]
-						}
+						"url": "{{host}}/api/v1.0/user"
 					},
 					"response": []
 				},
@@ -76,18 +65,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/api/v1.0/auth/login",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"auth",
-								"login"
-							]
-						}
+						"url": "{{host}}/api/v1.0/auth/login"
 					},
 					"response": []
 				},
@@ -108,28 +86,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "POST",
 						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1.0/auth/logout",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"auth",
-								"logout"
-							]
-						}
+						"url": "{{host}}/api/v1.0/auth/logout"
 					},
 					"response": []
 				}
@@ -146,13 +109,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "POST",
 								"header": [],
@@ -165,17 +124,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{host}}/api/v1.0/category",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"category"
-									]
-								}
+								"url": "{{host}}/api/v1.0/category"
 							},
 							"response": []
 						},
@@ -184,17 +133,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{host}}/api/v1.0/category",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"category"
-									]
-								}
+								"url": "{{host}}/api/v1.0/category"
 							},
 							"response": []
 						},
@@ -203,13 +142,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "PATCH",
 								"header": [],
@@ -274,13 +209,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "DELETE",
 								"header": [],
@@ -307,156 +238,133 @@
 						}
 					],
 					"description": "Passed tested Auth"
-				},
-				{
-					"name": "Payment",
-					"item": [
-						{
-							"name": "GetAll Payment",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{host}}/api/v1.0/payment",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"payment"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Payment",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\":\"gopay\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/api/v1.0/payment",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"payment"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Edit Payment",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\":\"ovo\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/api/v1.0/payment/:id",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"payment",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Payment",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{host}}/api/v1.0/payment/:id",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"payment",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"description": "Passed tested Auth"
 				}
 			]
 		},
 		{
 			"name": "User",
 			"item": [
+				{
+					"name": "Image",
+					"item": [
+						{
+							"name": "Get all image",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{host}}/api/v1.0/media"
+							},
+							"response": []
+						},
+						{
+							"name": "Upload new Image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/brian/Documents/js/Binar-Platinum/WhatsApp Image 2024-02-01 at 08.49.27_79289a5f.jpg"
+										},
+										{
+											"key": "parentId",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "Role",
+											"value": "profile",
+											"type": "text"
+										}
+									]
+								},
+								"url": "{{host}}/api/v1.0/media"
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "type",
+											"value": "avatar",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/media/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"media",
+										"1"
+									],
+									"query": [
+										{
+											"key": "parentId",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": "{{host}}/api/v1.0/media/2"
+							},
+							"response": []
+						},
+						{
+							"name": "FindOne Image",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "GetOne User",
 					"event": [
@@ -474,13 +382,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "GET",
 						"header": [],
@@ -522,13 +426,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "PUT",
 						"header": [],
@@ -541,17 +441,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/api/v1.0/user",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"user"
-							]
-						}
+						"url": "{{host}}/api/v1.0/user"
 					},
 					"response": []
 				},
@@ -560,13 +450,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "DELETE",
 						"header": [],
@@ -596,28 +482,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1.0/user/",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"user",
-								""
-							]
-						}
+						"url": "{{host}}/api/v1.0/user/"
 					},
 					"response": []
 				}
@@ -628,19 +499,229 @@
 			"item": [
 				{
 					"name": "Order",
-					"item": []
+					"item": [
+						{
+							"name": "getAll Order by User Id Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "userId",
+										"value": "1",
+										"type": "text"
+									}
+								],
+								"url": "{{host}}/api/v1.0/order/"
+							},
+							"response": []
+						},
+						{
+							"name": "getAll Order Status Copy",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "userId",
+										"value": "1",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": "{{host}}/api/v1.0/order"
+							},
+							"response": []
+						},
+						{
+							"name": "getOne Order Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1.0/order/:userId/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"order",
+										":userId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "id",
+											"value": "43"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create order Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": \"1\",\n    \"paymentMethodId\": \"1\",\n    \"totalPrice\":30000,\n    \"orderProducts\": [\n        {\n            \"productId\": \"1\",\n            \"quantity\": \"2\"\n        },\n        {\n            \"productId\": \"2\",\n            \"quantity\": \"2\"\n        }\n    ],\n    \"status\": \"Payment_Waiting\" // processing, failed, done\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{host}}/api/v1.0/order"
+							},
+							"response": []
+						},
+						{
+							"name": "update Order Status Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "userId",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"failed\" // processing, failed, done\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1.0/order/:userId/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1.0",
+										"order",
+										":userId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "id",
+											"value": "43"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "Cart",
-					"item": []
-				},
-				{
-					"name": "Image",
-					"item": []
-				},
-				{
-					"name": "Cart",
-					"item": []
+					"item": [
+						{
+							"name": "getAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{host}}/api/v1.0/cart"
+							},
+							"response": []
+						},
+						{
+							"name": "get one cartitem by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create cart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// {\r\n//     \"firstName\" : \"Lucky\",\r\n//     \"lastName\" : \"Laurens\",\r\n//     \"userName\": \"luckylaurens15\",\r\n//     \"email\": \"luckylaurens@email.com\",\r\n//     \"phoneNumber\": \"082290100141\",\r\n//     \"password\": \"lucky123\",\r\n//     \"confirmPassword\": \"lucky123\",\r\n//     \"role\": \"buyer\",\r\n//     \"isActive\": true,\r\n//     \"address\" : [\r\n//         {\r\n//             \"userId\" : 2,\r\n//             \"address\":\"Jl. Foresta Raya\",\r\n//             \"name\" : \"lucky\",\r\n//             \"isUsed\" : true\r\n//         }\r\n//     ]\r\n// }\r\n\r\n// {\r\n//     \"userName\": \"luckylaurens15\",\r\n//     \"password\": \"lucky123\"\r\n// }\r\n\r\n{\r\n    \"productId\" : 1,\r\n    \"qty\" : 100\r\n}\r\n\r\n// {\r\n//     \"qty\" : 7\r\n// }\r\n\r\n// {\r\n//     \"full_name\" : \"Vincent\",\r\n//     \"email\": \"vincent@gmail.com\"\r\n// }\r\n\r\n// {\r\n//     \"full_name\" : \"Reinard2\",\r\n//     \"email\": \"reinard2@gmail.com\",\r\n//     \"phone_number\": \"08121234567\",\r\n//     \"dob\": \"2001-03-01\",\r\n//     \"password\" : \"password\"\r\n// }\r\n\r\n// {\r\n//     \"item_name\": \"Botol LocknLock Mahal\",\r\n//     \"price\" : 250000\r\n// }\r\n\r\n// {\r\n//     \"item_name\": \"Botol LocknLock\",\r\n//     \"price\" : 50000,\r\n//     \"stock\" :100\r\n// }\r\n\r\n// {\r\n//     \"user_id\" : 2,\r\n//     \"item_id\" : 5,\r\n//     \"qty\" : 10\r\n// }\r\n\r\n// {\r\n//     \"status\" : \"Delivered\"\r\n// }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{host}}/api/v1.0/cart"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Cart Qty",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"qty\" : 7\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{host}}/api/v1.0/cart/2"
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "Address",
@@ -653,17 +734,7 @@
 								},
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{host}}/api/v1.0/address",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"address"
-									]
-								}
+								"url": "{{host}}/api/v1.0/address"
 							},
 							"response": []
 						},
@@ -672,13 +743,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "GET",
 								"header": [],
@@ -708,13 +775,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "DELETE",
 								"header": [],
@@ -740,6 +803,87 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Image",
+					"item": [
+						{
+							"name": "Get all Payment",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "localhost:3000/api/v1.0/payment"
+							},
+							"response": []
+						},
+						{
+							"name": "Create new Payment",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "parentId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "user",
+											"type": "text"
+										}
+									]
+								},
+								"url": "localhost:3000/api/v1.0/media/1"
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Payment",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"ovo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "localhost:3000/api/v1.0/payment/1"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Payment",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "localhost:3000/api/v1.0/payment/1"
+							},
+							"response": []
+						},
+						{
+							"name": "FindOne Payment",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -754,13 +898,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "POST",
 								"header": [],
@@ -773,18 +913,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{host}}/api/v1.0/merchant/products",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"merchant",
-										"products"
-									]
-								}
+								"url": "{{host}}/api/v1.0/merchant/products"
 							},
 							"response": []
 						},
@@ -793,17 +922,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{host}}/api/v1.0/products",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"products"
-									]
-								}
+								"url": "{{host}}/api/v1.0/products"
 							},
 							"response": []
 						},
@@ -839,13 +958,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "DELETE",
 								"header": [],
@@ -876,13 +991,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "PUT",
 								"header": [],
@@ -924,17 +1035,7 @@
 								},
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{host}}/api/v1.0/address",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1.0",
-										"address"
-									]
-								}
+								"url": "{{host}}/api/v1.0/address"
 							},
 							"response": []
 						},
@@ -943,13 +1044,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "GET",
 								"header": [],
@@ -979,13 +1076,9 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
+									"bearer": {
+										"token": "{{token}}"
+									}
 								},
 								"method": "DELETE",
 								"header": [],
@@ -1017,17 +1110,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1.0/merchant",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"merchant"
-							]
-						}
+						"url": "{{host}}/api/v1.0/merchant"
 					},
 					"response": []
 				},
@@ -1062,13 +1145,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "PUT",
 						"header": [],
@@ -1121,13 +1200,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "{{token}}"
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -1140,17 +1215,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/api/v1.0/merchant",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1.0",
-								"merchant"
-							]
-						}
+						"url": "{{host}}/api/v1.0/merchant"
 					},
 					"response": []
 				}

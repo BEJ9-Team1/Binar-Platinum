@@ -7,8 +7,7 @@ module.exports = {
     database: process.env.PG_DB_NAME,
     host: process.env.PG_HOST,
     dialect: process.env.DB_CONNECTION,
-    port: process.env.PG_PORT,
-    dialect: process.env.DB_CONNECTION,
+    port: process.env.PG_PORT
     // dialectOptions: {
     //   ssl: {
     //     require: true,

@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
       })
     }
-  }
+  } 
+  //need relation to media
+  //update profile image with search fk parentId in media
   User.init({
     id: {
       type: DataTypes.UUID,
