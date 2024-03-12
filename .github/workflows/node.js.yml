@@ -45,10 +45,10 @@ jobs:
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.SSHHOST }}
-          username: ${{ secrets.SSHUSER }}
-          key: ${{ secrets.SSHKEY }}
-          port: ${{ secrets.SSHPORT }}
+          host: ${{ secrets.SSHHOST }} #ip public
+          username: ${{ secrets.SSHUSER }} #username acc vps
+          key: ${{ secrets.SSHKEY }} #secret key from vps
+          port: ${{ secrets.SSHPORT }} #ssh port 22
           script: |
             cd Binar-Platinum/
             npm restart

@@ -15,10 +15,17 @@ module.exports = (sequelize, DataTypes) => {
         as: 'category',
         foreignKey: 'categoryId',
         sourceKey: 'id'
+      }),
+      Product.belongsTo(models.Merchant, {
+        as: 'merchant',
+        foreignKey: 'merchantId',
+        sourceKey: 'id'
       })
     }
   }
-  Product.init({
+  //need relation to media
+  //update product image with search fk parentId in media
+  Product.init({ 
     name: {
       type: DataTypes.STRING,
       validate : {

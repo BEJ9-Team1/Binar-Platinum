@@ -13,6 +13,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      merchantId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        // references: {
+        //   key: "id",
+        //   model: "Merchants"
+        // }
+      },
       categoryId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -20,14 +28,6 @@ module.exports = {
           key: "id",
           model: "Categories"
         }
-      },
-      merchantId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        // references: {
-        //   key: "id",
-        //   model: "Merchants"
-        // }
       },
       description: {
         type: Sequelize.TEXT,
