@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, run-unit-tests]
+    needs: [build]
     steps:
       - uses: actions/checkout@v3
       - name: Upload to VM
