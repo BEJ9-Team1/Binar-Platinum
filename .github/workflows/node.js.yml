@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-testing:
 
     runs-on: ubuntu-latest
 
@@ -35,7 +35,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, test]
+    needs: [build-testing]
     steps:
       - uses: actions/checkout@v4
       - name: Upload to VM
