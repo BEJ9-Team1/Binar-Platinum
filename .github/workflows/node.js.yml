@@ -41,6 +41,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm install --silent
+      - run: npm run createdb
+      - run: npm run migrate
+      - run: npm run seed
       - run: npm test
 
   deploy:
