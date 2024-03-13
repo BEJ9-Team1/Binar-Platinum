@@ -28,16 +28,16 @@ jobs:
         cache: 'npm'
     - run: npm install --silent
 
-#  run-unit-tests:
-#    runs-on: ubuntu-latest
-#    needs: build
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: '14'
-#      - run: npm install
-#      - run: npm test
+  testing:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: [20.x]
+      - run: npm install --silent
+      - run: npm test
 
   deploy:
     runs-on: ubuntu-latest

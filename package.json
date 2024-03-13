@@ -21,14 +21,14 @@
     "pm2": "^5.3.1",
     "sequelize": "^6.35.1",
     "sequelize-cli": "^6.6.2",
-    "superjest": "^0.1.0",
+    "supertest": "^6.3.4",
     "uuid": "^9.0.1"
   },
   "name": "gold-challange",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles --forceExit --runInBand",
     "start": "pm2 start ./bin/www",
     "restart": "pm2 restart ./bin/www",
     "stop": "pm2 stop www",
