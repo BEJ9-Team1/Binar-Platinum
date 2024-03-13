@@ -30,7 +30,7 @@ jobs:
   
   test:
     runs-on: ubuntu-latest
-    strategy:
+    strategy:needs: [build]
       matrix:
         node-version: [20.x]
     steps:
@@ -41,7 +41,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - run: npm run createdb
+    - run: npm run migrate
+    - run: npm run seed
     - run: npm test
+    - run: npm run undodb
 
   deploy:
     runs-on: ubuntu-latest
