@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - run: npm install --silent
   
-  test:
+  testing:
     runs-on: ubuntu-latest
     strategy:needs: [build]
       matrix:
