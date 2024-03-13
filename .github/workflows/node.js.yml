@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Upload to VM
-        uses: appleboy/scp-action@v0.1.4
+      - uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSHHOST }}
           username: ${{ secrets.SSHUSER }}
