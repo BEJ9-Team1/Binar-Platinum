@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - run: npm install --silent
 
-  testing-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     needs: [build, testing]
     steps:
@@ -42,7 +42,7 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           source: '.'
           target: ./Binar-Platinum/
-      - name: configure database
+      - name: configure database and testing
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SSHHOST }}
@@ -54,15 +54,6 @@ jobs:
             npm run undodb
             npm run migrate
             npm run seed
-      - name: running testing
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSHHOST }}
-          username: ${{ secrets.SSHUSER }}
-          key: ${{ secrets.SSHKEY }}
-          port: ${{ secrets.SSHPORT }}
-          script: |
-            cd Binar-Platinum/
             npm test
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
