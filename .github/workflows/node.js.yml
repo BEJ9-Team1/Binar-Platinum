@@ -32,13 +32,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     strategy:
+      image: node:20-alpine
       matrix:
         node-version: [20.x]
 
     services:
       postgres:
         image: postgres:16
-        image: node:20-alpine
         env:
           POSTGRES_USER: user
           POSTGRES_PASSWORD: password
