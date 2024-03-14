@@ -73,7 +73,6 @@ jobs:
 
     - name: 'Create env file'
       run: |
-        cd Binar-Platinum/
         touch .env
         echo PORT=9000 >> .env
         echo DB_CONNECTION="postgres" >> .env
