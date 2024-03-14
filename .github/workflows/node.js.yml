@@ -54,7 +54,6 @@ jobs:
             npm run undodb
             npm run migrate
             npm run seed
-            npm test
       - name: testing
         uses: appleboy/ssh-action@v1.0.0
         with:
