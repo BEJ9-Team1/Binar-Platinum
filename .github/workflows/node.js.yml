@@ -86,35 +86,12 @@ jobs:
         echo SALT_ROUNDS=15 >> .env
         cat .env
         
-    - name: Print Env Variables
-      run: |
-        echo DB_CONNECTION=$DB_CONNECTION
-        echo DB_USER=$DB_USER
-        echo DB_PASS=$DB_PASS
-        echo DB_HOST=$DB_HOST
-        echo DB_PORT=$DB_PORT
-        echo DB_NAME=$DB_NAME
-      env:
-        DB_CONNECTION: "postgres"
-        DB_USER: user
-        DB_PASS: password
-        DB_HOST: localhost
-        DB_PORT: 5432
-        DB_NAME: challange_platinum_binar
     - name: Setup Database
       run: npm run createdb
     - name: Migrate Database
       run: npm run migrate
     - name: Seed Database
       run: npm run seed 
-      env:
-        DB_CONNECTION: "postgres"
-        DB_USER: user
-        DB_PASS: password
-        DB_HOST: localhost
-        DB_PORT: 5432
-        DB_NAME: challange_platinum_binar
-
     - name: Run tests
       run: npm test
     - name: Reset Database
