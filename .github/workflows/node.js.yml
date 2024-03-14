@@ -133,3 +133,4 @@ jobs:
           script: |
             cd Binar-Platinum/
             npm restart
+
