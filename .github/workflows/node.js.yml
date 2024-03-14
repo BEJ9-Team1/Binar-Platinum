@@ -27,11 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npx sequelize db:create
-    - run: npx sequelize db:migrate
-    - run: npx sequelize db:seed:all
-    - run: npm test
-    
+
   test:
     runs-on: ubuntu-latest
 
@@ -69,38 +65,36 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: npm ci
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Test PostgreSQL Connection
-        run: psql postgres://user:password@localhost:5432/testdb -c '\l'
+    - name: Test PostgreSQL Connection
+      run: psql postgres://user:password@localhost:5432/testdb -c '\l'
         
-      - name: Print Env Variables
-        run: |
-          echo DB_USER=$DB_USER
-          echo DB_PASS=$DB_PASS
-          echo DB_HOST=$DB_HOST
-          echo DB_PORT=$DB_PORT
-          echo DB_NAME=$DB_NAME
-        env:
-          DB_USER: user
-          DB_PASS: password
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: testdb
+    - name: Print Env Variables
+      run: |
+        echo DB_USER=$DB_USER
+        echo DB_PASS=$DB_PASS
+        echo DB_HOST=$DB_HOST
+        echo DB_PORT=$DB_PORT
+        echo DB_NAME=$DB_NAME
+      env:
+        DB_USER: user
+        DB_PASS: password
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DB_NAME: testdb
 
-      - name: Setup Database
-        run: yarn db:migrate 
-        env:
-          DB_USER: user
-          DB_PASS: password
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: testdb
+    - name: Setup Database
+      run: yarn db:migrate 
+      env:
+        DB_USER: user
+        DB_PASS: password
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DB_NAME: testdb
 
-      - name: Run tests
-        run: npm test
+    - name: Run tests
+      run: npm test
 
   deploy:
     runs-on: ubuntu-latest
