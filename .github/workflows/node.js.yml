@@ -20,7 +20,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -60,7 +60,7 @@ jobs:
       DATABASE_URL: postgres://user:password@localhost:5432/postgres
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -124,7 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, test]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Upload to VM
         uses: appleboy/scp-action@v0.1.4
         with:
