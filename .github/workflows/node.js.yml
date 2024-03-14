@@ -85,7 +85,9 @@ jobs:
         DB_NAME: challange_platinum_binar
 
     - name: Setup Database
-      run: npx sequelize db:migrate 
+      run: npx sequelize db:create
+      run: npx sequelize db:migrate
+      run: npx sequelize db:seed:all 
       env:
         DB_USER: postgres
         DB_PASS: BinarPlatinum
