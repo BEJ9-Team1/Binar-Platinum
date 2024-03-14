@@ -51,13 +51,13 @@ jobs:
           --health-retries 5
 
     env:
-      DB_CONNECTION: "testdb"
+      DB_CONNECTION: "postgres"
       DB_HOST: localhost
       DB_USER: user
       DB_PASS: password
       DB_NAME: challange_platinum_binar
       DB_PORT: 5432
-      DATABASE_URL: postgres://user:password@localhost:5432/testdb
+      DATABASE_URL: postgres://user:password@localhost:5432/postgres
 
     steps:
     - uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
     - run: npm ci
 
     - name: Test PostgreSQL Connection
-      run: psql postgres://user:password@localhost:5432/testdb -c '\l'
+      run: psql postgres://user:password@localhost:5432/postgres -c '\l'
         
     - name: Print Env Variables
       run: |
@@ -80,7 +80,7 @@ jobs:
         echo DB_PORT=$DB_PORT
         echo DB_NAME=$DB_NAME
       env:
-        DB_CONNECTION: "testdb"
+        DB_CONNECTION: "postgres"
         DB_USER: user
         DB_PASS: password
         DB_HOST: localhost
@@ -93,7 +93,7 @@ jobs:
     - name: Seed Database
       run: npx sequelize db:seed:all 
       env:
-        DB_CONNECTION: "testdb"
+        DB_CONNECTION: "postgres"
         DB_USER: user
         DB_PASS: password
         DB_HOST: localhost
