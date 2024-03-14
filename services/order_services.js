@@ -18,7 +18,7 @@ const getAll = async (userId) => {
 
 const findById = async (userId,id) => {
     const orders = await Order.findOne( 
-        { where: { userId:userId,id: id },
+        { where: { id: id },
         include: {
             model: OrderProduct,
             as: 'orderProduct',
