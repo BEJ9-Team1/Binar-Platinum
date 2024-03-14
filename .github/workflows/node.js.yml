@@ -39,9 +39,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: BinarPlatinum
-          POSTGRES_DB: challange_platinum_binar
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
         ports:
           - 5432:5432
         options: >-
@@ -93,7 +93,6 @@ jobs:
     - name: Seed Database
       run: npx sequelize db:seed:all 
       env:
-        DB_CONNECTION: "postgres"
         DB_USER: postgres
         DB_PASS: BinarPlatinum
         DB_HOST: localhost
