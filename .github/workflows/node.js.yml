@@ -32,7 +32,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     strategy:
-      image: node:20-alpine
       matrix:
         node-version: [20.x]
 
