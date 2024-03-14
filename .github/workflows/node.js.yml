@@ -118,7 +118,7 @@ jobs:
     - name: Run tests
       run: npm test
     - name: Reset Database
-      run: npm undodb
+      run: npm run undodb
 
   deploy:
     runs-on: ubuntu-latest
