@@ -86,8 +86,8 @@ jobs:
         DB_HOST: localhost
         DB_PORT: 5432
         DB_NAME: challange_platinum_binar
-    - name: Setup Database
-      run: npx sequelize db:create
+    #- name: Setup Database
+     # run: npx sequelize db:create
     - name: Migrate Database
       run: npx sequelize db:migrate
     - name: Seed Database
