@@ -86,7 +86,9 @@ jobs:
 
     - name: Setup Database
       run: npx sequelize db:create
+    - name: Migrate Database
       run: npx sequelize db:migrate
+    - name: Seed Database
       run: npx sequelize db:seed:all 
       env:
         DB_USER: postgres
