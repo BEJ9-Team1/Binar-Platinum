@@ -70,6 +70,22 @@ jobs:
 
     - name: Test PostgreSQL Connection
       run: psql postgres://user:password@localhost:5432/postgres -c '\l'
+
+    - name: 'Create env file'
+      run: |
+        cd Binar-Platinum/
+        touch .env
+        echo PORT=9000 >> .env
+        echo DB_CONNECTION="postgres" >> .env
+        echo PG_HOST=localhost >> .env
+        echo PG_PORT=5432 >> .env
+        echo PG_USER=user >> .env
+        echo PG_PASSWORD=password >> .env
+        echo PG_DB_NAME=challange_platinum_binar >> .env
+        echo JWT_SECRET_KEY=Ba86HYNuOE >> .env
+        echo JWT_EXPIRED= 12h >> .env
+        echo SALT_ROUNDS=15 >> .env
+        cat .env
         
     - name: Print Env Variables
       run: |
