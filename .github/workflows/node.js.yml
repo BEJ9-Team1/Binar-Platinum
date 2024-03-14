@@ -27,6 +27,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - run: npx sequelize db:create
+    - run: npx sequelize db:migrate
+    - run: npx sequelize db:seed:all
     - run: npm test
 
   deploy:
