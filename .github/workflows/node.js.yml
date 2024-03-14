@@ -39,9 +39,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: testdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: BinarPlatinum
+          POSTGRES_DB: challange_platinum_binar
         ports:
           - 5432:5432
         options: >-
@@ -51,6 +51,7 @@ jobs:
           --health-retries 5
 
     env:
+      DB_CONNECTION: "postgres"
       DB_HOST: localhost
       DB_USER: postgres
       DB_PASS: BinarPlatinum
@@ -72,18 +73,19 @@ jobs:
         
     - name: Print Env Variables
       run: |
+        echo DB_CONNECTION=$DB_CONNECTION
         echo DB_USER=$DB_USER
         echo DB_PASS=$DB_PASS
         echo DB_HOST=$DB_HOST
         echo DB_PORT=$DB_PORT
         echo DB_NAME=$DB_NAME
       env:
+        DB_CONNECTION: "postgres"
         DB_USER: postgres
         DB_PASS: BinarPlatinum
         DB_HOST: localhost
         DB_PORT: 5432
         DB_NAME: challange_platinum_binar
-
     - name: Setup Database
       run: npx sequelize db:create
     - name: Migrate Database
@@ -91,6 +93,7 @@ jobs:
     - name: Seed Database
       run: npx sequelize db:seed:all 
       env:
+        DB_CONNECTION: "postgres"
         DB_USER: postgres
         DB_PASS: BinarPlatinum
         DB_HOST: localhost
