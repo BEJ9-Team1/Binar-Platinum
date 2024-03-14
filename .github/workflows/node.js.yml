@@ -51,10 +51,10 @@ jobs:
           --health-retries 5
 
     env:
-      DB_CONNECTION: "postgres"
+      DB_CONNECTION: "testdb"
       DB_HOST: localhost
-      DB_USER: postgres
-      DB_PASS: BinarPlatinum
+      DB_USER: user
+      DB_PASS: password
       DB_NAME: challange_platinum_binar
       DB_PORT: 5432
       DATABASE_URL: postgres://user:password@localhost:5432/testdb
@@ -80,9 +80,9 @@ jobs:
         echo DB_PORT=$DB_PORT
         echo DB_NAME=$DB_NAME
       env:
-        DB_CONNECTION: "postgres"
-        DB_USER: postgres
-        DB_PASS: BinarPlatinum
+        DB_CONNECTION: "testdb"
+        DB_USER: user
+        DB_PASS: password
         DB_HOST: localhost
         DB_PORT: 5432
         DB_NAME: challange_platinum_binar
@@ -93,8 +93,9 @@ jobs:
     - name: Seed Database
       run: npx sequelize db:seed:all 
       env:
-        DB_USER: postgres
-        DB_PASS: BinarPlatinum
+        DB_CONNECTION: "testdb"
+        DB_USER: user
+        DB_PASS: password
         DB_HOST: localhost
         DB_PORT: 5432
         DB_NAME: challange_platinum_binar
