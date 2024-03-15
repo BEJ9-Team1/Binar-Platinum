@@ -18,7 +18,7 @@ router.post('/payment', JWTAuth, RoleGuard('admin'), paymentController.create)
 router.get('/payment/:name', paymentController.find)
 router.put('/payment/:id', JWTAuth, RoleGuard('admin'), paymentController.update)
 router.delete('/payment/:id', JWTAuth, RoleGuard('admin'), paymentController.destroy)
-=========================================== SATU ========================================
+=========================================== SATU ======================================== ROBBI
 //AUTH//
 router.post('/auth/register', userController.create) // {url}/user/register
 router.post('/auth/login', authController.login)
@@ -41,7 +41,7 @@ router.delete('/media/:id', JWTAuth, RoleGuard('buyer', 'merchant'),mediaControl
 router.get('/merchant', merchantController.index)
 router.post('/merchant', JWTAuth, RoleGuard('buyer', 'merchant'), merchantController.create)
 router.get('/merchant/:name', merchantController.find)
-============================================ DUA =======================================================================
+============================================ DUA ======================================================================= LUCKY
 router.put('/merchant/', JWTAuth, RoleGuard('merchant'), merchantController.update)
 
 // PRODUCT //
@@ -53,14 +53,12 @@ router.delete('/products/:id', JWTAuth, RoleGuard('merchant'), ProductController
 
 //ORDER//
 router.get('/order/', JWTAuth, RoleGuard('buyer', 'seller'), orderController.index) //getAllOrder
-router.post('/order',JWTAuth, RoleGuard('buyer'), orderController.create)
 router.get('/order/:id',JWTAuth, RoleGuard('buyer', 'seller'), orderController.find)
 router.patch('/order/:id',JWTAuth, RoleGuard('buyer', 'seller'), orderController.update)
 
 // USER CONTROLLER //
 router.get('/user', JWTAuth, userController.index)
-router.post('/user', userController.create)
 router.get('/user/:email', userController.find)
 router.put('/user/',JWTAuth, userController.update)
 router.delete('/user/:id', userController.destroy)
-========================================= TIGA ======================================================
+========================================= TIGA ====================================================== RIDHO
