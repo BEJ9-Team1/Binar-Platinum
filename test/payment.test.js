@@ -45,7 +45,7 @@ describe("Test POST /login", () => {
 });
 
 
-const mockRequestCreate = (body = {name: "Electronics"}, params = {}, query = {}) => {
+const mockRequestCreate = (body = {name: "VA BCA"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -53,12 +53,12 @@ const mockRequestCreate = (body = {name: "Electronics"}, params = {}, query = {}
     };
 };
 
-describe("Test CREATE /category", () => {
+describe("Test CREATE /payment", () => {
     it("Should response 201", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestCreate()
         request(app)
-            .post("/api/v1.0/category")
+            .post("/api/v1.0/payment")
             .set('Authorization', `Bearer ${token}`)
             .send(req.body)
             .then((res) => {
@@ -72,19 +72,19 @@ describe("Test CREATE /category", () => {
 });
 
 
-let categoryId = ''
-let categoryName = ''
+let paymentId = ''
+let paymentName = ''
 
-describe("Test GET ALL /category", () => {
+describe("Test GET ALL /payment", () => {
     it("Should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
 
         request(app)
-            .get("/api/v1.0/category")
+            .get("/api/v1.0/payment")
             .set('Authorization', `Bearer ${token}`)
             .then((res) => {
-                categoryId = res.body.data.rows[0].id
-                console.log(categoryId);
+                paymentId = res.body.data.rows[0].id
+                console.log(paymentId);
                 console.log(res.body);
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.status).toBe(200);
@@ -94,7 +94,7 @@ describe("Test GET ALL /category", () => {
     });
 });
 
-const mockRequestGetOneId = (body = {name: "Interior"}, params = {categoryId}, query = {}) => {
+const mockRequestGetOneId = (body = {name: "VA CIMB"}, params = {paymentId}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -102,7 +102,7 @@ const mockRequestGetOneId = (body = {name: "Interior"}, params = {categoryId}, q
     };
 };
 
-const mockRequestGetOneName = (body = {}, params = {categoryName}, query = {}) => {
+const mockRequestGetOneName = (body = {}, params = {paymentName}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -111,18 +111,18 @@ const mockRequestGetOneName = (body = {}, params = {categoryName}, query = {}) =
 };
 
 
-describe("Test PATCH /category", () => {
+describe("Test PUT /payment", () => {
     it("Should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestGetOneId()
         request(app)
-            .patch("/api/v1.0/category/"+req.params.categoryId)
+            .put("/api/v1.0/payment/"+req.params.paymentId)
             .set('Authorization', `Bearer ${token}`)
             .send(req.body)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 console.log(res.body.data[1][0].name);
-                categoryName = res.body.data[1][0].name
+                paymentName = res.body.data[1][0].name
                 expect(res.status).toBe(200);
                 expect(res.body.message).toBe("Success")
                 done();
@@ -130,12 +130,12 @@ describe("Test PATCH /category", () => {
     });
 });
 
-describe("Test GET ONE /category", () => {
+describe("Test GET ONE /payment", () => {
     it("Should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestGetOneName()
         request(app)
-            .get("/api/v1.0/category/"+req.params.categoryName)
+            .get("/api/v1.0/payment/"+req.params.paymentName)
             .set('Authorization', `Bearer ${token}`)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
@@ -146,12 +146,12 @@ describe("Test GET ONE /category", () => {
     });
 });
 
-describe("Test DESTROY /category", () => {
+describe("Test DESTROY /payment", () => {
     it("Should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestGetOneId()
         request(app)
-            .del("/api/v1.0/category/"+req.params.categoryId)
+            .del("/api/v1.0/payment/"+req.params.paymentId)
             .set('Authorization', `Bearer ${token}`)
             .send(req.body)
             .then((res) => {
@@ -190,12 +190,12 @@ describe("Test Unauthorized Account POST /login", () => {
     });
 });
 
-describe("Test Unauthorized CREATE /category", () => {
+describe("Test Unauthorized CREATE /payment", () => {
     it("Should response 403", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestCreate()
         request(app)
-            .post("/api/v1.0/category")
+            .post("/api/v1.0/payment")
             .set('Authorization', `Bearer ${token}`)
             .send(req.body)
             .then((res) => {
@@ -207,12 +207,12 @@ describe("Test Unauthorized CREATE /category", () => {
     });
 });
 
-describe("Test Unauthorized PATCH /category", () => {
+describe("Test Unauthorized PUT /payment", () => {
     it("Should response 403", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestGetOneId()
         request(app)
-            .patch("/api/v1.0/category/"+req.params.categoryId)
+            .put("/api/v1.0/payment/"+req.params.paymentId)
             .set('Authorization', `Bearer ${token}`)
             .send(req.body)
             .then((res) => {
@@ -223,12 +223,12 @@ describe("Test Unauthorized PATCH /category", () => {
     });
 });
 
-describe("Test Unauthorized DESTROY /category", () => {
+describe("Test Unauthorized DESTROY /payment", () => {
     it("Should response 403", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         req = mockRequestGetOneId()
         request(app)
-            .del("/api/v1.0/category/"+req.params.categoryId)
+            .del("/api/v1.0/payment/"+req.params.paymentId)
             .set('Authorization', `Bearer ${token}`)
             .send(req.body)
             .then((res) => {
