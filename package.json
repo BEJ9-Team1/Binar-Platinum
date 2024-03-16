@@ -39,7 +39,8 @@
     "migrate": "npx sequelize db:migrate",
     "seed": "npx sequelize db:seed:all",
     "undodb": "npx sequelize db:migrate:undo:all",
-    "dbtesting": "npx sequelize db:migrate:undo:all --env test && npx sequelize db:migrate --env test && npx sequelize db:seed:all --env test"
+    "testing": "npx sequelize db:migrate:undo:all --env test && npx sequelize db:migrate --env test && npx sequelize db:seed:all --env test && npm test --env test"
+    
   },
   "repository": {
     "type": "git",

@@ -16,9 +16,7 @@ const index = async (req, res) => {
         })
 
     } catch (error) {
-        if (error.message) {
-            next({status: 400, message: error.message, data: {}})
-        }
+        console.error(err);
         next(error)
     }
 }
@@ -60,6 +58,7 @@ const create = async (req, res, next) => {
         });
         
     } catch (err) {
+        console.log(err);
         next(err);
     }
 };
