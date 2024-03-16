@@ -86,16 +86,8 @@ jobs:
         echo SALT_ROUNDS=15 >> .env
         cat .env
         
-    - name: Setup Database
-      run: npm run createdb
-    - name: Migrate Database
-      run: npm run migrate
-    - name: Seed Database
-      run: npm run seed 
-    - name: Run tests
-      run: npm test
-    - name: Reset Database
-      run: npm run undodb
+    - name: Setup Database and Test
+      run: npm run testing
 
   deploy:
     runs-on: ubuntu-latest
