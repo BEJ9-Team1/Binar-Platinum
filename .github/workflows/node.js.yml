@@ -87,6 +87,8 @@ jobs:
         echo SALT_ROUNDS=15 >> .env
         cat .env
         
+    - name: Setup Database
+      run: npx sequelize db:create --env test
     - name: Setup Database and Test
       run: npm run testing
 
