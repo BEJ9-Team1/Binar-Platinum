@@ -74,18 +74,21 @@ jobs:
     - name: 'Create env file'
       run: |
         touch .env
+        echo ENVIRONMENT=TEST >> .env
         echo PORT=9000 >> .env
-        echo DB_CONNECTION="postgres" >> .env
-        echo PG_HOST=localhost >> .env
-        echo PG_PORT=5432 >> .env
-        echo PG_USER=user >> .env
-        echo PG_PASSWORD=password >> .env
-        echo PG_DB_NAME=testing_development >> .env
+        echo DB_TEST_CONNECTION="postgres" >> .env
+        echo PG_TEST_HOST=localhost >> .env
+        echo PG_TEST_PORT=5432 >> .env
+        echo PG_TEST_USER=user >> .env
+        echo PG_TEST_PASSWORD=password >> .env
+        echo PG_TEST_DB_NAME=testing_development >> .env
         echo JWT_SECRET_KEY=Ba86HYNuOE >> .env
         echo JWT_EXPIRED= 12h >> .env
         echo SALT_ROUNDS=15 >> .env
         cat .env
         
+    - name: Setup Database
+      run: npx sequelize db:create --env test
     - name: Setup Database and Test
       run: npm run testing
 
