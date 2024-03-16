@@ -1,10 +1,12 @@
 const { Address } = require('../models')
 
-const lookup = async (userId) => {
+const lookup = async (id, userId) => {
     const address = await Address.findAll( 
         { 
-            where: { userId: userId },
-            // include: [{ model: Address, as: 'address' }]
+            where: {
+                id: id, 
+                userId: userId 
+            },
         }        
      )
     return address  
@@ -16,10 +18,11 @@ const getAll = async (qParams) => {
 }
 
 
-const destroy = async (userId) => {
+const destroy = async (id, userId) => {
     const result = await Address.destroy({
         where: {
-            userId: userId,
+            id: id, 
+            userId: userId 
         },
         individualHooks: true
     })

@@ -29,7 +29,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --runInBand",
+    "integrationTest": "jest --detectOpenHandles --forceExit --runInBand",
     "start": "pm2 start ./bin/www",
     "dev": "nodemon ./bin/www",
     "restart": "pm2 restart ./bin/www",
@@ -39,7 +39,8 @@
     "migrate": "npx sequelize db:migrate",
     "seed": "npx sequelize db:seed:all",
     "undodb": "npx sequelize db:migrate:undo:all",
-    "dbtesting": "npx sequelize db:migrate:undo:all --env test && npx sequelize db:migrate --env test && npx sequelize db:seed:all --env test"
+    "testing": "npx sequelize db:migrate:undo:all --env test && npx sequelize db:migrate --env test && npx sequelize db:seed:all --env test && npm run integrationTest --env test "
+    
   },
   "repository": {
     "type": "git",
