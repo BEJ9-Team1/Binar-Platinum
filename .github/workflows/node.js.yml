@@ -74,6 +74,7 @@ jobs:
     - name: 'Create env file'
       run: |
         touch .env
+        echo ENVIRONMENT=TEST >> .env
         echo PORT=9000 >> .env
         echo DB_CONNECTION="postgres" >> .env
         echo PG_HOST=localhost >> .env
