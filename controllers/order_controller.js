@@ -15,7 +15,7 @@ const index = async (req, res, next) => {
         const data = await orderService.getAll(userId)
         return res.status(200).json({
             message:'Request Success',
-            data:data
+            payload:data
         })
     } catch (error) {
         if (error.message) {
@@ -33,7 +33,7 @@ const find = async (req, res, next) => {
         if (!data) throw new NotFoundError(`order not found`)
         return res.status(200).json({
             message:'Request Success',
-            data:data
+            payload:data
         }
         )
 
@@ -47,50 +47,54 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        //reduce stock if available or send error when stock not available 
+        //not using transaction, so product stock will check first
         const orderDTO = await createOrderDTO.validateAsync(req.body)
+        //expired time set 60 minutes
         const expiredAt = new Date(Date.now() + (60 * 60 * 1000)).toISOString()
         const productList = req.body.orderProducts
-        let availableStock=''
-        //check product and stock
-        productList.forEach(async(product) => {
+        const userId = req.user.id
+
+        //check product stock
+        for (let i = 0; i < productList.length; i++) {
+            const product = productList[i];
             const productStock = await productService.findById(product.productId)
-            if(!productStock) throw new NotFoundError("Product not Found")
-            availableStock = productStock.stock
-            const newStock = availableStock - orderQty
-            if(newStock<0) throw new BadRequestError('Stock less than your order')
-        })
+            if(productStock) {
+                availableStock = productStock.stock
+                const newStock = availableStock - product.quantity
+                if(newStock<0) throw new BadRequestError('Stock less than your order')
+            } else
+                throw new NotFoundError("Product not Found")    
+            }
 
-        let error = ''
-        //update stock
-        productList.forEach(async(product) => {
-            productId = product.productId
-            orderQty = product.quantity
-            const newStock = availableStock - orderQty
-            const payload ={
-                stock:newStock
-                }
+        //reduce stock, update stock in db product
+        for (let i = 0; i < productList.length; i++) {
+            const product = productList[i];
+            const productId= product.productId
+            const productStock = await productService.findById(productId)
+            const newStock = productStock.stock - product.quantity
+            const payload = {stock:newStock}
             const updateStock = await productService.updateProduct(productId, payload)
-        });
-
+        }
+        
+        //insert to db order
         const payload = {
             userId:req.user.id,
             paymentMethodId:orderDTO.paymentMethodId,
-            totalPrice:orderDTO.totalPrice,
+            totalPrice:orderDTO.totalPrice, // assumption front end calculate total price
             expiredAt: expiredAt,
             status:"payment_waiting",
         } 
         const result = await orderService.createOrder(payload);
+
+        //insert to db order product
         const orderId = result.dataValues.id
-        // insert to db order product
-        productList.forEach(async(product) => {
-            //get product detail
-            id = product.productId
-            orderQty = product.quantity
-            const getProductDetail = await productService.findById(id)
+        
+        for (let i = 0; i < productList.length; i++) {
+            const product = productList[i];
+            const getProductDetail = await productService.findById(product.productId)
             //calculate sub total
             const productPrice = getProductDetail.price
-            const subTotal = orderQty * productPrice
+            const subTotal = product.quantity * productPrice
             //insert order product
             const payload ={
                 orderId:orderId,
@@ -99,18 +103,18 @@ const create = async (req, res, next) => {
                 subTotal : subTotal
             }
             const insertProductOrder = orderPorductServices.createOrderProduct(payload)
-
         }
 
-        )
+        //select order and order product by order id
+        const data = await orderService.findById(userId,orderId)
+        console.log(data.orderProduct,"<<<<<<<<<<<<DATA ORDER PRODUCT>>>>>>>>>>")
         res.status(StatusCodes.CREATED).json({
             message: "Success",
-            payload: result.dataValues
+            payload: data
         });
-        
-    } catch (err) {
-         console.error(err);
-         next(err);
+    } 
+    catch (err) {
+        next({status: 400, message: err.message})
     }
 };
 
@@ -178,7 +182,10 @@ const crontab = async(req,res, next)=>{
 
 };
 
-cron.schedule('* * 1 * * *', async() => {
+//crontab running every 5 minute to check database 
+//if there are any order with status payment_waiting, scheduller will check expired time
+//if current time more than expired time, status order will change to failed
+cron.schedule('*/5 * * * *', async() => {
     await crontab()
 });
 
