@@ -45,7 +45,7 @@ describe("Test POST /login", () => {
 });
 
 
-const mockRequestCreate = (body = {name: "Electronics"}, params = {}, query = {}) => {
+const mockRequestCreate = (body = {name: "electronics"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -164,6 +164,43 @@ describe("Test DESTROY /category", () => {
 });
 
 //NEGATIVE CASE//
+describe("Test RECREATE /category after deleted", () => {
+    it("Should response 201", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestCreate()
+        request(app)
+            .post("/api/v1.0/category")
+            .set('Authorization', `Bearer ${token}`)
+            .send(req.body)
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                console.log(res.body);
+                expect(res.status).toBe(201);
+                expect(res.body.message).toBe("Success")
+                done();
+            });
+    });
+});
+
+
+describe("Test RECREATE /category", () => {
+    it("Should response 400", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestCreate()
+        request(app)
+            .post("/api/v1.0/category")
+            .set('Authorization', `Bearer ${token}`)
+            .send(req.body)
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                console.log(res.body);
+                expect(res.status).toBe(400);
+                expect(res.body.message).toBe(`${req.body.name} has been added`)
+                done();
+            });
+    });
+});
+
 const mockRequestLoginUnauth = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,

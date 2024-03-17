@@ -45,7 +45,7 @@ describe("Test POST /login", () => {
 });
 
 
-const mockRequestCreate = (body = {name: "VA BCA"}, params = {}, query = {}) => {
+const mockRequestCreate = (body = {name: "va bca"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -94,7 +94,7 @@ describe("Test GET ALL /payment", () => {
     });
 });
 
-const mockRequestGetOneId = (body = {name: "VA CIMB"}, params = {paymentId}, query = {}) => {
+const mockRequestGetOneId = (body = {name: "va cimb"}, params = {paymentId}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -160,10 +160,91 @@ describe("Test DESTROY /payment", () => {
                 expect(res.body.message).toBe("Success")
                 done();
             });
+        });
+    });
+    
+    //NEGATIVE CASE//
+    describe("Test REDESTROY /payment", () => {
+        it("Should response 404", (done) => {
+            // Supertest berfungsi sebagai pelaksana server
+            req = mockRequestGetOneId()
+            request(app)
+                .del("/api/v1.0/payment/"+req.params.paymentId)
+                .set('Authorization', `Bearer ${token}`)
+                .send(req.body)
+                .then((res) => {
+                    // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                    expect(res.status).toBe(404);
+                    expect(res.body.message).toBe("Payment Has Deleted")
+                    done();
+                });
+        });
+    });
+    
+    describe("Test RECREATE /payment after deleted", () => {
+    it("Should response 201", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestCreate()
+        request(app)
+            .post("/api/v1.0/payment")
+            .set('Authorization', `Bearer ${token}`)
+            .send(req.body)
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                paymentId = res.body.payload.id
+                console.log(res.body);
+                expect(res.status).toBe(201);
+                expect(res.body.message).toBe("Success")
+                done();
+            });
     });
 });
 
-//NEGATIVE CASE//
+
+describe("Test RECREATE /payment", () => {
+    it("Should response 400", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestCreate()
+        request(app)
+            .post("/api/v1.0/payment")
+            .set('Authorization', `Bearer ${token}`)
+            .send(req.body)
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                console.log(res.body);
+                expect(res.status).toBe(400);
+                expect(res.body.message).toBe(`${req.body.name} has been added`)
+                done();
+            });
+    });
+});
+
+const mockRequestReput = (body = {name: "va bca"}, params = {paymentId}, query = {}) => {
+    return {
+        body: body,
+        params: params,
+        query: query,
+    };
+};
+
+describe("Test REPUT /payment", () => {
+    it("Should response 400", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestReput()
+        request(app)
+            .put("/api/v1.0/payment/"+req.params.paymentId)
+            .set('Authorization', `Bearer ${token}`)
+            .send(req.body)
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.status).toBe(400);
+                expect(res.body.message).toBe(`${req.body.name} has been added`)
+                done();
+            });
+        });
+    });
+
+    
 const mockRequestLoginUnauth = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
