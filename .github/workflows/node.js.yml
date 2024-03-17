@@ -106,6 +106,8 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           source: '.'
           target: ./Binar-Platinum/
+<<<<<<< HEAD
+=======
       - name: configure database
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -118,13 +120,14 @@ jobs:
             npm run undodb
             npm run migrate
             npm run seed
+>>>>>>> 83799986f47cd61c8b239a21c2bd0143b978ed93
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.SSHHOST }}
-          username: ${{ secrets.SSHUSER }}
-          key: ${{ secrets.SSHKEY }}
-          port: ${{ secrets.SSHPORT }}
+          host: ${{ secrets.SSHHOST }} #ip public
+          username: ${{ secrets.SSHUSER }} #username acc vps
+          key: ${{ secrets.SSHKEY }} #secret key from vps
+          port: ${{ secrets.SSHPORT }} #ssh port 22
           script: |
             cd Binar-Platinum/
             npm restart
