@@ -25,6 +25,7 @@ const index = async (req, res) => {
 const find = async (req, res, next) => {
     try {
         const result = await addressService.lookup(req.params.id, req.user.id);
+        console.log(req.params.id)
         res.status(StatusCodes.OK).json({
             data: result,
         });
@@ -40,7 +41,7 @@ const find = async (req, res, next) => {
 const destroy = async(req, res, next) => {
     try {
         const addressId = req.params.id
-        const result = await addressService.destroy(addressId, req.user.id)
+        const result = await addressService.destroy(addressId)
         if(!result) throw new NotFoundError("Address Has Deleted")
         res.status(StatusCodes.OK).json({
             message: "Success",
