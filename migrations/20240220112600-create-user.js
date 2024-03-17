@@ -2,31 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Addresses', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID
       },
-      userId: {
-        type: Sequelize.UUID,
-        references: {
-          key: "id",
-          model: "Users"
-<<<<<<< HEAD:migrations/5-create-address.js
-        }
-=======
-        },
->>>>>>> 83799986f47cd61c8b239a21c2bd0143b978ed93:migrations/20240223071632-create-address.js
-      },
-      address: {
+      firstName: {
         type: Sequelize.STRING
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
+      lastName: {
+        type: Sequelize.STRING
       },
-      isUsed: {
+      userName: {
+        type: Sequelize.STRING
+      },
+      email: {
+        type: Sequelize.STRING
+      },
+      phoneNumber: {
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
+      },
+      role: {
+        type: Sequelize.STRING
+      },
+      isActive: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {
@@ -38,11 +41,12 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Addresses');
+    await queryInterface.dropTable('Users');
   }
 };

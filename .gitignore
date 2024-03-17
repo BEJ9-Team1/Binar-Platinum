@@ -1,8 +1,8 @@
 # compiled output
 node_modules
-.env
 *.txt
 .vscode
+.env
 coverage
 *.jpg
 # Ignore Mac DS_Store files

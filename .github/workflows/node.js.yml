@@ -26,11 +26,75 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install --silent
+    - run: npm ci
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [build]
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_CONNECTION: "postgres"
+      DB_HOST: localhost
+      DB_USER: user
+      DB_PASS: password
+      DB_NAME: challange_platinum_binar
+      DB_PORT: 5432
+      DATABASE_URL: postgres://user:password@localhost:5432/postgres
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+
+    - name: Test PostgreSQL Connection
+      run: psql postgres://user:password@localhost:5432/postgres -c '\l'
+
+    - name: 'Create env file'
+      run: |
+        touch .env
+        echo ENVIRONMENT=TEST >> .env
+        echo PORT=9000 >> .env
+        echo DB_TEST_CONNECTION="postgres" >> .env
+        echo PG_TEST_HOST=localhost >> .env
+        echo PG_TEST_PORT=5432 >> .env
+        echo PG_TEST_USER=user >> .env
+        echo PG_TEST_PASSWORD=password >> .env
+        echo PG_TEST_DB_NAME=testing_development >> .env
+        echo JWT_SECRET_KEY=Ba86HYNuOE >> .env
+        echo JWT_EXPIRED= 12h >> .env
+        echo SALT_ROUNDS=15 >> .env
+        cat .env
+        
+    - name: Setup Database
+      run: npx sequelize db:create --env test
+    - name: Setup Database and Test
+      run: npm run testing
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, test]
     steps:
       - uses: actions/checkout@v3
       - name: Upload to VM
@@ -42,6 +106,21 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           source: '.'
           target: ./Binar-Platinum/
+<<<<<<< HEAD
+=======
+      - name: configure database
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSHHOST }}
+          username: ${{ secrets.SSHUSER }}
+          key: ${{ secrets.SSHKEY }}
+          port: ${{ secrets.SSHPORT }}
+          script: |
+            cd Binar-Platinum/
+            npm run undodb
+            npm run migrate
+            npm run seed
+>>>>>>> 83799986f47cd61c8b239a21c2bd0143b978ed93
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
         with:

@@ -14,14 +14,22 @@ module.exports = {
         references: {
           key: "id",
           model: "Orders"
+<<<<<<< HEAD:migrations/7-create-order-product.js
         }
+=======
+        },
+>>>>>>> 83799986f47cd61c8b239a21c2bd0143b978ed93:migrations/20240301155529-create-order-product.js
       },
       productId: {
         type: Sequelize.INTEGER,
         references: {
           key: "id",
           model: "Products"
+<<<<<<< HEAD:migrations/7-create-order-product.js
         }
+=======
+        },
+>>>>>>> 83799986f47cd61c8b239a21c2bd0143b978ed93:migrations/20240301155529-create-order-product.js
       },
       qty: {
         type: Sequelize.INTEGER

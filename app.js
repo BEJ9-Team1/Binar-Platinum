@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('/', (req, res) => {
+app.get('/health-check', (req, res) => {
     res.status(200).json({
         message: "Connected"
     });

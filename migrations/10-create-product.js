@@ -27,7 +27,19 @@ module.exports = {
         references: {
           key: "id",
           model: "Categories"
+<<<<<<< HEAD:migrations/10-create-product.js
         }
+=======
+        },
+      },
+      merchantId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          key: "id",
+          model: "Merchants"
+        },
+>>>>>>> 83799986f47cd61c8b239a21c2bd0143b978ed93:migrations/20240221044600-create-product.js
       },
       description: {
         type: Sequelize.TEXT,

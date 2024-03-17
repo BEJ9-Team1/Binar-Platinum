@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'merchantId',
         sourceKey: 'id'
       })
-    }
+    }//need relation to media
+      //include in return service get etc
   }
   //need relation to media
   //update product image with search fk parentId in media

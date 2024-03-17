@@ -4,10 +4,8 @@ const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
 
 //ADDRESS MERCHANT & BUYER//
-router.get('/address', AddressController.index)
-router.post('/address', JWTAuth, RoleGuard('buyer', 'merchant'), AddressController.create)
+router.get('/address',JWTAuth, AddressController.index)
 router.get('/address/:id', JWTAuth, RoleGuard('buyer', 'merchant'),AddressController.find)
-router.put('/address/:id', JWTAuth, RoleGuard('buyer', 'merchant'), AddressController.update)
 router.delete('/address/:id', JWTAuth, RoleGuard('buyer', 'merchant'), AddressController.destroy)
 
 
