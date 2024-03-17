@@ -41,7 +41,7 @@ const destroy = async(req, res, next) => {
     try {
         const addressId = req.params.id
         const result = await addressService.destroy(addressId, req.user.id)
-        if(!result) throw new NotFoundError("Category Has Deleted")
+        if(!result) throw new NotFoundError("Address Has Deleted")
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: result,

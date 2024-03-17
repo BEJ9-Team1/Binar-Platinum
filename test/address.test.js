@@ -159,6 +159,23 @@ describe("Test DESTROY ONE /address:id", () => {
 
 
 //NEGATIVE CASE//
+describe("Test  REDESTROY ONE /address:id", () => {
+    it("Should response 404", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestGetOne()
+        request(app)
+            .del("/api/v1.0/address/"+req.params.addressId)
+            .set('Authorization', `Bearer ${token}`)
+            .then((res) => {
+                console.log(req.params.addressId);
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.status).toBe(404);
+                expect(res.body.message).toBe("Address Has Deleted")
+                done();
+            });
+    });
+});
+
 const mockRequestUnauth = (body = {userName: "admin", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
@@ -221,3 +238,4 @@ describe("Test Unauthorized DESTROY ONE /address:id", () => {
             });
     });
 });
+
