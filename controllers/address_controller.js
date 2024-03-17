@@ -37,55 +37,6 @@ const find = async (req, res, next) => {
     }
 };
 
-const create = async (req, res, next) => {
-    try {
-         const addressData = await addressDataDTO.validateAsync(req.body)
-        
-        const payload = {
-            userId: addressData.userId,
-            address:addressData.address,
-            name: addressData.name,
-            isUsed:addressData.isUsed
-        } 
-
-        // const lookup = await addressService.lookup(payload.address)
-        // if(lookup) throw new BadRequestError(`${lookup.address} has been added`)
-
-        const result = await addressService.add(payload);
-        res.status(StatusCodes.CREATED).json({
-            message: "Success",
-            payload: result.dataValues
-        });
-        
-    } catch (err) {
-        console.log(err);
-        next(err);
-    }
-};
-const update = async(req, res, next) => {
-    try {
-        const addressData = await addressDataDTO.validateAsync(req.body)
-        const lookup = await addressService.lookup(req.params.id)
-        if(!lookup)  throw new BadRequestError(`Address not found`)
-
-        const address_id = req.params.id
-        const newData = {
-            userid: addressData.userid,
-            address: addressData.address,
-            name: addressData.name ?? lookup.dataValues.name,
-            isUsed: addressData.isUsed
-        }
-
-
-        const result = await addressService.update(address_id ,newData)
-        res.status(StatusCodes.OK).json({
-            message: "Success",
-            data: result,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
 
 const destroy = async(req, res, next) => {
     try {
@@ -103,9 +54,7 @@ const destroy = async(req, res, next) => {
 
 
 module.exports = {
-    create,
     index,
-    update,
     find,
     destroy
 }
