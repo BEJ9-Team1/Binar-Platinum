@@ -1,57 +1,11 @@
-const user_service = require('../services/user_services')
-const { create } = require('../controllers/user_controller')
-const BadRequestError = require('../errors/bad-request')
-jest.mock('../models')
-
-const address = [
-    {
-        "address": "jogja",
-        "name": "office",
-        "isUsed": true
-    },
-    {
-        "address": "jakarta",
-        "name": "office",
-        "isUsed": true
+jest.mock('../services/user_services', () => {
+    return {
+        registerUser: jest.fn(),
+        emailIsExists: jest.fn(),
     }
-]
+})
 
-const body = {
-    firstName: "firstName",
-    lastName: "lastName",
-    userName: "userName",
-    email: "email@gmail.com",
-    phoneNumber: "phoneNumber",
-    password: "password",
-    confirmPassword: "password",
-    role: "buyer",
-    isActive: true,
-    address: address
-}
-
-const mockRequest = (body = {
-    firstName: "firstName",
-    lastName: "lastName",
-    userName: "userName",
-    email: "email@gmail.com",
-    phoneNumber: "phoneNumber",
-    password: "password",
-    confirmPassword: "password",
-    role: "buyer",
-    isActive: true,
-    address: [
-        {
-            "address": "jogja",
-            "name": "office",
-            "isUsed": true
-        },
-        {
-            "address": "jakarta",
-            "name": "office",
-            "isUsed": true
-        }
-    ]
-}, params = {}, query = {}) => {
+const mockRequest = (body = {}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -60,90 +14,59 @@ const mockRequest = (body = {
 }
 
 const mockResponse = () => {
-    const res = {};
-
-    res.json = jest.fn().mockReturnValue(res);
-    res.status = jest.fn().mockReturnValue(res);
-
-    return res;
-};
-
-const mockDB = 
-
-describe("Test register handler on user controller", () => {
-    test("Must return status 201", (done) => {
-        const req = mockRequest();
-        const res = mockResponse();
-
-        create(req, res).then(() => {
-            expect(res.status).toBeCalledWith(201);
-            expect(res.json).toBeCalledWith({
-                message: "Success",
-                payload: {
-                    firstName: "firstName",
-                    lastName: "lastName",
-                    userName: "username",
-                    email: "email@gmail.com",
-                    phoneNumber: "phoneNumber",
-                    password: "password",
-                    role: "buyer",
-                    isActive: true,
-                    address: [
-                        {
-                            "address": "jogja",
-                            "name": "office",
-                            "isUsed": true
-                        },
-                        {
-                            "address": "jakarta",
-                            "name": "office",
-                            "isUsed": true
-                        }
-                    ]
-                }
-            });
-            done();
-        });
-    }, 15000);
-});
-
-const userDTO = {
-    email: 'existing@example.com',
+    return {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+    }
 }
 
-describe("Test for email avaialbility", () => {
+const mockNext = () => {
+    return jest.fn((x) => x)
+}
 
-    test("Must throw BadRequestError if email is used", async () => {
-    
-        try {
-            const lookup = await user_service.emailIsExists(userDTO.email)
-    
-            if (lookup) {
-                throw BadRequestError(`${lookup.email} has been registered before`)
+const { registerUser, emailIsExists } = require('../services/user_services')
+const { create } = require('../controllers/user_controller')
+const { User } = require('../models');
+
+describe('Testing for register user', () => {
+    const req = mockRequest()
+    req.body = {
+        firstName: 'firstName',
+        lastName: 'lastName',
+        userName: 'userName',
+        email: 'mail@example.com',
+        phoneNumber: 'phoneNumber',
+        password: 'password',
+        confirmPassword: 'password',
+        role: 'admin',
+        isActive: true,
+        address: [
+            {
+                address: "address",
+                name: "office",
+                isUsed: true
             }
-    
-        } catch (error) {
-            expect(error instanceof BadRequestError).toBe(true);
-            expect(error.message).toBe(`${userDTO.email} has been registered before`)
-        }
-    
+        ]
+    }
+    const next = mockNext()
+    const res = mockResponse()
+
+    it('test mock create', async () => {
+
+        registerUser.mockResolvedValue(Promise.resolve(User));
+        await create(req, res, next)
+        expect(res.status).toHaveBeenCalledWith(201)
+        expect(res.json).toBeCalledWith({
+            message: 'Success',
+            payload: User.dataValues
+        })
+    })
+
+    it('test if email is exists', async () => {
+
+        emailIsExists.mockResolvedValue(Promise.resolve(User))
+        await create(req, res, next)
+        expect(next).toBeCalledWith(new Error(`${User.email} has been registered before`))
     })
 
 })
-
-describe("Test for confirmation password", () => {
-    test('Must throw BadRequestError if password incosnsistent', () => {
-        
-        userDTO.password = 'password',
-        userDTO.confirmPassword = 'confirmPassword'
-        try {
-            if(userDTO.password !== userDTO.confirmPassword) {
-                throw new BadRequestError('Password NOT Match With Confirm Password')
-            }
-        } catch (error) {
-            expect(error.message).toBe('Password NOT Match With Confirm Password')
-        }
-
-    })
-})
-
