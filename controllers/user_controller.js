@@ -28,13 +28,13 @@ const index = async (req, res, next) => {
 const find = async (req, res, next) => {
     try {
         const result = await userService.emailIsExists(req.params.email);
+        if (!result) {
+            throw new NotFoundError(`${req.params.email} is not found`)
+        }
         res.status(StatusCodes.OK).json({
             data: result,
         });
     } catch (error) {
-        if (error.message) {
-            next({status: 400, message: error.message, data: {}})
-        }
         next(error)
     }
 };

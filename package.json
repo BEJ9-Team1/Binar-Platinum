@@ -31,6 +31,7 @@
   "scripts": {
     "integrationTest": "jest --detectOpenHandles --forceExit --runInBand",
     "start": "pm2 start ./bin/www",
+    "test": "jest",
     "dev": "nodemon ./bin/www",
     "restart": "pm2 restart ./bin/www",
     "stop": "pm2 stop www",
@@ -60,6 +61,7 @@
     "sequelize-cli": "^6.6.2"
   },
   "jest": {
+    "bail": 1,
     "verbose": true,
     "collectCoverage": true
   }

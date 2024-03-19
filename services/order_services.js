@@ -16,7 +16,7 @@ const getAll = async (userId) => {
     return orders
 }
 
-const findById = async (userId,id) => {
+const findById = async (id) => {
     const orders = await Order.findOne( 
         { where: { id: id },
         include: {
@@ -45,7 +45,7 @@ const createOrder = async (payload) => {
 const createOrderProduct = async (payload) => {
     const {...orderProduct} = payload
     const createOrderProduct = await OrderProduct.create({
-     ...OrderProduct
+     ...orderProduct
     }
     );
 
