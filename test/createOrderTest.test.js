@@ -1,6 +1,10 @@
 jest.mock('../services/productServices', () => {
     return {
+<<<<<<< HEAD
         findById: jest.fn(),
+=======
+        findById: jest.fn((x) => x),
+>>>>>>> 194efdd179b610e5260fcd83ae1550435c8c1d79
         updateProduct: jest.fn()
     }
 })
@@ -27,19 +31,30 @@ const mockRequest = (body = {}, params = {}, query = {}, user = {}) => {
 const mockResponse = () => {
     return {
         status: jest.fn().mockReturnThis(),
+<<<<<<< HEAD
         json: jest.fn().mockReturnThis()
+=======
+        json: jest.fn()
+>>>>>>> 194efdd179b610e5260fcd83ae1550435c8c1d79
     }
 }
 
 const mockNext = () => {
+<<<<<<< HEAD
     return jest.fn()
+=======
+    return jest.fn((x) => x)
+>>>>>>> 194efdd179b610e5260fcd83ae1550435c8c1d79
 }
 
 const { findById, updateProduct } = require('../services/productServices')
 const { createOrder } = require('../services/order_services')
 const { createOrderProduct } = require('../services/orderProduct_services')
 const { create } = require('../controllers/order_controller')
+<<<<<<< HEAD
 const { Product, Order, OrderProduct } = require('../models')
+=======
+>>>>>>> 194efdd179b610e5260fcd83ae1550435c8c1d79
 
 describe('Create Order Unit Test', () => {
     const req = mockRequest()
@@ -61,10 +76,17 @@ describe('Create Order Unit Test', () => {
 
     req.user = {
         id: 'id',
+<<<<<<< HEAD
         role: 'buyer'
     }
 
     // console.log("req",req)
+=======
+        role:'buyer'
+    }
+
+    console.log("req",req)
+>>>>>>> 194efdd179b610e5260fcd83ae1550435c8c1d79
 
     const orderPayload = {
         userId: 'id',
@@ -78,6 +100,7 @@ describe('Create Order Unit Test', () => {
     const res = mockResponse()
 
     it('must return error if product not found', async () => {
+<<<<<<< HEAD
         findById.mockRejectedValue(new Error('Product not Found'))
 
         await create(req, res, next)
@@ -117,5 +140,14 @@ describe('Create Order Unit Test', () => {
         //     message: "Success",
         //     payload: Order
         // })
+=======
+        findById.mockResolvedValue(() => Promise.resolve(undefined))
+        updateProduct.mockResolvedValue(() => Promise.resolve(undefined))
+        createOrder.mockResolvedValue(() => Promise.resolve(undefined))
+        createOrderProduct.mockResolvedValue(() => Promise.resolve(undefined))
+
+        await create(req, res, next)
+        expect(next).toBeCalledWith(new Error('Product not Found'))
+>>>>>>> 194efdd179b610e5260fcd83ae1550435c8c1d79
     })
 })
