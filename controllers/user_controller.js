@@ -1,3 +1,4 @@
+
 const authToken = require('../controllers/auth_controller')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
@@ -27,13 +28,13 @@ const index = async (req, res, next) => {
 const find = async (req, res, next) => {
     try {
         const result = await userService.emailIsExists(req.params.email);
+        if (!result) {
+            throw new NotFoundError(`${req.params.email} is not found`)
+        }
         res.status(StatusCodes.OK).json({
             data: result,
         });
     } catch (error) {
-        if (error.message) {
-            next({status: 400, message: error.message, data: {}})
-        }
         next(error)
     }
 };
@@ -80,7 +81,7 @@ const update = async(req, res, next) => {
         const userId = req.user.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
-        const oldAddress = await addressService.lookup(userId)
+        const oldAddress = await addressService.update(userId)
         const oldDataUser = await userService.lookup(userId)
         if(!oldDataUser) throw new NotFoundError(`Account with email ${oldDataUser.email} Not Found`)
 

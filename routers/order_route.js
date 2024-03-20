@@ -5,7 +5,7 @@ const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
 
 //ORDER//
-router.get('/order/', JWTAuth, RoleGuard('buyer', 'seller'), orderController.index) //getAllOrder
+router.get('/order', JWTAuth, RoleGuard('buyer', 'seller'), orderController.index) //getAllOrder
 router.post('/order',JWTAuth, RoleGuard('buyer'), orderController.create)
 router.get('/order/:id',JWTAuth, RoleGuard('buyer', 'seller'), orderController.find)
 router.patch('/order/:id',JWTAuth, RoleGuard('buyer', 'seller'), orderController.update)

@@ -104,7 +104,7 @@ describe("Test GET ALL /address", () => {
             .then((res) => {
                 addressId = res.body.data.rows[0].id
                 console.log(addressId);
-                console.log(res.body);
+                console.log(res.body.data);
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.status).toBe(200);
                 expect(res.body.message).toBe("Request Success")
@@ -131,7 +131,7 @@ describe("Test GET ONE /address:id", () => {
             .set('Authorization', `Bearer ${token}`)
             .then((res) => {
                 console.log(req.params.addressId);
-                console.log(res.body);
+                console.log(res.body.data);
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.status).toBe(200);
                 done();
@@ -238,4 +238,3 @@ describe("Test Unauthorized DESTROY ONE /address:id", () => {
             });
     });
 });
-

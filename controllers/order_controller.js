@@ -28,8 +28,8 @@ const index = async (req, res, next) => {
 const find = async (req, res, next) => {
     try {
         const userId = req.user.id
-        const id = req.params.id
-        const data = await orderService.findById(userId,id)
+        const id = +req.params.id
+        const data = await orderService.findById(id)
         if (!data) throw new NotFoundError(`order not found`)
         return res.status(200).json({
             message:'Request Success',
@@ -38,9 +38,6 @@ const find = async (req, res, next) => {
         )
 
     } catch (error) {
-        if (error.message) {
-            next({status: 400, message: error.message, data: {}})
-        }
         next(error)
     }
 };
@@ -106,7 +103,7 @@ const create = async (req, res, next) => {
         }
 
         //select order and order product by order id
-        const data = await orderService.findById(userId,orderId)
+        const data = await orderService.findById(orderId)
         console.log(data.orderProduct,"<<<<<<<<<<<<DATA ORDER PRODUCT>>>>>>>>>>")
         res.status(StatusCodes.CREATED).json({
             message: "Success",

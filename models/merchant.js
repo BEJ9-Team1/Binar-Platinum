@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user',
         foreignKey: 'userId',
         sourceKey: 'id'
-      }) //NOT WORKS, NEED RELATION TO GET MERCHANT ADDRESS
+      })
     }
   }
   Merchant.init({

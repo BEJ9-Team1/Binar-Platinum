@@ -1,12 +1,12 @@
+const merchant_services = require('../services/merchant_services')
 const productServices = require('../services/productServices')
 const categoryServices = require('../services/category_services')
 const productValidator = require('../validators/productValidator')
-const { NotFoundError } = require('../errors');
+const { NotFoundError, UnauthorizedError } = require('../errors');
+const { Merchant } = require('../models')
 
 
-class ProductController {
-
-    static index = async (req, res) => {
+    const index = async (req, res) => {
 
         try {
 
@@ -22,10 +22,9 @@ class ProductController {
 
     }
 
-    static findById = async (req, res, next) => {
+    const findById = async (req, res, next) => {
 
         const id = +req.params.id
-        let payload = {}
 
         try {
 
@@ -43,9 +42,13 @@ class ProductController {
 
     }
 
-    static create = async (req, res, next) => {
+    const create = async (req, res, next) => {
 
         try {
+
+            const userId = req.user.id
+
+            const merchant = await merchant_services.lookup(userId)
 
             const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
@@ -56,7 +59,7 @@ class ProductController {
             const payload = {
                 name: productDTO.name,
                 categoryId: category.id,
-                merchantId: 1,
+                merchantId: merchant.dataValues.id,
                 description: productDTO.description,
                 price: productDTO.price,
                 stock: productDTO.stock
@@ -74,17 +77,21 @@ class ProductController {
 
     }
 
-    static update = async (req, res, next) => {
+    const update = async (req, res, next) => {
 
         const id = +req.params.id
 
-        let message = ''
-
         try {
+
+            const merchant = await merchant_services.lookup(req.user.id)
 
             const product = await productServices.findById(id)
 
             if (!product) throw new NotFoundError(`product with id ${id} not found`)
+
+            if(product.dataValues.merchantId !== merchant.dataValues.id) {
+                throw new UnauthorizedError(`Not Authorized`)
+            }
 
             const productDTO = await productValidator.updateProductDTO.validateAsync(req.body)
 
@@ -107,15 +114,28 @@ class ProductController {
 
     }
 
-    static delete = async (req, res, next) => {
+    const deleteProduct = async (req, res, next) => {
 
         const id = +req.params.id
 
+        const userId = req.user.id
+
         try {
 
-            const productDelete = await productServices.deleteProduct(id)
+            const merchant = await merchant_services.lookup(userId)
 
-            if (productDelete == 0) throw new NotFoundError('no product was deleted')
+            const product = await productServices.findById(id)
+            if (!product) {
+                throw new NotFoundError('Product not found')
+            }
+
+            if(product.dataValues.merchantId !== merchant.dataValues.id) {
+                throw new UnauthorizedError(`Not Authorized`)
+            }
+            
+            const productDeleted = await productServices.deleteProduct(id)
+
+            if (productDeleted == 0) throw new NotFoundError('no product was deleted')
 
             return res.status(200).json({ message: 'success', payload: null })
 
@@ -127,6 +147,11 @@ class ProductController {
 
     }
 
-}
 
-module.exports = ProductController
+module.exports = {
+    index,
+    findById,
+    create,
+    update,
+    deleteProduct
+}
