@@ -6,4 +6,3 @@ I attach the ERD in below
 
 And i attach too the postman collection in this folder
 
-[You can import to post man, search file named gold-binar-robbi.postman_collection.json]

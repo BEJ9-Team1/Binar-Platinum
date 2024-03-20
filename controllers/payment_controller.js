@@ -3,7 +3,7 @@ const createPaymentDTO = require('../validators/payment_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
 
-const index = async (req,res)=>{
+const index = async (req,res,next)=>{
     try{
         const data = await paymentService.getAll()
 

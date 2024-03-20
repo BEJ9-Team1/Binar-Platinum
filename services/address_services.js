@@ -1,9 +1,19 @@
 const { Address } = require('../models')
 
-const lookup = async (userId) => {
+const lookup = async (id, userId) => {
     const address = await Address.findAll( 
         { 
-            where: { userId: userId },
+            where: { id: id, userId: userId },
+            // include: [{ model: Address, as: 'address' }]
+        }        
+     )
+    return address  
+}
+
+const update = async (userId) => {
+    const address = await Address.findAll( 
+        { 
+            where: {userId: userId },
             // include: [{ model: Address, as: 'address' }]
         }        
      )
@@ -16,10 +26,11 @@ const getAll = async (qParams) => {
 }
 
 
-const destroy = async (userId) => {
+const destroy = async (addressId) => {
+    console.log(addressId);
     const result = await Address.destroy({
         where: {
-            userId: userId,
+            id: addressId,
         },
         individualHooks: true
     })
@@ -30,5 +41,6 @@ const destroy = async (userId) => {
 module.exports = {
     lookup,
     getAll,
-    destroy
+    destroy,
+    update
 }
