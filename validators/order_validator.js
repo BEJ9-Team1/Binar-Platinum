@@ -1,7 +1,7 @@
 const Joi = require('joi'); 
 
 const createOrderDTO = Joi.object({ 
-    paymentMethodId: Joi.number().required(),
+    paymentMethodId: Joi.string().required(),
     totalPrice:Joi.number().required(),
     status:Joi.string().required(),
     orderProducts:Joi.array().optional()
