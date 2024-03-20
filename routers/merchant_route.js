@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const ProductController = require('../controllers/productController');
+const productController = require('../controllers/productController');
 const merchantController = require('../controllers/merchant_controller')
 const  {JWTAuth} = require('../middlewares/auth-jwt')
 const {RoleGuard} = require('../middlewares/role-guard')
@@ -11,11 +11,11 @@ router.get('/merchant/:name', merchantController.find)
 router.put('/merchant/', JWTAuth, RoleGuard('merchant'), merchantController.update)
 
 // PRODUCT //
-router.get('/products', ProductController.index)
-router.post('/products', JWTAuth, RoleGuard('merchant'), ProductController.create)
-router.get('/products/:id', ProductController.findById)
-router.put('/products/:id', JWTAuth, RoleGuard('merchant'), ProductController.update)
-router.delete('/products/:id', JWTAuth, RoleGuard('merchant'), ProductController.delete)
+router.get('/products', productController.index)
+router.post('/products', JWTAuth, RoleGuard('merchant'), productController.create)
+router.get('/products/:id', productController.findById)
+router.put('/products/:id', JWTAuth, RoleGuard('merchant'), productController.update)
+router.delete('/products/:id', JWTAuth, RoleGuard('merchant'), productController.deleteProduct)
 
 
 
