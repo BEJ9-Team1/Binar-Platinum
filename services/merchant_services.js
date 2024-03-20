@@ -1,5 +1,4 @@
 const { Merchant } = require('../models')
-const merchant = require('../models/merchant')
 
 const isMerchantExists = async (name) => {
     const merchant = await Merchant.findOne( 

@@ -1,9 +1,9 @@
 const { Address } = require('../models')
 
-const lookup = async (id, userId) => {
+const lookup = async (userId) => {
     const address = await Address.findAll( 
         { 
-            where: { id: id, userId: userId },
+            where: { userId: userId },
             // include: [{ model: Address, as: 'address' }]
         }        
      )
