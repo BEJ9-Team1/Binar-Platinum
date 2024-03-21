@@ -28,7 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       })
       //include in return service get etc
     }
-  }
+  } 
+  //need relation to media
+  //update profile image with search fk parentId in media
   User.init({
     id: {
       type: DataTypes.UUID,

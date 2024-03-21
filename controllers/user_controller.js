@@ -1,3 +1,4 @@
+
 const authToken = require('../controllers/auth_controller')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
@@ -66,7 +67,7 @@ const update = async(req, res, next) => {
         const userId = req.user.id
         const userDTO = await regsiterUserDTO.validateAsync(req.body)
 
-        const oldAddress = await addressService.lookup(userId)
+        const oldAddress = await addressService.update(userId)
         const oldDataUser = await userService.lookup(userId)
         if(!oldDataUser) throw new NotFoundError(`Account with email ${oldDataUser.email} Not Found`)
 

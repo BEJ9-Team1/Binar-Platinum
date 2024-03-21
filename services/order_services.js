@@ -1,7 +1,4 @@
-const sequelize = require('sequelize')
 const { Order, OrderProduct } = require('../models')
-const { getStatusText } = require('http-status-codes')
-const order = require('../models/order')
 
 const getAll = async (userId) => {
     const orders = await Order.findAndCountAll( 
@@ -22,7 +19,9 @@ const findById = async (id) => {
         include: {
             model: OrderProduct,
             as: 'orderProduct',
-            attributes: ['id','productId','qty','subTotal']
+            attributes: {
+                exclude: ['id', 'createdAt', 'updatedAt']
+            }
         }
         
      }
@@ -45,7 +44,7 @@ const createOrder = async (payload) => {
 const createOrderProduct = async (payload) => {
     const {...orderProduct} = payload
     const createOrderProduct = await OrderProduct.create({
-     ...OrderProduct
+     ...orderProduct
     }
     );
 
@@ -53,16 +52,15 @@ const createOrderProduct = async (payload) => {
    
 }
 
-const updateOrder = async (oldorder,newData) => {
-    const {status, ...order}=newData
-    const updateOldorder = Object.assign(oldorder,newData)
-    await oldorder.save()
-    if(oldorder.status){
-    oldorder.status= status
-    console.log(oldorder.status)
-    await oldorder.save();
-    }
-    return updateOldorder.reload()
+const updateOrder = async (orderId, status) => {
+    Order.update({
+        status: status
+    },
+    {
+        where: {
+            id: orderId
+        }
+    })
 };
 
 

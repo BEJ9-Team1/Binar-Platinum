@@ -12,7 +12,7 @@ const regsiterUserDTO = Joi.object({
     confirmPassword: Joi.string().min(8).required(),
     role: Joi.string().valid(...UserRolesEnum),
     isActive: Joi.boolean().required(),
-    address: Joi.array().items(addressDataDTO).min(1).required()
+    address: Joi.array().items(addressDataDTO).min(1).optional()
 })
 
 module.exports = regsiterUserDTO

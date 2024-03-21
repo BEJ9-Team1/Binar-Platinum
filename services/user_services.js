@@ -18,8 +18,10 @@ const getOne = async (userId) => {
 
 const lookup = async (userId) => {
     const checkUser = await User.findByPk(userId,
-        {include: 'address'},
-        )
+    {
+        include: 'address',
+        attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role'],
+    })
     return checkUser
 }
 
@@ -72,7 +74,7 @@ const update = async (oldAddress, oldData, newData) => {
             }
         }
 
-    return await updateUser.reload({include: 'address'})
+    return await updateUser.reload({include: 'address',  attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role']} )
    
 };
 
