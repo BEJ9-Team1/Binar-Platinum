@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'cascade',
         onDelete: 'cascade',
       })//need relation to media
+      User.hasOne(models.Media,{
+        foreignKey:"parentId",
+        sourceKey:"id",
+        as:"image"
+      })
       //include in return service get etc
     }
   }

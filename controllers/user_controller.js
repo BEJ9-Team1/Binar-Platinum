@@ -4,7 +4,7 @@ const addressService = require('../services/address_services')
 const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
-
+const chat_services=require("../services/chat_services")
 
 const index = async (req, res, next) => {
     try {
@@ -37,6 +37,9 @@ const find = async (req, res, next) => {
         next(error)
     }
 };
+
+
+
 
 const create = async (req, res, next) => {
     try {
@@ -129,5 +132,5 @@ module.exports = {
     find,
     create,
     update,
-    destroy
+    destroy,
 }

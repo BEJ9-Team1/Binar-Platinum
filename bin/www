@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 dotenv.config();
-const socketConnect = require('../services/chat_service')
+const {socketConnect} = require('../services/chat_services')
 const http = require("http");
 const app = require("../app");
 const port = process.env.PORT || 3000;
