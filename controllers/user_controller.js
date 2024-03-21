@@ -10,7 +10,7 @@ const {BadRequestError, NotFoundError} = require('../errors')
 const index = async (req, res, next) => {
     try {
         const userId = req.user.id
-        const data = await userService.getAll(userId)
+        const data = await userService.lookup(userId)
 
         return res.status(StatusCodes.OK).json({  
             message: 'Request Success',
@@ -112,7 +112,7 @@ const update = async(req, res, next) => {
 
 const destroy = async(req, res, next) => {
     try {
-        const userId = req.params.id
+        const userId = req.user.id
         const user = await userService.destroy(userId)
         if(!user) throw new NotFoundError("User Has Been Deleted")
         const address = await addressService.destroy(userId)
