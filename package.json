@@ -31,7 +31,7 @@
   "scripts": {
     "integrationTest": "jest --detectOpenHandles --forceExit --runInBand",
     "start": "pm2 start ./bin/www",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "dev": "nodemon ./bin/www",
     "restart": "pm2 restart ./bin/www",
     "stop": "pm2 stop www",
