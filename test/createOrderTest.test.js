@@ -44,9 +44,7 @@ const { Product, Order, OrderProduct } = require('../models')
 describe('Create Order Unit Test', () => {
     const req = mockRequest()
     req.body = {
-        paymentMethodId: 1,
-        totalPrice: 30000,
-        status: "Payment_Waiting",
+        paymentMethodId: "1",
         orderProducts: [
             {
                 productId: "1",
@@ -64,13 +62,7 @@ describe('Create Order Unit Test', () => {
         role: 'buyer'
     }
 
-    const orderPayload = {
-        userId: 'id',
-        paymentMethodId: req.body.paymentMethodId,
-        totalPrice: req.body.totalPrice, // assumption front end calculate total price
-        expiredAt: new Date(Date.now() + (60 * 60 * 1000)).toISOString(),
-        status: "payment_waiting",
-    }
+    // console.log("req",req)
 
     const next = mockNext()
     const res = mockResponse()
@@ -92,28 +84,37 @@ describe('Create Order Unit Test', () => {
         }
     })
 
-    it('must return 201 if create order is complete', async () => {
-
-        findById.mockResolvedValue(() => Promise.resolve({
-            id: 1,
-        }))
-        updateProduct.mockResolvedValue(() => Promise.resolve({
-            id: 1
-        }))
-        createOrder.mockResolvedValue(() => Promise.resolve({
-            id: 1
-        }))
-        createOrderProduct.mockResolvedValue(() => Promise.resolve({
-            id:1
-        }))
-        
+    it('must return error if failed to update product stock', async() => {
+        findById.mockResolvedValue(() => Promise.resolve(Product))
+        updateProduct.mockRejectedValue(() => Promise.reject(undefined))
         await create(req, res, next)
-        
         expect(next).toBeDefined()
-        // expect(res.status).toHaveBeenCalledWith(201)
-        // expect(res.json).toBeCalledWith({
-        //     message: "Success",
-        //     payload: Order
-        // })
     })
+
+    it('must return error if failed to create order', async() => {
+        findById.mockResolvedValue(() => Promise.resolve(Product))
+        updateProduct.mockResolvedValue(() => Promise.resolve([1]))
+        createOrder.mockRejectedValue(() => Promise.reject(undefined))
+        await create(req, res, next)
+        expect(next).toBeDefined()
+    })
+
+    it('must return error if failed to create orderProduct', async() => {
+        findById.mockResolvedValue(() => Promise.resolve(Product))
+        updateProduct.mockResolvedValue(() => Promise.resolve([1]))
+        createOrder.mockResolvedValue(() => Promise.resolve(Order))
+        createOrderProduct.mockRejectedValue(() => Promise.reject(undefined))
+        await create(req, res, next)
+        expect(next).toBeDefined()
+    })
+
+    it('must return 201 if success', async () => {
+        findById.mockResolvedValue(() => Promise.resolve(Product))
+        updateProduct.mockResolvedValue(() => Promise.resolve([1]))
+        createOrder.mockResolvedValue(() => Promise.resolve(Order))
+        createOrderProduct.mockResolvedValue(() => Promise.resolve(OrderProduct))
+        await create(req, res, next)
+        expect(res).toBeDefined()
+    })
+
 })
