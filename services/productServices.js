@@ -21,6 +21,11 @@ const findById = async (productId) => {
                 model: Category,
                 as: 'category',
                 attributes: ['name']
+            },
+            include:{
+                model:Media,
+                as:"ProductImage",
+                attributes:['url']
             }
         })
 

@@ -1,5 +1,5 @@
 const sequelize = require('sequelize')
-const { User, Address } = require('../models')
+const { User, Address, Media } = require('../models')
 
 const getAll = async (userId) => {
     const user = await User.findAndCountAll(
@@ -13,7 +13,12 @@ const getAll = async (userId) => {
 
 const lookup = async (userId) => {
     const checkUser = await User.findByPk(userId,
-        {include: 'address'})
+        {include: 'address'},
+        {include:{
+            model:Media,
+            as:"UserImage",
+            attributes:['url']
+        }})
     return checkUser
 }
 
@@ -21,6 +26,7 @@ const emailIsExists = async (emailUser) => {
     const user = await User.findOne(
         { where: { email: emailUser },
         include: [{ model: Address, as: 'address' }]
+        
     }        
     )
     return user
