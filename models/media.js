@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   Media.init({
     url: DataTypes.STRING,
     publicId: DataTypes.STRING,
-    parentId: DataTypes.STRING,
+    parentId: DataTypes.UUID,
     role: DataTypes.STRING
   }, {
     sequelize,

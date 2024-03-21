@@ -15,8 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         as: 'category',
         foreignKey: 'categoryId',
         sourceKey: 'id'
+      }),
+      Product.hasMany(models.Media, {
+        as: 'ProductImage',
+        foreignKey: 'parentId',
+        sourceKey: 'id'
       })
-
+      
     }//need relation to media
       //include in return service get etc
   }

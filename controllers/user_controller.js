@@ -9,7 +9,7 @@ const chat_services=require("../services/chat_services")
 const index = async (req, res, next) => {
     try {
         const userId = req.user.id
-        const data = await userService.getAll(userId)
+        const data = await userService.getOne(userId)
 
         return res.status(StatusCodes.OK).json({  
             message: 'Request Success',
@@ -23,23 +23,6 @@ const index = async (req, res, next) => {
         next(error)
     }
 }
-
-const find = async (req, res, next) => {
-    try {
-        const result = await userService.emailIsExists(req.params.email);
-        res.status(StatusCodes.OK).json({
-            data: result,
-        });
-    } catch (error) {
-        if (error.message) {
-            next({status: 400, message: error.message, data: {}})
-        }
-        next(error)
-    }
-};
-
-
-
 
 const create = async (req, res, next) => {
     try {
@@ -129,7 +112,6 @@ const destroy = async(req, res, next) => {
 
 module.exports = {
     index,
-    find,
     create,
     update,
     destroy,
