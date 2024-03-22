@@ -6,7 +6,7 @@ const mailerService = require('../services/mailer_services')
 const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
-
+const chat_services=require("../services/chat_services")
 
 const index = async (req, res, next) => {
     try {
@@ -25,20 +25,6 @@ const index = async (req, res, next) => {
         next(error)
     }
 }
-
-const find = async (req, res, next) => {
-    try {
-        const result = await userService.emailIsExists(req.params.email);
-        if (!result) {
-            throw new NotFoundError(`${req.params.email} is not found`)
-        }
-        res.status(StatusCodes.OK).json({
-            data: result,
-        });
-    } catch (error) {
-        next(error)
-    }
-};
 
 const create = async (req, res, next) => {
     try {
@@ -132,8 +118,7 @@ const destroy = async(req, res, next) => {
 
 module.exports = {
     index,
-    find,
     create,
     update,
-    destroy
+    destroy,
 }
