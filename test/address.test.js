@@ -3,7 +3,7 @@ const app = require("../app");
 
 
 //POSITIVE CASE//
-const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestLogin = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -12,10 +12,10 @@ const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, pa
 };
 
 const mockRequestRegistPositive = (body = {
-    firstName: "biuyer",
-    lastName: "biuyer", 
+    firstName: "buyer",
+    lastName: "buyer",
     userName: "biuyer",
-    email: "biuyeiiir@mail.com",
+    email: "biuyer@mail.com",
     phoneNumber: "0819208489612",
     password: "kapallawd",
     confirmPassword: "kapallawd",
@@ -56,6 +56,7 @@ describe("Test GET /health-check", () => {
     });
 });
 
+let token = ''
     describe("Test POST /api/v1.0/user ", () => {
         it("Regist Should response 201", (done) => {
             // Supertest berfungsi sebagai pelaksana server
@@ -65,14 +66,14 @@ describe("Test GET /health-check", () => {
             .send(req.body)
             .set('Accept', 'application/json')
             .then((res) => {
+                userId = res.body.payload.id
+                console.log(userId);
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.statusCode).toBe(201);
                 done();
             });
         });
     });
-    
-let token = ''
 
 describe("Test POST /login", () => {
     it("Should response 200", (done) => {
@@ -130,8 +131,9 @@ describe("Test GET ONE /address:id", () => {
             .get("/api/v1.0/address/"+req.params.addressId)
             .set('Authorization', `Bearer ${token}`)
             .then((res) => {
+                console.log(token);
                 console.log(req.params.addressId);
-                console.log(res.body.data);
+                console.log(res.body);
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.status).toBe(200);
                 done();
