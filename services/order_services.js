@@ -1,30 +1,35 @@
 const { Order, OrderProduct } = require('../models')
+const { Op } = require("sequelize");
 
 const getAll = async (userId) => {
-    const orders = await Order.findAndCountAll( 
-        {where: { userId: userId },
-        include: {
-            model: OrderProduct,
-            as: 'orderProduct',
-            attributes: ['id','productId','qty','subTotal']
-        }
+    const orders = await Order.findAndCountAll(
+        {
+            where: { userId: userId },
+            include: {
+                model: OrderProduct,
+                as: 'orderProduct',
+                attributes: ['id', 'productId', 'qty', 'subTotal']
+            }
         }
     )
     return orders
 }
 
-const findById = async (id) => {
-    const orders = await Order.findOne( 
-        { where: { id: id },
-        include: {
-            model: OrderProduct,
-            as: 'orderProduct',
-            attributes: {
-                exclude: ['id', 'createdAt', 'updatedAt']
+const findById = async (userId, id) => {
+    const orders = await Order.findOne(
+        {
+            where: {
+                [Op.and]: [{ userId: userId }, { id: id }]
+            },
+            include: {
+                model: OrderProduct,
+                as: 'orderProduct',
+                attributes: {
+                    exclude: ['id', 'createdAt', 'updatedAt']
+                }
             }
+
         }
-        
-     }
     )
     return orders
 }
@@ -38,35 +43,35 @@ const createOrder = async (payload) => {
     );
 
     return createOrder;
-    
+
 }
 
 const createOrderProduct = async (payload) => {
-    const {...orderProduct} = payload
+    const { ...orderProduct } = payload
     const createOrderProduct = await OrderProduct.create({
-     ...orderProduct
+        ...orderProduct
     }
     );
 
     return createOrderProduct;
-   
+
 }
 
 const updateOrder = async (orderId, status) => {
     Order.update({
         status: status
     },
-    {
-        where: {
-            id: orderId
-        }
-    })
+        {
+            where: {
+                id: orderId
+            }
+        })
 };
 
 
-const getAllStatus =async () => {
+const getAllStatus = async () => {
     const getOrderStatus = await Order.findAll({
-        attributes: ['id', 'userId', 'status','expiredAt'],
+        attributes: ['id', 'userId', 'status', 'expiredAt'],
 
     })
     return getOrderStatus

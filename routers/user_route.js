@@ -6,8 +6,9 @@ const  {JWTAuth} = require('../middlewares/auth-jwt')
 // USER CONTROLLER //
 router.get('/user', JWTAuth, userController.index)
 router.post('/user', userController.create)
-router.put('/user/',JWTAuth, userController.update)
-router.delete('/user/:id', userController.destroy)
+router.put('/user',JWTAuth, userController.update)
+router.delete('/user',JWTAuth, userController.destroy)
+
 
 
 module.exports = router 

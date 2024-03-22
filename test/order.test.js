@@ -72,7 +72,7 @@ describe("Test POST /login Admin", () => {
 });
 
 // USER UNAUTHORIZED //
-describe('Test Order Router with unauthorized user', () => {
+describe('Test Order Router with login as admin', () => {
     it('GET /order should response 403', (done) => {
         request(app)
             .get("/api/v1.0/order")
@@ -106,11 +106,11 @@ describe('Test Order Router with unauthorized user', () => {
     })
 })
 
-describe("Test POST /login User & Merchant", () => {
+describe("Test POST /login Buyer", () => {
     it("Should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'buyer'
+        req.body.userName = 'jokooo'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
@@ -139,7 +139,7 @@ describe("Test Order Router with Authorized User", () => {
 
     it('GET /order/:id response 404 when order id is not found', (done) => {
         const req = mockRequest();
-        req.params.id = 1
+        req.params.id = 100
         request(app)
             .get("/api/v1.0/order/" + req.params.id)
             .set('Authorization', `Bearer ${token}`)
@@ -151,7 +151,7 @@ describe("Test Order Router with Authorized User", () => {
 
     it('PATCH /order/:id response 404 when order id is not found', (done) => {
         const req = mockRequest();
-        req.params.id = 1
+        req.params.id = 100
         req.body.status = 'done'
         request(app)
             .patch("/api/v1.0/order/" + req.params.id)

@@ -28,8 +28,8 @@ const find = async (req, res, next) => {
     try {
         const userId = req.user.id
         const id = +req.params.id
-        const order = await orderService.findById(id)
-        if(!order || userId !== order.dataValues.userId) throw new NotFoundError(`order not found`)
+        const order = await orderService.findById(userId, id)
+        if(!order) throw new NotFoundError(`order not found`)
         return res.status(200).json({
             message: 'Request Success',
             payload: order
@@ -126,13 +126,13 @@ const update = async (req, res, next) => {
         //---if date > expired date, then set status to failed, else set status to processing/done--//
         const userId = req.user.id
         const id = req.params.id
-        const order = await orderService.findById(id)
+        const order = await orderService.findById(userId, id)
 
         if(!order || userId !== order.dataValues.userId) throw new NotFoundError(`order not found`)
         if(order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
         await orderService.updateOrder(id, 'success')
 
-        const updatedOrder = await orderService.findById(id)
+        const updatedOrder = await orderService.findById(userId, id)
         updatedOrder.dataValues.status = 'success'
         res.status(StatusCodes.OK).json({
             message: "Success",

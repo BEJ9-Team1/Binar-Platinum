@@ -7,6 +7,11 @@ const getAll = async () => {
             model: Category,
             as: 'category',
             attributes: ['name']
+        },
+        include:{
+            model:Media,
+            as:"ProductImage",
+            attributes:['url']
         }
     })
 
@@ -39,6 +44,8 @@ const createProducts = async (payload) => {
         {
             ...product
         })
+        console.log("PRODUCT ==> ", createProduct);
+
 
     return createProduct
 }

@@ -28,62 +28,27 @@ module.exports = (sequelize, DataTypes) => {
       })
       
     }//need relation to media
-      //include in return service get etc
+    //include in return service get etc
   }
   //need relation to media
   //update product image with search fk parentId in media
-  Product.init({ 
-    name: {
-      type: DataTypes.STRING,
-      validate : {
-        notEmpty : {
-          msg : `product name can't contain empty string`
-        }
-      }
+  Product.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      validate : {
-        notEmpty : {
-          msg : `category id can't contain empty string`
-        },
-        isNumeric : {
-          args : true,
-          msg: `category id only receive numeric value`
-        }
-      }
-    },
+    name: DataTypes.STRING,
+    categoryId: DataTypes.INTEGER,
     merchantId: DataTypes.UUID,
     description: DataTypes.TEXT,
-    stock: {
-      type: DataTypes.INTEGER,
-      validate : {
-        notEmpty : {
-          msg : `qty can't contain empty value`
-        },
-        isNumeric : {
-          args : true,
-          msg: `qty only receive numeric value`
-        }
-      }
-    },
-    price: {
-      type: DataTypes.FLOAT,
-      validate : {
-        notEmpty : {
-          msg : `price can't contain empty value`
-        },
-        isNumeric : {
-          args : true,
-          msg: `price only receive numeric value`
-        }
-      }
-    }
+    stock: DataTypes.INTEGER,
+    price: DataTypes.FLOAT,
   }, {
     sequelize,
     modelName: 'Product',
-    paranoid : true,
-    
+    paranoid: true,
+
   });
   return Product;
 };
