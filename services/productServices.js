@@ -34,6 +34,8 @@ const createProducts = async (payload) => {
         {
             ...product
         })
+        console.log("PRODUCT ==> ", createProduct);
+
 
     return createProduct
 }

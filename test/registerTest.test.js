@@ -28,31 +28,47 @@ const { registerUser, emailIsExists } = require('../services/user_services')
 const { create } = require('../controllers/user_controller')
 const { User } = require('../models');
 
-describe('Testing for register user', () => {
-    const req = mockRequest()
+const req = mockRequest()
+const next = mockNext()
+const res = mockResponse()
+
+beforeEach(() => {
     req.body = {
         firstName: 'firstName',
         lastName: 'lastName',
         userName: 'userName',
-        email: 'mail@example.com',
+        email: 'existsemail@example.com',
         phoneNumber: 'phoneNumber',
         password: 'password',
         confirmPassword: 'password',
         role: 'admin',
         isActive: true,
-        address: [
-            {
-                address: "address",
-                name: "office",
-                isUsed: true
-            }
-        ]
     }
-    const next = mockNext()
-    const res = mockResponse()
+})
+describe('Function Testing for Register New User', () => {
 
-    it('test mock create', async () => {
+    it('return error if email is exists', async () => {
 
+        emailIsExists.mockResolvedValue(Promise.resolve({ email: 'existsemail@example.com' }))
+        await create(req, res, next)
+        expect(next).toBeCalledWith(new Error(`${req.body.email} has been registered before`))
+    })
+
+    it('return error if password inconsistent', async () => {
+
+        req.body.confirmPassword = 'differentpassword'
+
+        emailIsExists.mockResolvedValue(Promise.resolve(undefined))
+        await create(req, res, next)
+        if (req.body.password !== req.body.confirmPassword) {
+            expect(next).toBeCalledWith(new Error('Password NOT Match With Confirm Password'))
+        }
+
+    })
+
+    it('return 200 if registration success', async () => {
+
+        emailIsExists.mockResolvedValue(Promise.resolve(undefined))
         registerUser.mockResolvedValue(Promise.resolve(User));
         await create(req, res, next)
         expect(res.status).toHaveBeenCalledWith(201)
@@ -60,13 +76,6 @@ describe('Testing for register user', () => {
             message: 'Success',
             payload: User.dataValues
         })
-    })
-
-    it('test if email is exists', async () => {
-
-        emailIsExists.mockResolvedValue(Promise.resolve(User))
-        await create(req, res, next)
-        expect(next).toBeCalledWith(new Error(`${User.email} has been registered before`))
     })
 
 })
