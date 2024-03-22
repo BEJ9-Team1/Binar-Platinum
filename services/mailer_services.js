@@ -30,10 +30,8 @@ const sendEmail = async (userId, email) => {
             html: "<p><strong>Hello "+accountName+"</strong> <br>You registered an account on Binar Platinum, before being able to use your account you need to verify that this is your email address by clicking here: <br></p><a href="+linkVerify+">Click Here to Confirm Your Account</a><p>Kind Regards</p>"
           });
     }
-    console.log(email,"<<<<<EMAIL>>>>>")
-
-    return resultSendEmail
-}
+    
+  }
 
 module.exports = {sendEmail}
 

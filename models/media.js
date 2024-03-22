@@ -11,12 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Media.belongsTo(models.User,{
+        foreignKey:"parentId",
+        sourceKey:"id",
+        as:"UserImage"
+      })
+      Media.belongsTo(models.Product,{
+        foreignKey:"parentId",
+        sourceKey:"id",
+        as:"Productimage"
+      })
     }
   }
   Media.init({
     url: DataTypes.STRING,
     publicId: DataTypes.STRING,
-    parentId: DataTypes.STRING,
+    parentId: DataTypes.UUID,
     role: DataTypes.STRING
   }, {
     sequelize,

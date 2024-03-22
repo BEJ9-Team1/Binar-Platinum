@@ -16,11 +16,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'categoryId',
         sourceKey: 'id'
       }),
-        Product.belongsTo(models.Merchant, {
-          as: 'merchant',
-          foreignKey: 'merchantId',
-          sourceKey: 'id'
-        })
+      Product.belongsTo(models.Merchant, {
+        as: 'merchant',
+        foreignKey: 'merchantId',
+        sourceKey: 'id'
+      }),
+      Product.hasMany(models.Media, {
+        as: 'ProductImage',
+        foreignKey: 'parentId',
+        sourceKey: 'id'
+      })
+      
     }//need relation to media
     //include in return service get etc
   }
