@@ -44,8 +44,6 @@ const registerUser = async (payload) => {
     }
     );
 
-    console.log('USER ==> ', registerUser);
-
     return registerUser;
    
 }

@@ -20,9 +20,9 @@ const index = async (req, res) => {
 
 }
 
-const findById = async (req, res, next) => {
+const findOne = async (req, res, next) => {
 
-    const id = +req.params.id
+    const id = req.params.id
 
     try {
 
@@ -45,9 +45,8 @@ const create = async (req, res, next) => {
     try {
 
         const userId = req.user.id
-        console.log("Error is here")
+
         const merchant = await merchant_services.lookup(userId)
-        console.log(merchant.dataValues.id)
 
         const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
@@ -78,7 +77,7 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
 
-    const id = +req.params.id
+    const id = req.params.id
 
     try {
 
@@ -115,7 +114,7 @@ const update = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
 
-    const id = +req.params.id
+    const id = req.params.id
 
     const userId = req.user.id
 
@@ -149,7 +148,7 @@ const deleteProduct = async (req, res, next) => {
 
 module.exports = {
     index,
-    findById,
+    findOne,
     create,
     update,
     deleteProduct
