@@ -2,7 +2,7 @@
 node_modules
 *.txt
 .vscode
-.env
+# .env
 coverage
 *.jpg
 # Ignore Mac DS_Store files
