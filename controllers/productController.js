@@ -45,7 +45,6 @@ const create = async (req, res, next) => {
     try {
 
         const userId = req.user.id
-        console.log("Error is here")
         const merchant = await merchant_services.lookup(userId)
         console.log(merchant.dataValues.id)
 
