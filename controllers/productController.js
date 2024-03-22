@@ -49,24 +49,23 @@ const { Merchant } = require('../models')
             const userId = req.user.id
 
             const merchant = await merchant_services.lookup(userId)
-
+            console.log(merchant.dataValues.id)
             const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
             const category = await categoryServices.lookup(req.body.category)
-
+            console.log(category.dataValues.id)
             if (!category) throw new NotFoundError(`category ${category} not found`)
-
             const payload = {
                 name: productDTO.name,
-                categoryId: category.id,
+                categoryId: category.dataValues.id,
                 merchantId: merchant.dataValues.id,
                 description: productDTO.description,
                 price: productDTO.price,
                 stock: productDTO.stock
             }
-
+            console.log(payload)
             const product = await productServices.createProducts(payload)
-
+            console.log(product)
             return res.status(201).json({ message: 'success', payload: product })
 
         } catch (error) {
