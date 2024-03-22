@@ -1,12 +1,9 @@
 const mediaService = require('../services/media_services')
-const multer = require("multer");
 const fs = require("fs");
-const { lookup,getAll,uploadCloudinary,upload} = require("../services/media_services")
+const {uploadCloudinary,upload} = require("../services/media_services")
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
-const createMediaDTO = require('../validators/media_validator')
-const Joi = require('joi'); 
-const ImageRolesEnum = require('../config/enum/media_type_enum');
+const productService = require('../services/productServices')
 
 
 const index = async (req, res, next) => {
@@ -41,16 +38,15 @@ const find = async (req, res, next) => {
     }
 };
 
-const create = async(req,res,next)=>{
+const createUser = async(req,res,next)=>{
     try{
         if(!req.file) throw new BadRequestError("Image does not exist")
-        const  MediaDTO=await createMediaDTO.validateAsync(req.body)
         let uploadResult = await uploadCloudinary(req.file.path);
         const payload={
             url:uploadResult.secure_url,
             publicId:uploadResult.public_id,
             parentId:req.user.id,
-            role:MediaDTO.role
+            role:"profile"
         }
         const result = await mediaService.uploadImage(payload);
         fs.unlink(req.file.path, (err) => {
@@ -60,6 +56,35 @@ const create = async(req,res,next)=>{
         res.status(StatusCodes.OK).json(result)
 
     }catch(error){
+        next(error);
+    }
+
+
+}
+
+const createProduct = async(req,res,next)=>{
+    try{
+        const prod=await productService.findById(req.params.id)
+        if(!prod)throw new NotFoundError("product not found")
+        console.log(prod)
+        if(!req.file) throw new BadRequestError("Image does not exist")
+        let uploadResult = await uploadCloudinary(req.file.path);
+        const payload={
+            url:uploadResult.secure_url,
+            publicId:uploadResult.public_id,
+            parentId:req.params.id,
+            role:"product"
+        }
+
+        const result = await mediaService.uploadImage(payload);
+        fs.unlink(req.file.path, (err) => {
+            if (err) {
+                throw new Error("file does not exist");
+            }  })
+        res.status(StatusCodes.OK).json(result)
+
+    }catch(error){
+        console.log("e1")
         next(error);
     }
 
@@ -111,7 +136,8 @@ const destroy = async(req, res, next) => {
 module.exports = {
     index,
     find,
-    create,
+    createUser,
+    createProduct,
     updateImage,
     destroy
 }

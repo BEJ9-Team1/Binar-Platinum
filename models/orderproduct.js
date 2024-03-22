@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'productId',
         sourceKey: 'id'
       })
+      OrderProduct.belongsTo(models.Order, {
+        as: 'order',
+        foreignKey: 'orderId',
+        sourceKey: 'id'
+      })
     }
   }
   OrderProduct.init({

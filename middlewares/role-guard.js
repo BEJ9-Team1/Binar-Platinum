@@ -7,12 +7,14 @@ const RoleGuard = (requiredRole1, requiredRole2) => {
       try {
         userData = req.user
         const userRole = userData.role;
-    
-        if (userRole === requiredRole1) {
-          next(); // User has the required role, proceed to the next middleware or route handler
-        } else if (userRole === requiredRole2) {
-          next()
+        if(req.user.isActive){         
+          if (userRole === requiredRole1) {
+            next(); // User has the required role, proceed to the next middleware or route handler
+          } else if (userRole === requiredRole2) {
+            next()
+          } 
         }
+       
         else throw new UnauthorizedError("Access Forbidden") // User does not have the required role  
         
       } catch (err) {

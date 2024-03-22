@@ -181,10 +181,17 @@ describe("Test DESTROY /payment", () => {
         });
     });
     
+const mockRequestRecreate = (body = {name: "va cimb"}, params = {}, query = {}) => {
+    return {
+        body: body,
+        params: params,
+        query: query,
+    };
+};
     describe("Test RECREATE /payment after deleted", () => {
     it("Should response 201", (done) => {
         // Supertest berfungsi sebagai pelaksana server
-        req = mockRequestCreate()
+        req = mockRequestRecreate()
         request(app)
             .post("/api/v1.0/payment")
             .set('Authorization', `Bearer ${token}`)
@@ -204,7 +211,7 @@ describe("Test DESTROY /payment", () => {
 describe("Test RECREATE /payment", () => {
     it("Should response 400", (done) => {
         // Supertest berfungsi sebagai pelaksana server
-        req = mockRequestCreate()
+        req = mockRequestRecreate()
         request(app)
             .post("/api/v1.0/payment")
             .set('Authorization', `Bearer ${token}`)
@@ -260,10 +267,11 @@ describe("Test Unauthorized Account POST /login", () => {
         request(app)
             .post("/api/v1.0/auth/login")
             .send(req.body)
-            .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${token}`)
             .then((res) => {
                 console.log(res.body.token);
                 token = res.body.token
+                console.log(token,"var token");
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.statusCode).toBe(200);
                 done();
@@ -281,6 +289,7 @@ describe("Test Unauthorized CREATE /payment", () => {
             .send(req.body)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                console.log(token, "<<<<<<<<<<<,THIS");
                 console.log(res.body);
                 expect(res.status).toBe(403);
                 done();
