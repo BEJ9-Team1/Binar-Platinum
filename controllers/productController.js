@@ -22,7 +22,7 @@ const index = async (req, res) => {
 
 const findById = async (req, res, next) => {
 
-    const id = +req.params.id
+    const id = req.params.id
 
     try {
 
@@ -77,7 +77,7 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
 
-    const id = +req.params.id
+    const id = req.params.id
 
     try {
 
