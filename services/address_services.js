@@ -10,6 +10,16 @@ const lookup = async (addressId, userId) => {
     return address  
 }
 
+const find = async (userId) => {
+    const address = await Address.findAll( 
+        { 
+            where: { userId:userId},
+            // include: [{ model: Address, as: 'address' }]
+        }        
+     )
+    return address  
+}
+
 const update = async (userId) => {
     const address = await Address.findAll( 
         { 
@@ -42,5 +52,6 @@ module.exports = {
     lookup,
     getAll,
     destroy,
-    update
+    update,
+    find
 }

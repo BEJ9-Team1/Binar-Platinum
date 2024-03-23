@@ -15,6 +15,7 @@ const lookup = async (userId) => {
             where: { userId: userId },
         }        
      )
+     console.log(merchant);
     return merchant  
 }
 

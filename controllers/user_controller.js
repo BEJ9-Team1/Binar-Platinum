@@ -11,7 +11,7 @@ const chat_services=require("../services/chat_services")
 const index = async (req, res, next) => {
     try {
         const userId = req.user.id
-        const data = await userService.lookup(userId)
+        const data = await userService.getOne(userId)
 
         return res.status(StatusCodes.OK).json({  
             message: 'Request Success',
