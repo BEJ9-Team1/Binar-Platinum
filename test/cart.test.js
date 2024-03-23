@@ -32,7 +32,7 @@ describe("Test POST /login", () => {
     });
 });
 
-const mockRequestCategory = (body = {name: "category1"}, params = {}, query = {}) => {
+const mockRequestCategory = (body = {name: "categoryTest"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -83,6 +83,32 @@ describe("Test POST /login", () => {
     });
 });
 
+const mockRequestCreateMerchant = (body = {name: "Merchant For Cart Test"}, params = {}, query = {}) => {
+    return {
+        body: body,
+        params: params,
+        query: query,
+    };
+};
+
+
+describe("Test CREATE /merchant", () => {
+    it("Should response 201", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        req = mockRequestCreateMerchant()
+        request(app)
+            .post("/api/v1.0/merchant")
+            .set('Authorization', `Bearer ${tokenMerchant1}`)
+            .send(req.body)
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.status).toBe(201);
+                expect(res.body.message).toBe("Success")
+                done();
+            });
+    });
+});
+
 const mockRequestProduct = (body = {
     name: "Product Biar Bisa Create Cart",
     categoryId: 1,
@@ -116,7 +142,7 @@ describe('Test POST /products', () => {
 
 
 //POSITIVE CASE//
-const mockRequestLogin = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -139,7 +165,7 @@ describe("Test GET /health-check", () => {
 });
 
     
-let token = ''
+let tokenBuyerForCart = ''
 
 describe("Test POST /login", () => {
     it("Should response 200", (done) => {
@@ -151,7 +177,7 @@ describe("Test POST /login", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 console.log(res.body.token);
-                token = res.body.token
+                tokenBuyerForCart = res.body.token
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 expect(res.statusCode).toBe(200);
                 done();
@@ -173,7 +199,7 @@ describe("Test CREATE /cart", () => {
         req = mockRequestCreate()
         request(app)
             .post("/api/v1.0/cart")
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', `Bearer ${tokenBuyerForCart}`)
             .send(req.body)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
@@ -190,7 +216,7 @@ describe("Test GET /cart", () => {
         // Supertest berfungsi sebagai pelaksana server
         request(app)
             .get("/api/v1.0/cart")
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', `Bearer ${tokenBuyerForCart}`)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
                 console.log(res.body);
@@ -237,7 +263,7 @@ describe("Test PATCH /cart/:id", () => {
         req = mockRequestUpdateCart()
         request(app)
             .patch("/api/v1.0/cart/"+req.params.id)
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', `Bearer ${tokenBuyerForCart}`)
             .send(req.body)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
