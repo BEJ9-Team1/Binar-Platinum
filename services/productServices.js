@@ -1,4 +1,4 @@
-const { Product, Category } = require('../models')
+const { Product, Category,Media } = require('../models')
 
 const getAll = async () => {
     const products = await Product.findAll({
@@ -7,6 +7,11 @@ const getAll = async () => {
             model: Category,
             as: 'category',
             attributes: ['name']
+        },
+        include:{
+            model:Media,
+            as:"ProductImage",
+            attributes:['url']
         }
     })
 
@@ -21,6 +26,11 @@ const findById = async (productId) => {
                 model: Category,
                 as: 'category',
                 attributes: ['name']
+            },
+            include:{
+                model:Media,
+                as:"ProductImage",
+                attributes:['url']
             }
         })
 

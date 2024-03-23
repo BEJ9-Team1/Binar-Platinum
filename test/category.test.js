@@ -45,7 +45,7 @@ describe("Test POST /login", () => {
 });
 
 
-const mockRequestCreate = (body = {name: "electronics"}, params = {}, query = {}) => {
+const mockRequestCreate = (body = {name: "testing"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,

@@ -5,7 +5,7 @@ const { createOrderDTO, updateOrderDTO } = require('../validators/order_validato
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 const cron = require('node-cron');
-const { message } = require('../validators/media_validator')
+//const { message } = require('../validators/media_validator')
 
 
 const index = async (req, res, next) => {

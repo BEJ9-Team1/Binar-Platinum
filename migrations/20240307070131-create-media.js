@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       parentId: {
-        type: Sequelize.STRING
+        type: Sequelize.UUID
       },
       role: {
         type: Sequelize.STRING

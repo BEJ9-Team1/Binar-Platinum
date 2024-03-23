@@ -56,7 +56,7 @@ const create = async (req, res, next) => {
         const payload = {
             name: productDTO.name,
             categoryId: category.id,
-            merchantId: merchant.dataValues.id,
+            merchantId: merchant.id,
             description: productDTO.description,
             price: productDTO.price,
             stock: productDTO.stock

@@ -2,15 +2,16 @@
 const authToken = require('../controllers/auth_controller')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
+const mailerService = require('../services/mailer_services')
 const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
-
+const chat_services=require("../services/chat_services")
 
 const index = async (req, res, next) => {
     try {
         const userId = req.user.id
-        const data = await userService.lookup(userId)
+        const data = await userService.getOne(userId)
 
         return res.status(StatusCodes.OK).json({  
             message: 'Request Success',
@@ -24,20 +25,6 @@ const index = async (req, res, next) => {
         next(error)
     }
 }
-
-const find = async (req, res, next) => {
-    try {
-        const result = await userService.emailIsExists(req.params.email);
-        if (!result) {
-            throw new NotFoundError(`${req.params.email} is not found`)
-        }
-        res.status(StatusCodes.OK).json({
-            data: result,
-        });
-    } catch (error) {
-        next(error)
-    }
-};
 
 const create = async (req, res, next) => {
     try {
@@ -59,12 +46,16 @@ const create = async (req, res, next) => {
             phoneNumber: userDTO.phoneNumber,
             password: userDTO.password,
             role: userDTO.role,
-            isActive: userDTO.isActive,
+            isActive: "false", //userDTO.isActive
             address: userDTO.address
         } 
 
 
         const result = await userService.registerUser(payload);
+        const userId = result.dataValues.id
+        const email = result.dataValues.email
+        const verifyEmail = mailerService.sendEmail(userId,email)
+        
         res.status(StatusCodes.CREATED).json({
             message: "Success",
             payload: result.dataValues
@@ -127,8 +118,7 @@ const destroy = async(req, res, next) => {
 
 module.exports = {
     index,
-    find,
     create,
     update,
-    destroy
+    destroy,
 }

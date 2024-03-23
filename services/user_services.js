@@ -1,11 +1,18 @@
 const sequelize = require('sequelize')
-const { User, Address } = require('../models')
+const { User, Address, Media } = require('../models')
 
-const getAll = async (userId) => {
+const getOne = async (userId) => {
     const user = await User.findAndCountAll(
         {
             attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role'],
             where: {id: userId},
+            include:[{
+                model:Media,
+                as:"UserImage",
+                attributes:['url']
+            },
+            { model: Address, as: 'address' }
+            ]
         }
         )
     return user
@@ -24,6 +31,7 @@ const emailIsExists = async (emailUser) => {
     const user = await User.findOne(
         { where: { email: emailUser },
         include: [{ model: Address, as: 'address' }]
+        
     }        
     )
     return user
@@ -92,7 +100,7 @@ const destroy = async (userId) => {
 };
 
 module.exports = {
-    getAll,
+    getOne,
     emailIsExists,
     lookup,
     registerUser,
