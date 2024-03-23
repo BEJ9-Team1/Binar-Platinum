@@ -10,6 +10,8 @@ const mockRequest = (body = {}, params = {}, query = {}) => {
     };
 }
 
+let userId = []
+
 //* MOCK REGISTER 
 describe("Test POST /api/v1.0/user ", () => {
     it("Register Buyer Should response 201", (done) => {
@@ -24,7 +26,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "buyer",
-            isActive: true,
             address: [
                 {
                     "address": "jogja",
@@ -44,6 +45,7 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                userId.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
@@ -61,7 +63,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "merchant",
-            isActive: true,
             address: [
                 {
                     "address": "jogja",
@@ -76,6 +77,7 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                userId.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
@@ -93,7 +95,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "merchant",
-            isActive: true,
             address: [
                 {
                     "address": "Semarang",
@@ -108,6 +109,7 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                userId.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
@@ -125,7 +127,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "admin",
-            isActive: true,
             address: [
                 {
                     "address": "Jakarta",
@@ -140,11 +141,56 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                userId.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
     });
 });
+
+describe(`Verify User`, () => {
+    it(`Buyerp1 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + userId[0])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+
+    it(`Merchantp1 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + userId[1])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+
+    it(`Merchantp2 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + userId[2])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+    
+    it(`Adminp1 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + userId[3])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+})
+
+
 
 // * VARIABLES //
 let tokenBuyer = ''

@@ -19,10 +19,11 @@ const mockRequest = (body = {}, params = {}, query = {}) => {
     };
 }
 
+let idUser = []
 
 //* MOCK REGISTER USER
 describe("Test POST /api/v1.0/user ", () => {
-    it("Register Buyer Should response 201", (done) => {
+    it("Register Buyero1 Should response 201", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest()
         req.body = {
@@ -34,7 +35,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "buyer",
-            isActive: true,
             address: [
                 {
                     "address": "jogja",
@@ -54,12 +54,13 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                idUser.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
     });
 
-    it("Register buyer2 Should response 201", (done) => {
+    it("Register buyero2 Should response 201", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest()
         req.body = {
@@ -71,7 +72,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "buyer",
-            isActive: true,
             address: [
                 {
                     "address": "jogja",
@@ -86,12 +86,13 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                idUser.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
     });
 
-    it("Register Merchant1 Should response 201", (done) => {
+    it("Register Merchanto1 Should response 201", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest()
         req.body = {
@@ -103,7 +104,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "merchant",
-            isActive: true,
             address: [
                 {
                     "address": "Semarang",
@@ -118,12 +118,13 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                idUser.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
     });
 
-    it("Register Admin Should response 201", (done) => {
+    it("Register Admino1 Should response 201", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest()
         req.body = {
@@ -135,7 +136,6 @@ describe("Test POST /api/v1.0/user ", () => {
             password: "kapallawd",
             confirmPassword: "kapallawd",
             role: "admin",
-            isActive: true,
             address: [
                 {
                     "address": "Jakarta",
@@ -150,11 +150,54 @@ describe("Test POST /api/v1.0/user ", () => {
             .set('Accept', 'application/json')
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                idUser.push(res.body.payload.id)
                 expect(res.statusCode).toBe(201);
                 done();
             });
     });
 });
+
+describe(`Verify User`, () => {
+    it(`Buyero1 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + idUser[0])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+
+    it(`Buyero2 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + idUser[1])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+
+    it(`Merchanto1 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + idUser[2])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+    
+    it(`Admino1 Should be 200`, (done) => {
+        request(app)
+            .get(`/api/v1.0/verify/` + idUser[3])
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    })
+})
 
 // * MOCK LOGIN USER
 describe("Test POST /login", () => {

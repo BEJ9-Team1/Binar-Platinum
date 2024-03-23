@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models')
-const {BadRequestError} = require('../errors');
+const {BadRequestError, UnauthorizedError} = require('../errors');
 
 
 const login = async (req, res, next) => {
@@ -14,6 +14,7 @@ const login = async (req, res, next) => {
 
         if (foundUser) {
             const isValidPassword = bcrypt.compareSync(password, foundUser.password);
+            if (!foundUser.isActive) throw new UnauthorizedError(`Your account is not activated`)
             if (isValidPassword) {
                 const payload = {
                     id: foundUser.id,
