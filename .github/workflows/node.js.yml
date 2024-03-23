@@ -111,6 +111,7 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           script: |
             cd Binar-Platinum/
+            npm ci
             npm run undodb
             npm run migrate
             npm run seed
