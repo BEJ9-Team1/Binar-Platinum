@@ -123,6 +123,6 @@ jobs:
           port: ${{ secrets.SSHPORT }}
           script: |
             cd Binar-Platinum/
-            nvm install v20.11.1
+            nvm use v20.11.1
             npm install
             npm restart
