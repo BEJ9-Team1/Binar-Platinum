@@ -62,3 +62,25 @@ router.get('/user/:email', userController.find)
 router.put('/user/',JWTAuth, userController.update)
 router.delete('/user/:id', userController.destroy)
 ========================================= TIGA ====================================================== RIDHO
+
+
+//AUTH//
+router.post('/auth/register', userController.create) // {url}/user/register
+router.post('/auth/login', authController.login)
+router.post('/auth/logout', JWTAuth, authController.logout)
+//CART//
+router.post('/cart', JWTAuth, RoleGuard('buyer'), cartController.create);
+router.get('/cart',JWTAuth, RoleGuard('buyer'), cartController.index);
+router.get('/cart/:id', cartController.findCartItems);
+router.patch('/cart/:id', JWTAuth, RoleGuard('buyer'), cartController.updateQty);
+//MEDIA
+router.get('/media', mediaController.index)
+router.get('/media/:id',mediaController.find)
+router.post('/media', JWTAuth, RoleGuard('buyer', 'merchant'), upload.single("picture"),mediaController.create)
+router.put('/media/:id', JWTAuth, RoleGuard('buyer', 'merchant'), upload.single("picture"),mediaController.updateImage)
+router.delete('/media/:id', JWTAuth, RoleGuard('buyer', 'merchant'),mediaController.destroy)
+//MERCHANT//
+router.get('/merchant', merchantController.index)
+router.post('/merchant', JWTAuth, RoleGuard('buyer', 'merchant'), merchantController.create)
+router.get('/merchant/:name', merchantController.find)
+============================================ DUA ======================================== LUCKY
