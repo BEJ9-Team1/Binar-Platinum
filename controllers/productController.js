@@ -23,7 +23,6 @@ const index = async (req, res) => {
 const findById = async (req, res, next) => {
 
     const id = req.params.id
-
     try {
 
         const product = await productServices.findById(id)

@@ -5,7 +5,11 @@ const bodyParser = require('body-parser')
 const routes = require('./routers/index')
 const passportAuth = require('./config/passport-jwt')
 
+
 const app = express();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger_kelompok1.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const notFoundMiddleware = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/handler-error');

@@ -18,7 +18,8 @@ const login = async (req, res, next) => {
                 const payload = {
                     id: foundUser.id,
                     userName: foundUser.userName,
-                    role: foundUser.role
+                    role: foundUser.role,
+                    isActive : foundUser.isActive
                 }
                 const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRED });
                 return res.status(200).json({

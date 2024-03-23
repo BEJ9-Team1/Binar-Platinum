@@ -1,0 +1,1231 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "There are services to register user, login, logout, crud order, etc.\n",
+    "version": "1.0",
+    "title": "Test_API"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1.0/cart": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"status\": 200,\n    \"message\": \"Request Success\",\n    \"data\": {\n        \"count\": 1,\n        \"rows\": [\n            {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "post": {
+        "operationId": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/cart"
+            },
+            "x-examples": {
+              "application/json": "{\n    \"productId\" : 2,\n    \"qty\" : 100\n}\n"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": 2,\n        \"productId\": 2,\n        \"qty\": 100,\n        \"cartId\": 1,\n        \"updatedAt\": \"2024-03-18T06:24:28.864Z\",\n        \"createdAt\": \"2024-03-18T06:24:28.864Z\"\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/user": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"8ee2e4f8-a04a-4d15-a21d-6952e83a4919\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"admin1\",\n        \"email\": \"admin1@mail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$V4tCrmDXV95OMgc0M2T8A.EL48wHr34JoYr04U99Xcn2ULUEMLBHu\",\n        \"role\": \"admin\",\n        \"isActive\": true,\n        \"address\": [\n            {\n                \"id\": \"e5c1ea97-5185-4e49-a716-661b0fa360c4\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"8ee2e4f8-a04a-4d15-a21d-6952e83a4919\",\n                \"updatedAt\": \"2024-03-13T06:32:40.101Z\",\n                \"createdAt\": \"2024-03-13T06:32:40.101Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"df71c126-d8a7-4a08-a0c5-4dbd4533f836\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"8ee2e4f8-a04a-4d15-a21d-6952e83a4919\",\n                \"updatedAt\": \"2024-03-13T06:32:40.101Z\",\n                \"createdAt\": \"2024-03-13T06:32:40.101Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-13T06:32:38.288Z\",\n        \"createdAt\": \"2024-03-13T06:32:38.288Z\"\n    }\n}"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/user"
+            },
+            "x-examples": {
+              "application/json": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\", //should be not required\n    \"userName\": \"admin9\",\n    \"email\": \"ardecandrapamungkas@gmail.com\",\n    \"phoneNumber\": \"0819208489612\",\n    \"password\": \"kapallawd\",\n    \"confirmPassword\": \"kapallawd\",\n    \"role\": \"admin\",\n    \"isActive\": false,\n    \"address\": [\n        {\n            \"address\": \"jogja\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        },\n        {\n            \"address\": \"jakarta\",\n            \"name\": \"office\",\n            \"isUsed\": true\n        }\n    ]\n}\n\n"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          },
+          "201": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          },
+          "202": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          },
+          "203": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          },
+          "204": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          },
+          "205": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          },
+          "206": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"testadmin\",\n        \"email\": \"test@gmail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"password\": \"$2b$15$JyVjOgu3A/P1y5BjX//K0eXJqU2hsFZpFC9A/bH63Q3QDPa9lP3f6\",\n        \"role\": \"admin\",\n        \"isActive\": false,\n        \"address\": [\n            {\n                \"id\": \"2ff8382f-1ed1-4590-bf50-5cf853a5b391\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": \"0b9e5171-0abd-4e75-8f83-9f1881e91778\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true,\n                \"userId\": \"0de0b4dd-b937-4f72-95e4-53d432e4e39d\",\n                \"updatedAt\": \"2024-03-22T08:36:36.838Z\",\n                \"createdAt\": \"2024-03-22T08:36:36.838Z\",\n                \"deletedAt\": null\n            }\n        ],\n        \"updatedAt\": \"2024-03-22T08:36:35.018Z\",\n        \"createdAt\": \"2024-03-22T08:36:35.018Z\"\n    }\n}"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/cart/:id": {
+      "get": {
+        "operationId": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        \n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "object"
+            },
+            "x-examples": {
+              "application/json": "{\n    \"qty\" : 4\n}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        \n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/merchant/:name": {
+      "patch": {
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/category/:id": {
+      "get": {
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"data\": {\n        \"id\": 2,\n        \"name\": \"cat1\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": \"2024-03-13T08:30:39.527Z\",\n        \"deletedAt\": null\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "post": {
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": 4,\n        \"name\": \"cat3\",\n        \"updatedAt\": \"2024-03-14T10:25:32.990Z\",\n        \"createdAt\": \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/media": {
+      "get": {
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "multipart/mixed"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/media/:id": {
+      "put": {
+        "consumes": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "delete": {
+        "consumes": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/order/:id": {
+      "get": {
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n        \"id\": 49,\n        \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n        \"paymentMethodId\": 1,\n        \"totalPrice\": 30000,\n        \"expiredAt\": \"2024-03-14T10:42:59.970Z\",\n        \"status\": \"payment_waiting\",\n        \"createdAt\": \"2024-03-14T09:43:00.055Z\",\n        \"updatedAt\": \"2024-03-14T09:43:00.055Z\",\n        \"orderProduct\": [\n            {\n                \"id\": 81,\n                \"productId\": 1,\n                \"qty\": 10,\n                \"subTotal\": 1000000\n            },\n            {\n                \"id\": 82,\n                \"productId\": 2,\n                \"qty\": 10,\n                \"subTotal\": 500000\n            }\n        ]\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/auth/login": {
+      "post": {
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1YmVkMTJlLWE4ZWEtNGQ2NC1iNGFmLWRjMjM1MzdhYjI5OCIsInVzZXJOYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTAzMTQ3MzUsImV4cCI6MTcxMDM1NzkzNX0.GDifTfwoNLdfYKXYo8vAu2fgMxcAWYR9bpxYr6foFGQ\"\n}\n"
+            },
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/auth/logout": {
+      "post": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"logged out at 1710411809674\"\n}\n"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/products/:id": {
+      "get": {
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"success\",\n    \"payload\": [\n        {\n            \"id\": 1,\n            \"name\": \"Celana Chinos\",\n            \"merchantId\": 1,\n            \"price\": 100000,\n            \"category\": {\n                \"name\": \"edit cat\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"name\": \"kemeja\",\n            \"merchantId\": 1,\n            \"price\": 50000,\n            \"category\": {\n                \"name\": \"cat2\"\n            }\n        },\n        {\n            \"id\": 4,\n            \"name\": \"test stock\",\n            \"merchantId\": 1,\n            \"price\": 50000,\n            \"category\": {\n                \"name\": \"cat2\"\n            }\n        },\n        {\n            \"id\": 3,\n            \"name\": \"test stock\",\n            \"merchantId\": 1,\n            \"price\": 50000,\n            \"category\": {\n                \"name\": \"cat2\"\n            }\n        }\n    ]\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/category": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"status\": 200,\n    \"message\": \"Request Success\",\n    \"data\": {\n        \"count\": 2,\n        \"rows\": [\n            {\n                \"id\": 3,\n                \"name\": \"cat2\",\n                \"createdAt\": \"2024-03-13T08:31:25.338Z\",\n                \"updatedAt\": \"2024-03-13T08:31:25.338Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": 2,\n                \"name\": \"cat1\",\n                \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n                \"updatedAt\": \"2024-03-13T08:30:39.527Z\",\n                \"deletedAt\": null\n            }\n        ]\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "post": {
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": 4,\n        \"name\": \"cat3\",\n        \"updatedAt\": \"2024-03-14T10:25:32.990Z\",\n        \"createdAt\": \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "Authorization",
+          "in": "header",
+          "description": "Bearer token",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/api/v1.0/address": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n        \"count\": 2,\n        \"rows\": [\n            {\n                \"id\": \"36670be0-95a6-431d-b7e6-0501b4ad1f3b\",\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true\n            },\n            {\n                \"id\": \"8f3782ae-7dad-44ae-979e-f78037bc5d11\",\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true\n            }\n         \n        ]\n    }\n}\n"
+            },
+            "schema": {
+              "$ref": "#/definitions/address"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/merchant": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"status\": 200,\n    \"message\": \"Request Success\",\n    \"data\": {\n        \"count\": 1,\n        \"rows\": [\n            {\n                \"id\": \"1fc2b89d-93a9-4719-81be-6af366ac933a\",\n                \"name\": \"merchant1\",\n                \"address\": [\n                    [\n                        {\n                            \"id\": \"d3af1d64-5f58-46e1-913f-55df30f1fde2\",\n                            \"userId\": \"f57b21ed-1998-4bb3-bc8c-26b51f36c61b\",\n                            \"address\": \"jogja\",\n                            \"name\": \"office\",\n                            \"isUsed\": true\n                        },\n                        {\n                            \"id\": \"99e1c61a-4baa-40dd-993e-5e9514f406ec\",\n                            \"userId\": \"f57b21ed-1998-4bb3-bc8c-26b51f36c61b\",\n                            \"address\": \"jakarta\",\n                            \"name\": \"office\",\n                            \"isUsed\": true\n                        }\n                    ],\n                    [\n                        {\n                            \"id\": \"d3af1d64-5f58-46e1-913f-55df30f1fde2\",\n                            \"userId\": \"f57b21ed-1998-4bb3-bc8c-26b51f36c61b\",\n                            \"address\": \"jogja\",\n                            \"name\": \"office\",\n                            \"isUsed\": true\n                        },\n                        {\n                            \"id\": \"99e1c61a-4baa-40dd-993e-5e9514f406ec\",\n                            \"userId\": \"f57b21ed-1998-4bb3-bc8c-26b51f36c61b\",\n                            \"address\": \"jakarta\",\n                            \"name\": \"office\",\n                            \"isUsed\": true\n                        }\n                    ]\n                ],\n                \"user\": {\n                    \"id\": \"f57b21ed-1998-4bb3-bc8c-26b51f36c61b\",\n                    \"firstName\": \"test\",\n                    \"lastName\": \"test\",\n                    \"userName\": \"merchant\",\n                    \"email\": \"merchant@mail.com\",\n                    \"phoneNumber\": \"0819208489612\",\n                    \"password\": \"$2b$15$scaSe7prNrhv11SpuTG1k.rt1PMQJCsutBAXZ48UxbtOwwZtqp2IG\",\n                    \"role\": \"merchant\",\n                    \"isActive\": true,\n                    \"createdAt\": \"2024-03-11T18:28:54.353Z\",\n                    \"updatedAt\": \"2024-03-13T10:26:38.032Z\"\n                }\n            }\n        ]\n    }\n}"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/order": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n        \"count\": 2,\n        \"rows\": [\n            {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"paymentMethodId\": 1,\n                \"totalPrice\": 30000,\n                \"expiredAt\": \"2024-03-13T13:03:38.330Z\",\n                \"status\": \"payment_waiting\",\n                \"createdAt\": \"2024-03-13T12:03:38.345Z\",\n                \"updatedAt\": \"2024-03-13T12:03:38.345Z\",\n                \"orderProduct\": [\n                    {\n                        \"id\": 1,\n                        \"productId\": 1,\n                        \"qty\": 2,\n                        \"subTotal\": 650000\n                    }\n                ]\n            },\n            {\n                \"id\": 2,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"paymentMethodId\": 1,\n                \"totalPrice\": 30000,\n                \"expiredAt\": \"2024-03-13T13:04:06.768Z\",\n                \"status\": \"payment_waiting\",\n                \"createdAt\": \"2024-03-13T12:04:06.770Z\",\n                \"updatedAt\": \"2024-03-13T12:04:06.770Z\",\n                \"orderProduct\": [\n                    {\n                        \"id\": 3,\n                        \"productId\": 1,\n                        \"qty\": 2,\n                        \"subTotal\": 6500000\n                    },\n                    {\n                        \"id\": 2,\n                        \"productId\": 3,\n                        \"qty\": 20,\n                        \"subTotal\": 1000000\n                    }\n                ]\n            }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "post": {
+        "operationId": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/order"
+            },
+            "x-examples": {
+              "application/json": "{\n    \"paymentMethodId\": \"1\",\n    \"totalPrice\":30000,\n    \"orderProducts\": [\n        {\n            \"productId\": \"1\",\n            \"quantity\": \"10\"\n        }\n    ],\n    \"status\": \"Payment_Waiting\" \n}\n"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Success\",\n    \"payload\": {\n        \"id\": 50,\n        \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n        \"paymentMethodId\": 1,\n        \"totalPrice\": 30000,\n        \"expiredAt\": \"2024-03-14T10:50:38.736Z\",\n        \"status\": \"payment_waiting\",\n        \"createdAt\": \"2024-03-14T09:50:38.854Z\",\n        \"updatedAt\": \"2024-03-14T09:50:38.854Z\",\n        \"orderProduct\": [\n            {\n                \"id\": 83,\n                \"productId\": 1,\n                \"qty\": 10,\n                \"subTotal\": 1000000\n            }\n        ]\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/user/:email": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"data\": {\n        \"id\": \"c4a9a31e-5868-42b3-9e2a-bc3ab521f5ee\",\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"userName\": \"admin2\",\n        \"email\": \"admin2@mail.com\",\n        \"phoneNumber\": \"0819208489612\",\n        \"role\": \"admin\",\n        \"isActive\": true,\n        \"createdAt\": \"2024-03-13T07:04:55.140Z\",\n        \"updatedAt\": \"2024-03-13T07:04:55.140Z\",\n        \"address\": [\n            {\n                \"id\": \"ce454fdc-f5c7-4fab-9b40-977d9a9d7ef5\",\n                \"userId\": \"c4a9a31e-5868-42b3-9e2a-bc3ab521f5ee\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true\n            },\n            {\n                \"id\": \"eb24c5ea-1585-46a3-9efc-36a174253a88\",\n                \"userId\": \"c4a9a31e-5868-42b3-9e2a-bc3ab521f5ee\",\n                \"address\": \"jakarta\",\n                \"name\": \"office\",\n                \"isUsed\": true\n            }\n        ]\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/address/:id": {
+      "get": {
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "header",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                 \"id\": \"36670be0-95a6-431d-b7e6-0501b4ad1f3b\",\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"address\": \"jogja\",\n                \"name\": \"office\",\n                \"isUsed\": true\n          \n        }\n}"
+            },
+            "schema": {
+              "$ref": "#/definitions/address"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "delete": {
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": "{\n    \"message\": \"Delete success\",\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/products": {
+      "get": {
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"success\",\n    \"payload\": [\n        {\n            \"id\": 1,\n            \"name\": \"Celana Chinos\",\n            \"merchantId\": 1,\n            \"price\": 100000,\n            \"category\": {\n                \"name\": \"edit cat\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"name\": \"kemeja\",\n            \"merchantId\": 1,\n            \"price\": 50000,\n            \"category\": {\n                \"name\": \"cat2\"\n            }\n        },\n        {\n            \"id\": 4,\n            \"name\": \"test stock\",\n            \"merchantId\": 1,\n            \"price\": 50000,\n            \"category\": {\n                \"name\": \"cat2\"\n            }\n        },\n        {\n            \"id\": 3,\n            \"name\": \"test stock\",\n            \"merchantId\": 1,\n            \"price\": 50000,\n            \"category\": {\n                \"name\": \"cat2\"\n            }\n        }\n    ]\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      },
+      "post": {
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "merchantId",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"message\": \"success\",\n    \"payload\": {\n        \"id\": 4,\n        \"name\": \"test stock\",\n        \"categoryId\": 3,\n        \"merchantId\": 1,\n        \"description\": \"test desc\",\n        \"price\": 50000,\n        \"stock\": 10,\n        \"updatedAt\": \"2024-03-18T06:14:39.543Z\",\n        \"createdAt\": \"2024-03-18T06:14:39.543Z\",\n        \"deletedAt\": null\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "product": {
+      "type": "object",
+      "required": [
+        "category",
+        "id",
+        "merchantId",
+        "name",
+        "price"
+      ],
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "id": {
+          "type": "string",
+          "format": "UUID"
+        },
+        "merchantId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        }
+      }
+    },
+    "address": {
+      "type": "object"
+    },
+    "merchant": {
+      "type": "object",
+      "required": [
+        "address",
+        "id",
+        "name",
+        "user"
+      ],
+      "properties": {
+        "address": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/address"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/user"
+        }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "UUID"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "media": {
+      "type": "object",
+      "required": [
+        "parentId",
+        "publicId",
+        "role",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "UUID"
+        },
+        "url": {
+          "type": "string"
+        },
+        "publicId": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "orderProduct": {
+      "type": "object",
+      "required": [
+        "id",
+        "productId",
+        "qty",
+        "subTotal"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "qty": {
+          "type": "string"
+        },
+        "subTotal": {
+          "type": "string"
+        }
+      }
+    },
+    "cartItems": {
+      "type": "object",
+      "required": [
+        "cartId",
+        "id",
+        "productId",
+        "qty"
+      ],
+      "properties": {
+        "cartId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string",
+          "format": "UUID"
+        },
+        "qty": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "category": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "login": {
+      "type": "object",
+      "required": [
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "required": [
+        "createdAt",
+        "email",
+        "firstName",
+        "id",
+        "isActive",
+        "lastName",
+        "phoneNumber",
+        "role",
+        "updatedAt",
+        "userName"
+      ],
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "UUID"
+        },
+        "isActive": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "merchant",
+            "buyer"
+          ]
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/address"
+        }
+      }
+    },
+    "cart": {
+      "type": "object",
+      "required": [
+        "productId",
+        "qty"
+      ],
+      "properties": {
+        "productId": {
+          "type": "string",
+          "format": "UUID"
+        },
+        "qty": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "order": {
+      "type": "object",
+      "required": [
+        "expiredAt",
+        "paymentMethodId",
+        "status",
+        "userId"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "paymentMethodId": {
+          "type": "string"
+        },
+        "expiredAt": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "payment_waiting",
+            "failed",
+            "processing",
+            "done"
+          ]
+        }
+      }
+    }
+  }
+}
