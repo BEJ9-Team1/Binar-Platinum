@@ -61,6 +61,8 @@ const create = async (req, res, next) => {
                 throw new NotFoundError("Product not Found")
         }
 
+
+
         //reduce stock, update stock in db product
         let totalPrice = 0
 
@@ -106,8 +108,7 @@ const create = async (req, res, next) => {
         }
 
         //select order and order product by order id
-        const data = await orderService.findById(orderId)
-        console.log("DATA ==>> ", data);
+        const data = await orderService.findById(req.user.id, orderId)
         res.status(StatusCodes.CREATED).json({
             message: "Success",
             payload: data
@@ -128,12 +129,11 @@ const update = async (req, res, next) => {
         const id = req.params.id
         const order = await orderService.findById(userId, id)
 
-        if(!order || userId !== order.dataValues.userId) throw new NotFoundError(`order not found`)
+        if(!order) throw new NotFoundError(`order not found`)
         if(order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
         await orderService.updateOrder(id, 'success')
 
         const updatedOrder = await orderService.findById(userId, id)
-        updatedOrder.dataValues.status = 'success'
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: updatedOrder,

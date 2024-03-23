@@ -49,7 +49,7 @@ const create = async (req, res, next) => {
 
         const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
-        const category = await categoryServices.lookup(req.body.category)
+        const category = await categoryServices.findById(req.body.categoryId)
 
         if (!category) throw new NotFoundError(`category ${category} not found`)
 

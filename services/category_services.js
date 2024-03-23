@@ -1,4 +1,3 @@
-const { where } = require('sequelize')
 const { Category } = require('../models')
 
 const lookup = async (payload) => {
@@ -6,7 +5,12 @@ const lookup = async (payload) => {
     return category  
 }
 
-const getAll = async (qParams) => {
+const findById = async (id) => {
+    const category = await Category.findByPk(id)
+    return category
+}
+
+const getAll = async () => {
     const category = await Category.findAndCountAll(
         {
             order: [
@@ -55,7 +59,6 @@ module.exports = {
     getAll,
     createCategory,
     update,
-    destroy
-    // updateMenu,
-    // deleteMenu
+    destroy,
+    findById
 }
