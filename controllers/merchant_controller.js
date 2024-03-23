@@ -76,8 +76,6 @@ const create = async (req, res, next) => {
 
         
         const result = await merchantService.createMerchant(newData)
-        console.log(userId)
-        console.log(result)
         const refreshToken = await authToken.refreshToken(userId, dataUser.userName, dataUser.role)
 
         res.status(StatusCodes.CREATED).json({

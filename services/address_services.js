@@ -37,7 +37,6 @@ const getAll = async (qParams) => {
 
 
 const destroy = async (addressId) => {
-    console.log(addressId);
     const result = await Address.destroy({
         where: {
             id: addressId,
