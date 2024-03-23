@@ -1,7 +1,7 @@
 const Joi = require('joi'); 
 
 const createCartDTO = Joi.object({ 
-    productId:Joi.number().integer().required(),
+    productId:Joi.string().required(),
     qty:Joi.number().integer().required(),
 })
 
