@@ -43,9 +43,7 @@ const find = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
         const merchantDTO = await createMerchantDTO.validateAsync(req.body)
-        console.log("req user id = ", req.user.id)
         const userId = req.user.id
-        console.log("userId = ", userId);
 
 
         //update role in user
@@ -57,7 +55,7 @@ const create = async (req, res, next) => {
             role: 'merchant'
         }
         
-        const userAddress = await addressService.lookup(userId)
+        const userAddress = await addressService.find(userId)
         const updateRole = await userService.updateRole(userId, updateRoleUser)
 
         const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
@@ -78,8 +76,6 @@ const create = async (req, res, next) => {
 
         
         const result = await merchantService.createMerchant(newData)
-        console.log(userId)
-        console.log(result)
         const refreshToken = await authToken.refreshToken(userId, dataUser.userName, dataUser.role)
 
         res.status(StatusCodes.CREATED).json({

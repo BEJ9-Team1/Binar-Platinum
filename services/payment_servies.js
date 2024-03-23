@@ -6,7 +6,6 @@ const getAll = async(none)=>{
 }
 
 const lookup = async(params)=>{
-    console.log(params)
     const payment = Payment.findOne({where:{name:params}})
     return payment
 }

@@ -10,7 +10,9 @@ const getOne = async (userId) => {
                 model:Media,
                 as:"UserImage",
                 attributes:['url']
-            }]
+            },
+            { model: Address, as: 'address' }
+            ]
         }
         )
     return user
@@ -50,7 +52,6 @@ const registerUser = async (payload) => {
     }
     );
 
-    console.log('USER ==> ', registerUser);
 
     return registerUser;
    

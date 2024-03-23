@@ -23,7 +23,6 @@ const index = async (req,res,next)=>{
 const find = async (req, res, next) => {
     try {
         const result = await paymentService.lookup(req.params.name);
-        console.log(result)
         res.status(StatusCodes.OK).json({
             data: result,
         });
@@ -58,7 +57,6 @@ const update = async(req, res, next) => {
     try {
         const paymentId = req.params.id
         const checkDuplicate = await paymentService.lookup(req.body.name)
-        console.log(checkDuplicate)
         if(checkDuplicate) throw new BadRequestError(`${checkDuplicate.name} has been added`)
         const PaymentDTO = await createPaymentDTO.validateAsync(req.body)
         const newData = {

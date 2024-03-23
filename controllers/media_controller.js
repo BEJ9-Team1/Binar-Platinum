@@ -66,7 +66,6 @@ const createProduct = async(req,res,next)=>{
     try{
         const prod=await productService.findById(req.params.id)
         if(!prod)throw new NotFoundError("product not found")
-        console.log(prod)
         if(!req.file) throw new BadRequestError("Image does not exist")
         let uploadResult = await uploadCloudinary(req.file.path);
         const payload={
@@ -84,7 +83,6 @@ const createProduct = async(req,res,next)=>{
         res.status(StatusCodes.OK).json(result)
 
     }catch(error){
-        console.log("e1")
         next(error);
     }
 
@@ -98,7 +96,6 @@ const updateImage = async(req,res,next)=>{
         const oldData = await mediaService.lookup(mediaId);
         mediaService.rollbackUploadCloudinary(oldData.publicId)
         let uploadResult = await uploadCloudinary(req.file.path)
-        console.log(uploadResult)
         const newData={
             url:uploadResult.secure_url,
             publicId:uploadResult.public_id,

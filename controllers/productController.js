@@ -45,7 +45,6 @@ const create = async (req, res, next) => {
 
         const userId = req.user.id
         const merchant = await merchant_services.lookup(userId)
-        console.log(merchant.dataValues.id)
 
         const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
@@ -56,7 +55,7 @@ const create = async (req, res, next) => {
         const payload = {
             name: productDTO.name,
             categoryId: category.id,
-            merchantId: merchant.dataValues.id,
+            merchantId: merchant.id,
             description: productDTO.description,
             price: productDTO.price,
             stock: productDTO.stock
