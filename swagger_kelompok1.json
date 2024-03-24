@@ -3,7 +3,7 @@
   "info": {
     "description": "There are services to register user, login, logout, crud order, etc.\n",
     "version": "1.0",
-    "title": "Test_API"
+    "title": "Bingle Shop Team One"
   },
   "consumes": [
     "application/json"
@@ -14,6 +14,9 @@
   "paths": {
     "/api/v1.0/cart": {
       "get": {
+        "tags": [
+          "cart"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -41,6 +44,9 @@
         }
       },
       "post": {
+        "tags": [
+          "cart"
+        ],
         "operationId": "",
         "consumes": [
           "application/json"
@@ -86,6 +92,9 @@
     },
     "/api/v1.0/user": {
       "get": {
+        "tags": [
+          "user"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -108,6 +117,9 @@
         }
       },
       "post": {
+        "tags": [
+          "user"
+        ],
         "consumes": [
           "application/json"
         ],
@@ -175,6 +187,9 @@
     },
     "/api/v1.0/cart/:id": {
       "get": {
+        "tags": [
+          "cart"
+        ],
         "operationId": "",
         "consumes": [
           "application/json"
@@ -210,7 +225,7 @@
           "200": {
             "description": "OK",
             "examples": {
-              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        \n    }\n}\n"
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        \n    \n}\n"
             },
             "schema": {
               "type": "object"
@@ -222,6 +237,9 @@
         }
       },
       "patch": {
+        "tags": [
+          "cart"
+        ],
         "operationId": "",
         "consumes": [
           "application/json"
@@ -246,7 +264,7 @@
           "200": {
             "description": "OK",
             "examples": {
-              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        \n    }\n}\n"
+              "application/json": "{\n    \"message\": \"Request Success\",\n    \"payload\": {\n                \"id\": 1,\n                \"userId\": \"f8c842e2-7307-4f27-8b53-3892ae0a9d68\",\n                \"createdAt\": \"2024-03-14T04:22:44.995Z\",\n                \"updatedAt\": \"2024-03-14T04:22:44.995Z\",\n                \"Cartitem\": [\n                    {\n                        \"id\": 1,\n                        \"cartId\": 1,\n                        \"productId\": 2,\n                        \"qty\": 100,\n                        \"createdAt\": \"2024-03-14T04:22:45.000Z\",\n                        \"updatedAt\": \"2024-03-14T04:22:45.000Z\"\n                    }\n                ]\n            }\n        \n    \n}\n"
             },
             "schema": {
               "type": "object"
@@ -260,6 +278,9 @@
     },
     "/api/v1.0/merchant/:name": {
       "patch": {
+        "tags": [
+          "merchant"
+        ],
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -282,8 +303,133 @@
         }
       }
     },
+    "/api/v1.0/payment/": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"status\": 200,\n    \"message\": \"Request Success\",\n    \"data\": {\n        \"count\": 2,\n        \"rows\": [\n            {\n                \"id\": 3,\n                \"name\": \"bca\",\n                \"createdAt\": \"2024-03-13T08:31:25.338Z\",\n                \"updatedAt\": \"2024-03-13T08:31:25.338Z\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"gopay\",\n                \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n                \"updatedAt\": \"2024-03-13T08:30:39.527Z\"\n            }\n        ]\n    }\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "payment"
+        ],
+        "operationId": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n        \"id\":\"2a2b3c\",\n        \"name\": \"virtual account bca\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": \"2024-03-13T08:30:39.527Z\"\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/payment/:name": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n        \"id\":\"2a2b3c\",\n        \"name\": \"virtual account bca\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": \"2024-03-13T08:30:39.527Z\"\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/payment/:id": {
+      "put": {
+        "tags": [
+          "payment"
+        ],
+        "consumes": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n        \"id\": \"2a2b3c\",\n        \"name\": \"virtual account bca\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": \"2024-03-13T08:30:39.527Z\"\n}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
     "/api/v1.0/category/:id": {
       "get": {
+        "tags": [
+          "category"
+        ],
         "consumes": [],
         "produces": [
           "application/json"
@@ -319,6 +465,9 @@
         }
       },
       "post": {
+        "tags": [
+          "category"
+        ],
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -352,6 +501,9 @@
     },
     "/api/v1.0/media": {
       "get": {
+        "tags": [
+          "media"
+        ],
         "consumes": [],
         "produces": [
           "application/json"
@@ -367,11 +519,25 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
           }
         }
-      },
+      }
+    },
+    "/api/v1.0/media/user": {
       "post": {
+        "tags": [
+          "media"
+        ],
         "consumes": [
           "multipart/mixed"
         ],
@@ -389,7 +555,41 @@
           "200": {
             "description": "OK",
             "examples": {
-              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/v1.0/media/product": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "consumes": [
+          "multipart/mixed"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
             },
             "schema": {
               "type": "object"
@@ -403,13 +603,16 @@
     },
     "/api/v1.0/media/:id": {
       "put": {
+        "tags": [
+          "media"
+        ],
         "consumes": [],
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK",
             "examples": {
-              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
             },
             "schema": {
               "type": "object"
@@ -421,6 +624,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "media"
+        ],
         "consumes": [],
         "parameters": [],
         "responses": {
@@ -441,6 +647,9 @@
     },
     "/api/v1.0/order/:id": {
       "get": {
+        "tags": [
+          "order"
+        ],
         "consumes": [],
         "produces": [
           "application/json"
@@ -478,6 +687,9 @@
     },
     "/api/v1.0/auth/login": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -504,6 +716,9 @@
     },
     "/api/v1.0/auth/logout": {
       "post": {
+        "tags": [
+          "auth"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -533,6 +748,9 @@
     },
     "/api/v1.0/products/:id": {
       "get": {
+        "tags": [
+          "product"
+        ],
         "consumes": [],
         "produces": [
           "application/json"
@@ -570,6 +788,9 @@
     },
     "/api/v1.0/category": {
       "get": {
+        "tags": [
+          "category"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -592,6 +813,9 @@
         }
       },
       "post": {
+        "tags": [
+          "category"
+        ],
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -635,6 +859,9 @@
     },
     "/api/v1.0/address": {
       "get": {
+        "tags": [
+          "address"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -664,6 +891,9 @@
     },
     "/api/v1.0/merchant": {
       "get": {
+        "tags": [
+          "merchant"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -688,6 +918,9 @@
     },
     "/api/v1.0/order": {
       "get": {
+        "tags": [
+          "order"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -710,6 +943,9 @@
         }
       },
       "post": {
+        "tags": [
+          "order"
+        ],
         "operationId": "",
         "consumes": [
           "application/json"
@@ -755,6 +991,9 @@
     },
     "/api/v1.0/user/:email": {
       "get": {
+        "tags": [
+          "user"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -793,6 +1032,9 @@
     },
     "/api/v1.0/address/:id": {
       "get": {
+        "tags": [
+          "address"
+        ],
         "consumes": [],
         "produces": [
           "application/json"
@@ -829,6 +1071,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "address"
+        ],
         "consumes": [],
         "produces": [
           "application/json"
@@ -849,6 +1094,9 @@
     },
     "/api/v1.0/products": {
       "get": {
+        "tags": [
+          "product"
+        ],
         "operationId": "",
         "consumes": [],
         "produces": [
@@ -871,6 +1119,9 @@
         }
       },
       "post": {
+        "tags": [
+          "product"
+        ],
         "operationId": "",
         "consumes": [
           "application/x-www-form-urlencoded"
@@ -1002,6 +1253,12 @@
           "format": "UUID"
         },
         "name": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
           "type": "string"
         }
       }

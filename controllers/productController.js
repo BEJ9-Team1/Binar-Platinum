@@ -20,9 +20,10 @@ const index = async (req, res) => {
 
 }
 
-const findById = async (req, res, next) => {
+const findOne = async (req, res, next) => {
 
     const id = req.params.id
+
     try {
 
         const product = await productServices.findById(id)
@@ -48,7 +49,7 @@ const create = async (req, res, next) => {
 
         const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
-        const category = await categoryServices.lookup(req.body.category)
+        const category = await categoryServices.findById(req.body.categoryId)
 
         if (!category) throw new NotFoundError(`category ${category} not found`)
 
@@ -112,7 +113,7 @@ const update = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
 
-    const id = +req.params.id
+    const id = req.params.id
 
     const userId = req.user.id
 
@@ -146,7 +147,7 @@ const deleteProduct = async (req, res, next) => {
 
 module.exports = {
     index,
-    findById,
+    findOne,
     create,
     update,
     deleteProduct
