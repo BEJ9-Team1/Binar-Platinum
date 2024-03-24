@@ -6,7 +6,6 @@ const RoleGuard = (requiredRole1, requiredRole2) => {
 
       try {
         userData = req.user
-        console.log(userData);
         const userRole = userData.role;
 
         let count = 0
