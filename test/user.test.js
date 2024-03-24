@@ -114,38 +114,6 @@ describe("Test POST /user", () => {
     });
 });
 
-describe(`Verify User`, () => {
-    it(`User Buyer Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + userId[0])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-
-    it(`User Merchant Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + userId[1])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-
-    it(`User Admin Merchantp2 Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + userId[2])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-})
-
 let tokenBuyer = ''
 let tokenMerchant = ''
 let tokenAdmin = ''

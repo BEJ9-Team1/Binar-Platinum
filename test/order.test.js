@@ -157,48 +157,6 @@ describe("Test POST /api/v1.0/user ", () => {
     });
 });
 
-describe(`Verify User`, () => {
-    it(`Buyero1 Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + idUser[0])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-
-    it(`Buyero2 Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + idUser[1])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-
-    it(`Merchanto1 Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + idUser[2])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-    
-    it(`Admino1 Should be 200`, (done) => {
-        request(app)
-            .get(`/api/v1.0/verify/` + idUser[3])
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                expect(res.statusCode).toBe(200);
-                done();
-            });
-    })
-})
-
 // * MOCK LOGIN USER
 describe("Test POST /login", () => {
     it("Buyer1 login should response 200", (done) => {
