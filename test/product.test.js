@@ -24,7 +24,7 @@ describe("Test POST /login", () => {
     it("Buyer1 login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'buyer'
+        req.body.userName = 'buyerorder1'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
@@ -41,7 +41,7 @@ describe("Test POST /login", () => {
     it("Merchant1 login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'merchant'
+        req.body.userName = 'merchantproduct1'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
@@ -58,7 +58,7 @@ describe("Test POST /login", () => {
     it("Merchant2 login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'merchant2'
+        req.body.userName = 'merchantproduct2'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
