@@ -14,7 +14,6 @@ const login = async (req, res, next) => {
 
         if (foundUser) {
             const isValidPassword = bcrypt.compareSync(password, foundUser.password);
-            // if (!foundUser.isActive) throw new UnauthorizedError(`Your account is not activated`)
             if (isValidPassword) {
                 const payload = {
                     id: foundUser.id,

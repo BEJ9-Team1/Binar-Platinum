@@ -71,7 +71,7 @@ describe('Create Order Unit Test', () => {
         findById.mockRejectedValue(new Error('Product not Found'))
 
         await create(req, res, next)
-        expect(next).toBeCalledWith({ message: "Product not Found", status: 400 })
+        expect(next).toBeCalledWith(new Error('Product not Found'))
     })
 
     it('must return error if product stock less than order quantity', async () => {

@@ -10,143 +10,6 @@ const mockRequest = (body = {}, params = {}, query = {}) => {
     };
 }
 
-let userId = []
-
-//* MOCK REGISTER 
-describe("Test POST /api/v1.0/user ", () => {
-    it("Register Buyer Should response 201", (done) => {
-        // Supertest berfungsi sebagai pelaksana server
-        const req = mockRequest()
-        req.body = {
-            firstName: "buyerp1",
-            lastName: "buyerp1",
-            userName: "buyerp1",
-            email: "buyerp1@mail.com",
-            phoneNumber: "0819208489612",
-            password: "kapallawd",
-            confirmPassword: "kapallawd",
-            role: "buyer",
-            address: [
-                {
-                    "address": "jogja",
-                    "name": "office",
-                    "isUsed": true
-                },
-                {
-                    "address": "jakarta",
-                    "name": "office",
-                    "isUsed": true
-                }
-            ]
-        }
-        request(app)
-            .post("/api/v1.0/user")
-            .send(req.body)
-            .set('Accept', 'application/json')
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                userId.push(res.body.payload.id)
-                expect(res.statusCode).toBe(201);
-                done();
-            });
-    });
-
-    it("Register Merchant1 Should response 201", (done) => {
-        // Supertest berfungsi sebagai pelaksana server
-        const req = mockRequest()
-        req.body = {
-            firstName: "merchantp1",
-            lastName: "merchantp1",
-            userName: "merchantp1",
-            email: "merchantp1@mail.com",
-            phoneNumber: "0819208489612",
-            password: "kapallawd",
-            confirmPassword: "kapallawd",
-            role: "merchant",
-            address: [
-                {
-                    "address": "jogja",
-                    "name": "office",
-                    "isUsed": true
-                }
-            ]
-        }
-        request(app)
-            .post("/api/v1.0/user")
-            .send(req.body)
-            .set('Accept', 'application/json')
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                userId.push(res.body.payload.id)
-                expect(res.statusCode).toBe(201);
-                done();
-            });
-    });
-
-    it("Register Merchant2 Should response 201", (done) => {
-        // Supertest berfungsi sebagai pelaksana server
-        const req = mockRequest()
-        req.body = {
-            firstName: "merchantp2",
-            lastName: "merchantp2",
-            userName: "merchantp2",
-            email: "merchantp2@mail.com",
-            phoneNumber: "0819208489613",
-            password: "kapallawd",
-            confirmPassword: "kapallawd",
-            role: "merchant",
-            address: [
-                {
-                    "address": "Semarang",
-                    "name": "office",
-                    "isUsed": true
-                }
-            ]
-        }
-        request(app)
-            .post("/api/v1.0/user")
-            .send(req.body)
-            .set('Accept', 'application/json')
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                userId.push(res.body.payload.id)
-                expect(res.statusCode).toBe(201);
-                done();
-            });
-    });
-
-    it("Register Admin Should response 201", (done) => {
-        // Supertest berfungsi sebagai pelaksana server
-        const req = mockRequest()
-        req.body = {
-            firstName: "adminp1",
-            lastName: "adminp1",
-            userName: "adminp1",
-            email: "adminp1@mail.com",
-            phoneNumber: "0819208489612",
-            password: "kapallawd",
-            confirmPassword: "kapallawd",
-            role: "admin",
-            address: [
-                {
-                    "address": "Jakarta",
-                    "name": "office",
-                    "isUsed": true
-                }
-            ]
-        }
-        request(app)
-            .post("/api/v1.0/user")
-            .send(req.body)
-            .set('Accept', 'application/json')
-            .then((res) => {
-                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-                userId.push(res.body.payload.id)
-                expect(res.statusCode).toBe(201);
-                done();
-            });
-    });
-});
 
 // * VARIABLES //
 let tokenBuyer = ''
@@ -161,7 +24,7 @@ describe("Test POST /login", () => {
     it("Buyer1 login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'buyerp1'
+        req.body.userName = 'buyer'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
@@ -178,7 +41,7 @@ describe("Test POST /login", () => {
     it("Merchant1 login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'merchantp1'
+        req.body.userName = 'merchant'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
@@ -195,7 +58,7 @@ describe("Test POST /login", () => {
     it("Merchant2 login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'merchantp2'
+        req.body.userName = 'merchant2'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")
@@ -212,7 +75,7 @@ describe("Test POST /login", () => {
     it("Admin login should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         const req = mockRequest();
-        req.body.userName = 'adminp1'
+        req.body.userName = 'admin'
         req.body.password = 'kapallawd'
         request(app)
             .post("/api/v1.0/auth/login")

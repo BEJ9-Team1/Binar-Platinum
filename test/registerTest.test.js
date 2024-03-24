@@ -45,7 +45,7 @@ beforeEach(() => {
         firstName: 'firstName',
         lastName: 'lastName',
         userName: 'userName',
-        email: process.env.RECEIVER_EMAIL,
+        email: process.env.NODEMAILER_EMAIL,
         phoneNumber: 'phoneNumber',
         password: 'password',
         confirmPassword: 'password',
@@ -56,7 +56,7 @@ describe('Function Testing for Register New User', () => {
 
     it('return error if email is exists', async () => {
 
-        emailIsExists.mockResolvedValue(Promise.resolve({ email: process.env.RECEIVER_EMAIL }))
+        emailIsExists.mockResolvedValue(Promise.resolve({ email: process.env.NODEMAILER_EMAIL }))
         await create(req, res, next)
         expect(next).toBeCalledWith(new Error(`${req.body.email} has been registered before`))
     })

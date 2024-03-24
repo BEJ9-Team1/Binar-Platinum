@@ -216,7 +216,6 @@ const crontab = async (req, res, next) => {
 //if there are any order with status payment_waiting, scheduller will check expired time
 //if current time more than expired time, status order will change to failed
 cron.schedule('* * * * *', async () => {
-cron.schedule('* * * * *', async () => {
     await crontab()
 });
 

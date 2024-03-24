@@ -28,6 +28,26 @@
         "password": "kapallawd",
         "role": "merchant",
         "isActive": true
+    },
+    {
+        "firstName": "buyer1",
+        "lastName": "buyer1",
+        "userName": "buyer1",
+        "email": "buyer1@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "buyer",
+        "isActive": true
+    },
+    {
+        "firstName": "merchant2",
+        "lastName": "merchant2",
+        "userName": "merchant2",
+        "email": "merchant2@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "merchant",
+        "isActive": true
     }
     
     

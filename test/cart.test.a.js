@@ -142,7 +142,7 @@ describe('Test POST /products', () => {
 
 
 //POSITIVE CASE//
-const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestLogin = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
