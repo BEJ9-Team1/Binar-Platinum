@@ -1,6 +1,6 @@
 const orderService = require('../services/order_services')
 const orderPorductServices = require('../services/orderProduct_services')
-const { OrderProduct, Product, sequelize } = require('../models')
+const { OrderProduct, Product, Order, sequelize } = require('../models')
 const productService = require('../services/productServices')
 const { createOrderDTO, updateOrderDTO } = require('../validators/order_validator')
 const { StatusCodes } = require('http-status-codes');
@@ -45,63 +45,68 @@ const find = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
 
+        let orderId
         const result = await sequelize.transaction(async (t) => {
 
- //not using transaction, so product stock will check first
-        const orderDTO = await createOrderDTO.validateAsync(req.body)
-        //expired time set 60 minutes
-        const expiredAt = new Date(Date.now() + (60 * 60 * 1000)).toISOString()
-        const productList = req.body.orderProducts
-        
-        //reduce stock, update stock in db product
-        let totalPrice = 0
+            //not using transaction, so product stock will check first
+            const orderDTO = await createOrderDTO.validateAsync(req.body)
+            //expired time set 60 minutes
+            const expiredAt = new Date(Date.now() + (60 * 60 * 1000)).toISOString()
+            const productList = req.body.orderProducts
 
-        for (let i = 0; i < productList.length; i++) {
-            const product = productList[i];
-            const productId = product.productId
-            const productStock = await productService.findById(productId)
-            if (productStock) {
-                availableStock = productStock.stock
-                const newStock = availableStock - product.quantity
-                if (newStock < 0) throw new BadRequestError('Stock less than your order')
-            } else
-                throw new NotFoundError("Product not Found")
-            const subTotal = productStock.dataValues.price * product.quantity
-            totalPrice += subTotal
-            const payload = { stock: newStock }
-            const update = await productService.updateProduct(productId, payload,t)    
+            //reduce stock, update stock in db product
+            let totalPrice = 0
+
+            for (let i = 0; i < productList.length; i++) {
+                const product = productList[i];
+                const productId = product.productId
+                const productStock = await productService.findById(productId)
+                let newStock = 0
+                if (productStock) {
+                    availableStock = productStock.stock
+                    newStock = availableStock - product.quantity
+                    if (newStock < 0) throw new BadRequestError('Stock less than your order')
+                } else
+                    throw new NotFoundError("Product not Found")
+                const subTotal = productStock.dataValues.price * product.quantity
+                totalPrice += subTotal
+                const payload = { stock: newStock }
+                const update = await productService.updateProduct(productId, payload, t)
             }
 
-        //insert to db order
-        const payload = {
-            userId: req.user.id,
-            paymentMethodId: orderDTO.paymentMethodId,
-            totalPrice: totalPrice,
-            expiredAt: expiredAt,
-            status: "payment_waiting",
-        }
-        const result = await orderService.createOrder(payload, t);
-
-        //insert to db order product
-        const orderId = result.dataValues.id
-
-        for (let i = 0; i < productList.length; i++) {
-            const product = productList[i];
-            const getProductDetail = await productService.findById(product.productId)
-            //calculate sub total
-            const productPrice = getProductDetail.price
-            const subTotal = product.quantity * productPrice
-            //insert order product
+            //insert to db order
             const payload = {
-                orderId: orderId,
-                productId: product.productId,
-                qty: product.quantity,
-                subTotal: subTotal
+                userId: req.user.id,
+                paymentMethodId: orderDTO.paymentMethodId,
+                totalPrice: totalPrice,
+                expiredAt: expiredAt,
+                status: "payment_waiting",
             }
-            await orderPorductServices.createOrderProduct(payload, t)
-        }
+            const result = await orderService.createOrder(payload, t);
 
-        //select order and order product by order id
+            //insert to db order product
+            orderId = result.dataValues.id
+
+            for (let i = 0; i < productList.length; i++) {
+                const product = productList[i];
+                const getProductDetail = await productService.findById(product.productId)
+                //calculate sub total
+                const productPrice = getProductDetail.price
+                const subTotal = product.quantity * productPrice
+                //insert order product
+                const payload = {
+                    orderId: orderId,
+                    productId: product.productId,
+                    qty: product.quantity,
+                    subTotal: subTotal
+                }
+                await orderPorductServices.createOrderProduct(payload, t)
+            }
+
+            //select order and order product by order id
+                
+        });
+        
         const data = await orderService.findById(req.user.id, orderId)
 
         res.status(StatusCodes.CREATED).json({
@@ -109,18 +114,15 @@ const create = async (req, res, next) => {
             payload: data
         });
 
-      
-        });
-      
         // If the execution reaches this line, the transaction has been committed successfully
         // `result` is whatever was returned from the transaction callback (the `user`, in this case)
-      
-      } catch (error) {
+
+    } catch (error) {
         next(error)
         // If the execution reaches this line, an error occurred.
         // The transaction has already been rolled back automatically by Sequelize!
-      
-      }
+
+    }
 };
 
 const update = async (req, res, next) => {
