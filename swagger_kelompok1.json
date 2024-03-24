@@ -281,6 +281,112 @@
           }
         }
       }
+    }, "/api/v1.0/payment/": {
+      "get":{
+        "operationId": "",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"status\": 200,\n    \"message\": \"Request Success\",\n    \"data\": {\n        \"count\": 2,\n        \"rows\": [\n            {\n                \"id\": 3,\n                \"name\": \"cat2\",\n                \"createdAt\": \"2024-03-13T08:31:25.338Z\",\n                \"updatedAt\": \"2024-03-13T08:31:25.338Z\",\n                \"deletedAt\": null\n            },\n            {\n                \"id\": 2,\n                \"name\": \"cat1\",\n                \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n                \"updatedAt\": \"2024-03-13T08:30:39.527Z\",\n                \"deletedAt\": null\n            }\n        ]\n    }\n}\n"
+      },
+      "schema": {
+        "type": "object"
+      }
+    }}
+  },
+    "post": {
+      "operationId": "",
+      "consumes": [
+        "application/x-www-form-urlencoded"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "Authorization",
+          "in": "header",
+          "description": "Bearer token",
+          "required": true,
+          "type": "string"
+        }
+      ],"responses": {
+        "200": {
+          "description": "OK",
+          "examples": {
+            "application/json": "{\n        \"id\": 2a2b3c,\n        \"name\": \"virtual account bca\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": \"2024-03-13T08:30:39.527Z\",\n}\n"
+          },
+          "schema": {
+            "type": "object"
+          }
+        },
+        "401": {
+          "description": "Access Denied"
+        }
+      }
+  }
+  },"/api/v1.0/payment/:name":{
+      "get":{
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n        \"id\":\" 2a2b3c\",\n        \"name\": \"virtual account bca\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": 2024-03-13T08:30:39.527Z}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+
+      }
+  },"/api/v1.0/payment/:id": {
+    "put": {
+      "consumes": [],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "examples": {
+            "application/json": "{\n        \"id\": 2a2b3c,\n        \"name\": \"virtual account bca\",\n        \"createdAt\": \"2024-03-13T08:30:39.527Z\",\n        \"updatedAt\": \"2024-03-13T08:30:39.527Z\",\n}\n"
+          },
+          "schema": {
+            "type": "object"
+          }
+        },
+        "401": {
+          "description": "Access Denied"
+        }
+      }
+    }
     },
     "/api/v1.0/category/:id": {
       "get": {
@@ -367,10 +473,19 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
           }
-        }
-      },
+          }
+        }},"/api/v1.0/media/user": {
       "post": {
         "consumes": [
           "multipart/mixed"
@@ -389,7 +504,37 @@
           "200": {
             "description": "OK",
             "examples": {
-              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
+            },
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },"/api/v1.0/media/product": {
+      "post": {
+        "consumes": [
+          "multipart/mixed"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
             },
             "schema": {
               "type": "object"
@@ -409,7 +554,7 @@
           "200": {
             "description": "OK",
             "examples": {
-              "application/json": "{\n    \"message\": \"Request Success\",\n}\n"
+              "application/json": "{\n    \"id\": \"1\",\n  \"url\": \"example.com\",\n \"publicId\": \"sample.jpg\",\n \"parentId\": \"1a2b3c\",\n  \"role\": \"profile\",\n \"createdAt\":  \"2024-03-14T10:25:32.990Z\",\n        \"deletedAt\": null}\n"
             },
             "schema": {
               "type": "object"
@@ -1002,6 +1147,11 @@
           "format": "UUID"
         },
         "name": {
+          "type": "string"
+        }, "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
           "type": "string"
         }
       }
