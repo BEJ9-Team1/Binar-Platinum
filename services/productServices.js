@@ -50,7 +50,7 @@ const createProducts = async (payload) => {
     return createProduct
 }
 
-const updateProduct = async (productId, payload,{transaction}) => {
+const updateProduct = async (productId, payload,t) => {
     
     const { ...product } = payload
 
@@ -59,11 +59,11 @@ const updateProduct = async (productId, payload,{transaction}) => {
         {
             where: {
                 id: productId
-            }
-        },{transaction}
+            },
+            transaction: t
+        }
         )
-
-    return updateProduct
+        return updateProduct
 }
 
 const deleteProduct =async(productId) => {
