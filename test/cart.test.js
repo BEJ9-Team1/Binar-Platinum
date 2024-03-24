@@ -32,6 +32,28 @@ describe("Test POST /login", () => {
     });
 });
 
+const mockRequestCategory = (body = {name: "categoryTest"}, params = {}, query = {}) => {
+    return {
+        body: body,
+        params: params,
+        query: query,
+    };
+};
+
+describe('Test POST /category', () => {
+    it('must return 201', (done) => {
+        const req = mockRequestCategory()
+        request(app)
+            .post("/api/v1.0/category")
+            .send(req.body)
+            .set('Authorization', `Bearer ${tokenAdmin}`)
+            .then((res) => {
+                console.log("RES CATEGORY", res.body)
+                expect(res.statusCode).toBe(201)
+                done()
+            })
+    })
+})
 
 const mockRequestLoginMerchant = (body = {userName: "merchant", password: "kapallawd"}, params = {}, query = {}) => {
     return {
@@ -89,7 +111,7 @@ describe("Test CREATE /merchant", () => {
 
 const mockRequestProduct = (body = {
     name: "Product Biar Bisa Create Cart",
-    category: "electronics",
+    categoryId: 1,
     description: "Product Merchant",
     price: 150000,
     stock: 20
@@ -120,7 +142,7 @@ describe('Test POST /products', () => {
 
 
 //POSITIVE CASE//
-const mockRequestLogin = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,

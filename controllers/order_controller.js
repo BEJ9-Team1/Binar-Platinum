@@ -135,8 +135,6 @@ const update = async (req, res, next) => {
 
         if (!order) throw new NotFoundError(`order not found`)
         if (order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
-        if (!order) throw new NotFoundError(`order not found`)
-        if (order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
         await orderService.updateOrder(id, 'success')
 
         const updatedOrder = await orderService.findById(userId, id)
