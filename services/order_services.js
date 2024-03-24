@@ -35,10 +35,13 @@ const findById = async (userId, id) => {
 }
 
 //include productid
-const createOrder = async (payload) => {
+const createOrder = async (payload, t) => {
     const { ...order } = payload
     const createOrder = await Order.create({
-        ...order
+        ...order,
+    },
+    {
+        transaction: t
     }
     );
 

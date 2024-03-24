@@ -14,18 +14,22 @@ module.exports = (sequelize, DataTypes) => {
       OrderProduct.belongsTo(models.Product, {
         as: 'product',
         foreignKey: 'productId',
-        sourceKey: 'id'
+        sourceKey: 'id',
+        onUpdate:"cascade",
+        onDelete:"cascade"
       })
       OrderProduct.belongsTo(models.Order, {
         as: 'order',
         foreignKey: 'orderId',
-        sourceKey: 'id'
+        sourceKey: 'id',
+        onUpdate:"cascade",
+        onDelete:"cascade"
       })
     }
   }
   OrderProduct.init({
     orderId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
+    productId: DataTypes.UUID,
     qty: DataTypes.INTEGER,
     subTotal: DataTypes.FLOAT
   }, {
