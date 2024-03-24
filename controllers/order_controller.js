@@ -1,11 +1,11 @@
 const orderService = require('../services/order_services')
 const orderPorductServices = require('../services/orderProduct_services')
+const { OrderProduct, Product } = require('../models')
 const productService = require('../services/productServices')
 const { createOrderDTO, updateOrderDTO } = require('../validators/order_validator')
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 const cron = require('node-cron');
-//const { message } = require('../validators/media_validator')
 
 
 const index = async (req, res, next) => {
@@ -29,7 +29,7 @@ const find = async (req, res, next) => {
         const userId = req.user.id
         const id = +req.params.id
         const order = await orderService.findById(userId, id)
-        if(!order) throw new NotFoundError(`order not found`)
+        if (!order) throw new NotFoundError(`order not found`)
         return res.status(200).json({
             message: 'Request Success',
             payload: order
@@ -129,8 +129,8 @@ const update = async (req, res, next) => {
         const id = req.params.id
         const order = await orderService.findById(userId, id)
 
-        if(!order) throw new NotFoundError(`order not found`)
-        if(order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
+        if (!order) throw new NotFoundError(`order not found`)
+        if (order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
         await orderService.updateOrder(id, 'success')
 
         const updatedOrder = await orderService.findById(userId, id)
@@ -154,14 +154,30 @@ const crontab = async (req, res, next) => {
             const currentTime = new Date(Date.now()).valueOf()
             const diffTime = (expiredAt - currentTime)
             //if expiredAt - currentTime < 0 set order status to failed
-            if (diffTime < 0) {
-                if (currentStatus === 'payment_waiting') {
-                    orderService.updateOrder(orderId, 'failed')
+            if (diffTime < 0 && currentStatus === 'payment_waiting') {
+                await orderService.updateOrder(orderId, 'failed')
+                const orderProduct = await OrderProduct.findAll({
+                    where: {
+                        orderId: orderId
+                    }
+                })
+
+                for (let i = 0; i < orderProduct.length; i++) {
+                    await Product.increment({
+                        stock: orderProduct[i].dataValues.qty
+                    }, {
+                        where:
+                        {
+                            id: orderProduct[i].dataValues.productId
+                        }
+                    })
                 }
             }
 
+
         })
         return res.status(200).json({ message: 'success', payload: orderStatus })
+
 
     } catch (error) {
 
@@ -174,7 +190,7 @@ const crontab = async (req, res, next) => {
 //crontab running every 5 minute to check database 
 //if there are any order with status payment_waiting, scheduller will check expired time
 //if current time more than expired time, status order will change to failed
-cron.schedule('* * * * *', async() => {
+cron.schedule('* * * * *', async () => {
     await crontab()
 });
 
