@@ -1,4 +1,4 @@
-const { Product, Category,Media } = require('../models')
+const { Product, Category,Media} = require('../models')
 
 const getAll = async () => {
     const products = await Product.findAll({
@@ -38,6 +38,7 @@ const findById = async (productId) => {
 }
 
 const createProducts = async (payload) => {
+
     const { ...product } = payload
 
     const createProduct = await Product.create(
@@ -49,8 +50,8 @@ const createProducts = async (payload) => {
     return createProduct
 }
 
-const updateProduct = async (productId, payload) => {
-
+const updateProduct = async (productId, payload,t) => {
+    
     const { ...product } = payload
 
     const updateProduct = await Product.update(
@@ -58,10 +59,11 @@ const updateProduct = async (productId, payload) => {
         {
             where: {
                 id: productId
-            }
-        })
-
-    return updateProduct
+            },
+            transaction: t
+        }
+        )
+        return updateProduct
 }
 
 const deleteProduct =async(productId) => {

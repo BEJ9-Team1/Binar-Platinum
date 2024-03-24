@@ -15,12 +15,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "orderId",
         sourceKey: "id",
         as: "orderProduct",
+        onUpdate:"cascade",
+        onDelete:"cascade"
       })
     }
   }
   Order.init({
     userId: DataTypes.UUID,
-    paymentMethodId: DataTypes.INTEGER,
+    paymentMethodId: DataTypes.UUID,
     totalPrice: DataTypes.FLOAT,
     expiredAt: DataTypes.STRING,
     status: DataTypes.STRING
