@@ -1,11 +1,11 @@
 const orderService = require('../services/order_services')
 const orderPorductServices = require('../services/orderProduct_services')
+const { OrderProduct, Product, sequelize } = require('../models')
 const productService = require('../services/productServices')
 const { createOrderDTO, updateOrderDTO } = require('../validators/order_validator')
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 const cron = require('node-cron');
-//const { message } = require('../validators/media_validator')
 
 
 const index = async (req, res, next) => {
@@ -29,7 +29,7 @@ const find = async (req, res, next) => {
         const userId = req.user.id
         const id = +req.params.id
         const order = await orderService.findById(userId, id)
-        if(!order) throw new NotFoundError(`order not found`)
+        if (!order) throw new NotFoundError(`order not found`)
         return res.status(200).json({
             message: 'Request Success',
             payload: order
@@ -42,7 +42,10 @@ const find = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
+    let transaction
     try {
+        transaction = await sequelize.transaction();
+
         //not using transaction, so product stock will check first
         const orderDTO = await createOrderDTO.validateAsync(req.body)
         //expired time set 60 minutes
@@ -60,7 +63,7 @@ const create = async (req, res, next) => {
             } else
                 throw new NotFoundError("Product not Found")
         }
-
+        
         //reduce stock, update stock in db product
         let totalPrice = 0
 
@@ -72,18 +75,19 @@ const create = async (req, res, next) => {
             totalPrice += subTotal
             const newStock = productStock.stock - product.quantity
             const payload = { stock: newStock }
-            await productService.updateProduct(productId, payload)
-        }
+            await productService.updateProduct(productId, payload,{ transaction:transaction })
+            }
 
         //insert to db order
         const payload = {
             userId: req.user.id,
             paymentMethodId: orderDTO.paymentMethodId,
-            totalPrice: totalPrice, // assumption front end calculate total price
+            totalPrice: totalPrice,
             expiredAt: expiredAt,
             status: "payment_waiting",
         }
-        const result = await orderService.createOrder(payload);
+        const result = await orderService.createOrder(payload, { transaction:transaction });
+       if(result) throw new BadRequestError("TEST ERROR")
 
         //insert to db order product
         const orderId = result.dataValues.id
@@ -101,19 +105,20 @@ const create = async (req, res, next) => {
                 qty: product.quantity,
                 subTotal: subTotal
             }
-
-            await orderPorductServices.createOrderProduct(payload)
+            await orderPorductServices.createOrderProduct(payload, { transaction:transaction })
         }
 
         //select order and order product by order id
-        const data = await orderService.findById(orderId)
-        console.log("DATA ==>> ", data);
+        const data = await orderService.findById(req.user.id, orderId)
+        await transaction.commit();
+
         res.status(StatusCodes.CREATED).json({
             message: "Success",
             payload: data
         });
     }
     catch (err) {
+        if(transaction) await transaction.rollback();
         next({ status: 400, message: err.message })
     }
 };
@@ -128,12 +133,11 @@ const update = async (req, res, next) => {
         const id = req.params.id
         const order = await orderService.findById(userId, id)
 
-        if(!order || userId !== order.dataValues.userId) throw new NotFoundError(`order not found`)
-        if(order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
+        if (!order) throw new NotFoundError(`order not found`)
+        if (order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
         await orderService.updateOrder(id, 'success')
 
         const updatedOrder = await orderService.findById(userId, id)
-        updatedOrder.dataValues.status = 'success'
         res.status(StatusCodes.OK).json({
             message: "Success",
             data: updatedOrder,
@@ -154,14 +158,30 @@ const crontab = async (req, res, next) => {
             const currentTime = new Date(Date.now()).valueOf()
             const diffTime = (expiredAt - currentTime)
             //if expiredAt - currentTime < 0 set order status to failed
-            if (diffTime < 0) {
-                if (currentStatus === 'payment_waiting') {
-                    orderService.updateOrder(orderId, 'failed')
+            if (diffTime < 0 && currentStatus === 'payment_waiting') {
+                await orderService.updateOrder(orderId, 'failed')
+                const orderProduct = await OrderProduct.findAll({
+                    where: {
+                        orderId: orderId
+                    }
+                })
+
+                for (let i = 0; i < orderProduct.length; i++) {
+                    await Product.increment({
+                        stock: orderProduct[i].dataValues.qty
+                    }, {
+                        where:
+                        {
+                            id: orderProduct[i].dataValues.productId
+                        }
+                    })
                 }
             }
 
+
         })
         return res.status(200).json({ message: 'success', payload: orderStatus })
+
 
     } catch (error) {
 
@@ -174,7 +194,7 @@ const crontab = async (req, res, next) => {
 //crontab running every 5 minute to check database 
 //if there are any order with status payment_waiting, scheduller will check expired time
 //if current time more than expired time, status order will change to failed
-cron.schedule('* * * * *', async() => {
+cron.schedule('* * * * *', async () => {
     await crontab()
 });
 
