@@ -8,12 +8,6 @@ const RoleGuard = (requiredRole1, requiredRole2) => {
       userData = req.user
       const userRole = userData.role;
 
-      // if (req.user.isActive && userRole === requiredRole1) {
-      //   next()
-      // } else if (req.user.isActive && userRole === requiredRole2) {
-      //   next()
-      // }
-      
       let count = 0
       if(req.user.isActive===true) count++
         if (userRole === requiredRole1 && count >= 0) {
