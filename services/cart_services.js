@@ -1,11 +1,7 @@
 const { Cart, CartItem } = require('../models')
 
 const lookup = async (cartId) => {
-    const cartItem = await CartItem.findByPk( cartId,
-        { 
-            include: ['Cart']
-        }        
-     )
+    const cartItem = await CartItem.findByPk( cartId)
     return cartItem  
 }
 
