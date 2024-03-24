@@ -52,7 +52,6 @@ const registerUser = async (payload) => {
     }
     );
 
-
     return registerUser;
    
 }

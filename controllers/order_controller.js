@@ -30,6 +30,7 @@ const find = async (req, res, next) => {
         const id = +req.params.id
         const order = await orderService.findById(userId, id)
         if (!order) throw new NotFoundError(`order not found`)
+        if (!order) throw new NotFoundError(`order not found`)
         return res.status(200).json({
             message: 'Request Success',
             payload: order
@@ -134,6 +135,8 @@ const update = async (req, res, next) => {
 
         if (!order) throw new NotFoundError(`order not found`)
         if (order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
+        if (!order) throw new NotFoundError(`order not found`)
+        if (order.dataValues.status === 'success') throw new BadRequestError('order is complete, please make a new one')
         await orderService.updateOrder(id, 'success')
 
         const updatedOrder = await orderService.findById(userId, id)
@@ -177,9 +180,30 @@ const crontab = async (req, res, next) => {
                 }
             }
 
+            if (diffTime < 0 && currentStatus === 'payment_waiting') {
+                await orderService.updateOrder(orderId, 'failed')
+                const orderProduct = await OrderProduct.findAll({
+                    where: {
+                        orderId: orderId
+                    }
+                })
+
+                for (let i = 0; i < orderProduct.length; i++) {
+                    await Product.increment({
+                        stock: orderProduct[i].dataValues.qty
+                    }, {
+                        where:
+                        {
+                            id: orderProduct[i].dataValues.productId
+                        }
+                    })
+                }
+            }
+
 
         })
         return res.status(200).json({ message: 'success', payload: orderStatus })
+
 
 
     } catch (error) {
@@ -193,6 +217,7 @@ const crontab = async (req, res, next) => {
 //crontab running every 5 minute to check database 
 //if there are any order with status payment_waiting, scheduller will check expired time
 //if current time more than expired time, status order will change to failed
+cron.schedule('* * * * *', async () => {
 cron.schedule('* * * * *', async () => {
     await crontab()
 });

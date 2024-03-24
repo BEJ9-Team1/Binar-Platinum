@@ -2,17 +2,17 @@ const nodemailer = require("nodemailer");
 const { User, Address } = require('../models')
 
 const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-    // user: process.env.NODEMAILER_EMAIL,
-    // pass: process.env.NODEMAILER_PASS,
-      user: "kookadeveloper@gmail.com",
-      pass: "qiyr qwkv biwn sgzf",
-    },
-  });
+  service: "Gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.NODEMAILER_EMAIL,
+    pass: process.env.NODEMAILER_PASS,
+    // user: NODEMAILER_EMAIL,
+    // pass: "qiyr qwkv biwn sgzf",
+  },
+});
 
 const sendEmail = async (userId, email) => {
     const checkUser = await User.findByPk(userId,
@@ -33,5 +33,5 @@ const sendEmail = async (userId, email) => {
     
   }
 
-module.exports = {sendEmail}
+module.exports = { sendEmail }
 
