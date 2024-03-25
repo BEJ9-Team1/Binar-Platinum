@@ -136,6 +136,34 @@ const mockRequestCreateMerchant = (body = {name: "Merchant For Cart Test"}, para
     };
 };
 
+const mockRequestLoginMerchantVerif = (body = {userName: "merchantcart", password: "kapallawd"}, params = {}, query = {}) => {
+    return {
+        body: body,
+        params: params,
+        query: query,
+    };
+};
+
+let tokenMerchantVerif = ''
+
+describe("Test POST /login", () => {
+    it("Should response 200", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        const req = mockRequestLoginMerchantVerif();
+        request(app)
+            .post("/api/v1.0/auth/login")
+            .send(req.body)
+            .set('Accept', 'application/json')
+            .then((res) => {
+                console.log(res.body.token);
+                tokenMerchantVerif = res.body.token
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
+    });
+});
+
 
 describe("Test CREATE /merchant", () => {
     it("Should response 201", (done) => {
@@ -143,7 +171,7 @@ describe("Test CREATE /merchant", () => {
         req = mockRequestCreateMerchant()
         request(app)
             .post("/api/v1.0/merchant")
-            .set('Authorization', `Bearer ${tokenMerchantTestCart}`)
+            .set('Authorization', `Bearer ${tokenMerchantVerif}`)
             .send(req.body)
             .then((res) => {
                 // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
@@ -176,7 +204,7 @@ describe('Test POST /products', () => {
         request(app)
             .post('/api/v1.0/products')
             .send(req.body)
-            .set('Authorization', `Bearer ${tokenMerchantTestCart}`)
+            .set('Authorization', `Bearer ${tokenMerchantVerif}`)
             .then((res) => {
                 productId1 = res.body.payload.id
                 expect(res.statusCode).toBe(201)
@@ -187,7 +215,7 @@ describe('Test POST /products', () => {
 
 
 //POSITIVE CASE//
-const mockRequestLogin = (body = {userName: "buyer", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestLogin = (body = {userName: "buyercart", password: "kapallawd"}, params = {}, query = {}) => {
     return {
         body: body,
         params: params,

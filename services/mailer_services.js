@@ -22,7 +22,7 @@ const sendEmail = async (user) => {
     //     })
     // if(checkUser){
         let accountName = user.firstName
-        let linkVerify = "http://localhost:3000/api/v1.0/verify/"+user.id
+        let linkVerify = "http://128.199.246.107:3005/api/v1.0/verify/"+user.id
         const info = await transporter.sendMail({
             from: "ardecandra@gmail.com", // sender address
             to: user.email, // list of receivers
