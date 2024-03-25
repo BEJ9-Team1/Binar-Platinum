@@ -1,8 +1,12 @@
 PLEASEE READ MEEE
 
-I attach the ERD in below
+the postman collection is attached in this folder
+dont forget to have postmant environment with 
+{{token}} and {{host}}. cause the collection need
+those environment
 
-[You can Search ERD.PNG]
+we have a staging server using http with host 
+128.199.246.107:3005
 
-And i attach too the postman collection in this folder
+
 
