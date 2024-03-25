@@ -20,7 +20,6 @@ const mockRequestRegistPositive = (body = {
     password: "kapallawd",
     confirmPassword: "kapallawd",
     role: "buyer",
-    isActive: true,
     address: [
         {
             "address": "jogja",

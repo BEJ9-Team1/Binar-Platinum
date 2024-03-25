@@ -3,7 +3,7 @@ const app = require("../app");
 
 
 //POSITIVE CASE//
-const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestLogin = (body = { userName: "biuyer", password: "kapallawd" }, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -13,14 +13,13 @@ const mockRequestLogin = (body = {userName: "biuyer", password: "kapallawd"}, pa
 
 const mockRequestRegist = (body = {
     firstName: "biuyer",
-    lastName: "biuyer", 
+    lastName: "biuyer",
     userName: "biuyer",
-    email: "biuyeiiir@mail.com",
+    email: "biuyerrrr@mail.com",
     phoneNumber: "0819208489612",
     password: "kapallawd",
     confirmPassword: "kapallawd",
     role: "buyer",
-    isActive: true,
     address: [
         {
             "address": "jogja",
@@ -46,21 +45,21 @@ describe("Test GET /health-check", () => {
     it("Should response 200", (done) => {
         // Supertest berfungsi sebagai pelaksana server
         request(app)
-        .get("/health-check")
-        .send()
-        .then((res) => {
-            // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
-            expect(res.statusCode).toBe(200);
-            done();
-        });
+            .get("/health-check")
+            .send()
+            .then((res) => {
+                // Jest berfungsi sebagai matchers => Tolak ukur apakah responsenya sesuai atau tidak
+                expect(res.statusCode).toBe(200);
+                done();
+            });
     });
 });
 
-    describe("Test POST /api/v1.0/auth/register ", () => {
-        it("Regist Should response 201", (done) => {
-            // Supertest berfungsi sebagai pelaksana server
-            const req = mockRequestRegist()
-            request(app)
+describe("Test POST /api/v1.0/auth/register ", () => {
+    it("Regist Should response 201", (done) => {
+        // Supertest berfungsi sebagai pelaksana server
+        const req = mockRequestRegist()
+        request(app)
             .post("/api/v1.0/auth/register")
             .send(req.body)
             .set('Accept', 'application/json')
@@ -69,9 +68,9 @@ describe("Test GET /health-check", () => {
                 expect(res.statusCode).toBe(201);
                 done();
             });
-        });
     });
-    
+});
+
 let token = ''
 
 describe("Test POST /login", () => {
@@ -110,14 +109,13 @@ describe("Test POST /logout", () => {
 // NEGATIVE CASE
 const mockRequestRegistPwPDoesntMatch = (body = {
     firstName: "biuyer",
-    lastName: "biuyer", 
+    lastName: "biuyer",
     userName: "biuyer",
     email: "biuyeiiir@mail.com",
     phoneNumber: "0819208489612",
     password: "kapallawd",
     confirmPassword: "asdasdasd",
     role: "buyer",
-    isActive: true,
     address: [
         {
             "address": "jogja",
@@ -138,7 +136,7 @@ const mockRequestRegistPwPDoesntMatch = (body = {
     };
 };
 
-const mockRequestUnauth = (body = {userName: "admin", password: "kapallawd"}, params = {}, query = {}) => {
+const mockRequestUnauth = (body = { userName: "admin", password: "kapallawd" }, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -146,7 +144,7 @@ const mockRequestUnauth = (body = {userName: "admin", password: "kapallawd"}, pa
     };
 };
 
-const mockRequestWrongPw = (body = {userName: "biuyer", password: "salahpassword"}, params = {}, query = {}) => {
+const mockRequestWrongPw = (body = { userName: "biuyer", password: "salahpassword" }, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
@@ -154,7 +152,7 @@ const mockRequestWrongPw = (body = {userName: "biuyer", password: "salahpassword
     };
 };
 
-const mockRequestAccountNotFound = (body = {userName: "tidakada", password: "tidakada"}, params = {}, query = {}) => {
+const mockRequestAccountNotFound = (body = { userName: "tidakada", password: "tidakada" }, params = {}, query = {}) => {
     return {
         body: body,
         params: params,
