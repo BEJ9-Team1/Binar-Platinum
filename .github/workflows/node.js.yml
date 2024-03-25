@@ -113,7 +113,7 @@ jobs:
             cd Binar-Platinum/
             npm run undodb
             npm run migrate
-            npm run seed
+            npm run seed:dev
       - name: restart pm2 services
         uses: appleboy/ssh-action@v1.0.0
         with:
