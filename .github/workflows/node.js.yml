@@ -81,8 +81,8 @@ jobs:
         echo JWT_SECRET_KEY=Ba86HYNuOE >> .env
         echo JWT_EXPIRED= 12h >> .env
         echo SALT_ROUNDS=15 >> .env
-        echo NODEMAILER_EMAIL=vickyrobbi@gmail.com >> .env
-        echo NODEMAILER_PASS=fkzf rlus uyvv fqrs >> .env
+        echo NODEMAILER_EMAIL=kookadeveloper@gmail.com >> .env
+        echo NODEMAILER_PASS=qiyr qwkv biwn sgzf >> .env
         cat .env
         
     - name: Setup Database

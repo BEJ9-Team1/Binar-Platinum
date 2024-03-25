@@ -71,7 +71,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userName\": \"buyer\",\n    \"password\": \"kapallawd\"\n}",
+							"raw": "{\n    \"userName\": \"arrrobbi\",\n    \"password\": \"kapallawd\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
