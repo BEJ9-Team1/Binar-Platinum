@@ -25,6 +25,7 @@ const index = async (req, res) => {
 const find = async (req, res, next) => {
     try {
         const result = await addressService.lookup(req.params.id, req.user.id);
+        console.log(result);
         res.status(StatusCodes.OK).json({
             data: result,
         });

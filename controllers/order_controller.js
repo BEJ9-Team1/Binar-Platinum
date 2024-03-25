@@ -1,5 +1,6 @@
 const orderService = require('../services/order_services')
 const orderPorductServices = require('../services/orderProduct_services')
+const paymentService = require('../services/payment_servies')
 const { OrderProduct, Product, Order, sequelize } = require('../models')
 const productService = require('../services/productServices')
 const { createOrderDTO, updateOrderDTO } = require('../validators/order_validator')
@@ -73,6 +74,9 @@ const create = async (req, res, next) => {
                 const payload = { stock: newStock }
                 const update = await productService.updateProduct(productId, payload, t)
             }
+
+            const paymentData = await paymentService.getbyId(orderDTO.paymentMethodId)
+            if(!paymentData) throw new NotFoundError("Payment doesnt exists")
 
             //insert to db order
             const payload = {

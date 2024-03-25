@@ -10,6 +10,11 @@ const lookup = async(params)=>{
     return payment
 }
 
+const getbyId = async(params)=>{
+    const payment = Payment.findOne({where:{id:params}})
+    return payment
+}
+
 const createPayment = async (payload) => {
     const { ...payment } = payload
     const createPayment = await Payment.create({
@@ -43,5 +48,6 @@ module.exports=
     getAll,
     createPayment,
     update,
-    destroy
+    destroy,
+    getbyId
 }
