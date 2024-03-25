@@ -1,4 +1,3 @@
-
 const authToken = require('../controllers/auth_controller')
 const userService = require('../services/user_services')
 const addressService = require('../services/address_services')
@@ -6,7 +5,6 @@ const mailerService = require('../services/mailer_services')
 const regsiterUserDTO = require('../validators/user_validator')
 const { StatusCodes } = require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors')
-const chat_services=require("../services/chat_services")
 
 const index = async (req, res, next) => {
     try {
