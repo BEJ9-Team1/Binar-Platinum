@@ -1,5 +1,5 @@
 'use strict';
-const datadAdmin = require('../databases/masterdata/payment.json')
+const datadAdmin = require('../../databases/masterdata/development/payment.json')
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 

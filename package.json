@@ -30,6 +30,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+    "seed:test": "npx sequelize db:seed:all --seeders-path seeders/testing --env test", 
+    "seed:dev": "npx sequelize db:seed:all --seeders-path seeders/development",
     "integrationTest": "jest --detectOpenHandles --forceExit --runInBand",
     "start": "pm2 start ./bin/www",
     "test": "jest --detectOpenHandles",
@@ -39,9 +41,8 @@
     "logs": "pm2 logs",
     "createdb": "npx sequelize db:create",
     "migrate": "npx sequelize db:migrate",
-    "seed": "npx sequelize db:seed:all",
     "undodb": "npx sequelize db:migrate:undo:all",
-    "testing": "npx sequelize db:migrate:undo:all --env test && npx sequelize db:migrate --env test && npx sequelize db:seed:all --env test && npm run integrationTest --env test "
+    "testing": "npx sequelize db:migrate:undo:all --env test && npx sequelize db:migrate --env test && npm run seed:test && npm run integrationTest --env test "
   },
   "repository": {
     "type": "git",
