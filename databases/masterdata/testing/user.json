@@ -30,6 +30,16 @@
         "isActive": true
     },
     {
+        "firstName": "buyercart",
+        "lastName": "buyercart",
+        "userName": "buyercart",
+        "email": "buyercart@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "buyer",
+        "isActive": true
+    },
+    {
         "firstName": "merchant",
         "lastName": "merchant",
         "userName": "merchant",
@@ -74,6 +84,16 @@
         "lastName": "merchant2",
         "userName": "merchant2",
         "email": "merchant2@mail.com",
+        "phoneNumber": "0819208489612",
+        "password": "kapallawd",
+        "role": "merchant",
+        "isActive": true
+    },
+    {
+        "firstName": "merchantcart",
+        "lastName": "merchantcart",
+        "userName": "merchantcart",
+        "email": "merchantcart@mail.com",
         "phoneNumber": "0819208489612",
         "password": "kapallawd",
         "role": "merchant",

@@ -1,6 +1,6 @@
 'use strict';
 const {INTEGER } = require('sequelize');
-const datadAdmin = require('../databases/masterdata/category.json')
+const datadAdmin = require('../../databases/masterdata/testing/category.json')
 const bcrypt = require('bcrypt');
 
 module.exports = {
