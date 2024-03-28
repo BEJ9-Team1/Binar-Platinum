@@ -87,7 +87,8 @@ const update = async (req, res, next) => {
     const refreshToken = await authToken.refreshToken(
       result.id,
       result.userName,
-      result.role
+      result.role,
+      result.isActive
     );
 
     res.status(StatusCodes.OK).json({

@@ -22,7 +22,7 @@ const lookup = async (userId) => {
     const checkUser = await User.findByPk(userId,
     {
         include: 'address',
-        attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role'],
+        attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role', 'isActive'],
     })
     return checkUser
 }
@@ -76,15 +76,15 @@ const update = async (oldAddress, oldData, newData) => {
             }
         }
 
-    return await updateUser.reload({include: 'address',  attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role']} )
+    return await updateUser.reload({include: 'address',  attributes: ['id', 'userName', 'email','phoneNumber', 'firstName', 'lastName', 'role', 'isActive']} )
    
 };
 
 const updateRole = async (userId, newData) => {
     const updateRole = await User.update(newData,{
-        where: {id: userId},
-        role: newData
+        where: {id: userId}
     })
+    console.log(updateRole, "UPDATE ROILEEEE");
     return updateRole
    
 };
