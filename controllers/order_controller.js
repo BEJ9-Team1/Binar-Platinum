@@ -184,26 +184,6 @@ const crontab = async (req, res, next) => {
                 }
             }
 
-            if (diffTime < 0 && currentStatus === 'payment_waiting') {
-                await orderService.updateOrder(orderId, 'failed')
-                const orderProduct = await OrderProduct.findAll({
-                    where: {
-                        orderId: orderId
-                    }
-                })
-
-                for (let i = 0; i < orderProduct.length; i++) {
-                    await Product.increment({
-                        stock: orderProduct[i].dataValues.qty
-                    }, {
-                        where:
-                        {
-                            id: orderProduct[i].dataValues.productId
-                        }
-                    })
-                }
-            }
-
 
         })
         return res.status(200).json({ message: 'success', payload: orderStatus })
