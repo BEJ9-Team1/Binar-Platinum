@@ -14,7 +14,10 @@ const index = async (req, res) => {
 
     } catch (error) {
 
-        return res.status(404).json({ message: 'failed', message: message })
+        if (error.message) {
+            next({ status: 400, message: error.message, data: {} })
+        }
+        next(error)
 
     }
 
@@ -45,7 +48,10 @@ const create = async (req, res, next) => {
     try {
 
         const userId = req.user.id
+
         const merchant = await merchant_services.lookup(userId)
+
+        if (!merchant) throw new UnauthorizedError(`you don't have any merchant, register first`)
 
         const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
