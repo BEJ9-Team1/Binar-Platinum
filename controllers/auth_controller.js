@@ -50,19 +50,17 @@ const logout = async (req, res, next) => {
 
 }
 
-const refreshToken = async (userId, userName, role) => {
-    try {  
-        const payload = {
-            id: userId,
-            userName: userName,
-            role: role
-        }
+const refreshToken = async (userId, userName, role, isActive) => {
+    const payload = {
+        id: userId,
+        userName: userName,
+        role: role,
+        isActive : isActive
+    }
+    console.log(payload, "auh CONTROLLEERRRR");
         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRED });
         return token
         
-    } catch (error) {
-        next(error)
-    }
 }
 module.exports = {
     login,

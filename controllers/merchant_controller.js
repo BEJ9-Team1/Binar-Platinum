@@ -54,10 +54,8 @@ const create = async (req, res, next) => {
             ...dataUser,
             role: 'merchant'
         }
-        
         const userAddress = await addressService.find(userId)
         const updateRole = await userService.updateRole(userId, updateRoleUser)
-
         const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
         if (checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
         const isHaveMerchant = await merchantService.lookup(userId)
@@ -74,9 +72,9 @@ const create = async (req, res, next) => {
             address: addressId
         }
 
-        
+        const updateDataUser = await userService.lookup(userId)
         const result = await merchantService.createMerchant(newData)
-        const refreshToken = await authToken.refreshToken(userId, dataUser.userName, dataUser.role)
+        const refreshToken = await authToken.refreshToken(userId, updateDataUser.userName, updateDataUser.role, updateDataUser.isActive)
 
         res.status(StatusCodes.CREATED).json({
             message: "Success",
