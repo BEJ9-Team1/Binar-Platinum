@@ -6,6 +6,7 @@ const { error } = require('../validators/address_validator');
 
 const index = async (req, res, next) => {
     try {
+        //passing getAll service
         const data = await cartServices.getAll(req.user.id)
 
         return res.status(200).json({
@@ -24,6 +25,7 @@ const index = async (req, res, next) => {
 
 const findCartItems = async (req, res, next) => {
     try {
+        //passing getAll service
         const result = await cartServices.lookup(req.params.id);
         res.status(200).json({
             data: result,
@@ -38,6 +40,7 @@ const findCartItems = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        //validate request body
         const cartDTO = await createCartDTO.validateAsync(req.body)
 
         const payload = {
@@ -45,6 +48,7 @@ const create = async (req, res, next) => {
             qty: cartDTO.qty,
         } 
 
+        //passing lookupUserCart service
         const lookup = await cartServices.lookupUserCart(req.user.id);
 
         if (!lookup){
@@ -61,7 +65,7 @@ const create = async (req, res, next) => {
         else{
             payload.cartId = lookup.id;
         }
-
+        //passing createCartItems service
         const newCartItems = await cartServices.createCartItems(payload);
         
         res.status(200).json({

@@ -26,11 +26,11 @@ const index = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const userDTO = await regsiterUserDTO.validateAsync(req.body);
-
+    //validate email
     const lookup = await userService.emailIsExists(userDTO.email);
     if (lookup) {
       throw new BadRequestError(`${lookup.email} has been registered before`);
-    } else if (userDTO.password !== userDTO.confirmPassword) {
+    } else if (userDTO.password !== userDTO.confirmPassword) { //validate password with confirmPassword
       throw new BadRequestError("Password NOT Match With Confirm Password");
     }
 
@@ -47,6 +47,7 @@ const create = async (req, res, next) => {
     };
 
     const user = await userService.registerUser(payload);
+    //sending mail for activation user
     mailerService.sendEmail(user);
 
     res.status(StatusCodes.CREATED).json({

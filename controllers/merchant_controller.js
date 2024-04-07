@@ -9,6 +9,7 @@ const { BadRequestError, NotFoundError } = require('../errors');
 const index = async (req, res, next) => {
     try {
         const params = req.qs
+        //passing to getall service
         const data = await merchantService.getAll(params)
 
         return res.status(200).json({
@@ -28,6 +29,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
+        //find merchant name
         const result = await merchantService.isMerchantExists(req.params.name);
         res.status(StatusCodes.OK).json({
             data: result,
@@ -54,13 +56,18 @@ const create = async (req, res, next) => {
             ...dataUser,
             role: 'merchant'
         }
+        //get user address
         const userAddress = await addressService.find(userId)
+        //updating user role from buyer to merchant
         const updateRole = await userService.updateRole(userId, updateRoleUser)
+        //validate merchant name
         const checkMerchant = await merchantService.isMerchantExists(merchantDTO.name)
         if (checkMerchant) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
+        //validate user has merchant
         const isHaveMerchant = await merchantService.lookup(userId)
         if (isHaveMerchant) throw new BadRequestError(`You Has Have Merchant Named ${isHaveMerchant.name}, Go Update Your Merchant. 1 Account Just For 1 Merchant`)
 
+        //collect addressId for insert to table
         let addressId = []
         for (let i = 0; i < userAddress.length; i++) {
             addressId.push(userAddress)
@@ -74,6 +81,7 @@ const create = async (req, res, next) => {
 
         const updateDataUser = await userService.lookup(userId)
         const result = await merchantService.createMerchant(newData)
+        //refreshToken is a function for regenerate token after updating data user
         const refreshToken = await authToken.refreshToken(userId, updateDataUser.userName, updateDataUser.role, updateDataUser.isActive)
 
         res.status(StatusCodes.CREATED).json({
@@ -86,11 +94,12 @@ const create = async (req, res, next) => {
         next(err);
     }
 };
-//NOT YET//
+
 const update = async (req, res, next) => {
     try {
+        //validate request body
         const merchantDTO = await createMerchantDTO.validateAsync(req.body)
-
+        //validate merchant name
         const lookup = await merchantService.isMerchantExists(merchantDTO.name)
         if (lookup) throw new BadRequestError("Merchant Name Has Been Used, Choose Another One")
 

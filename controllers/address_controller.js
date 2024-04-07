@@ -7,6 +7,7 @@ const address = require('../models/address');
 const index = async (req, res) => {
     try {
         const params = req.qs
+        //passing dataId for getAll service
         const data = await addressService.getAll(params)
 
         return res.status(200).json({
@@ -24,6 +25,7 @@ const index = async (req, res) => {
 
 const find = async (req, res, next) => {
     try {
+        //passing dataId for lookup service
         const result = await addressService.lookup(req.params.id, req.user.id);
         console.log(result);
         res.status(StatusCodes.OK).json({
@@ -41,6 +43,7 @@ const find = async (req, res, next) => {
 const destroy = async(req, res, next) => {
     try {
         const addressId = req.params.id
+        //passing dataId for destroy service
         const result = await addressService.destroy(addressId)
         if(!result) throw new NotFoundError("Address Has Deleted")
         res.status(StatusCodes.OK).json({

@@ -1,18 +1,39 @@
-const { Product, Category,Media} = require('../models')
+const { Product, Category, Media} = require('../models')
 
 const getAll = async () => {
-    const products = await Product.findAll({
+    const products = await Product.findAndCountAll({
         attributes: ['id', 'name', 'merchantId', 'price'],
-        include: {
+        include:[{
             model: Category,
             as: 'category',
             attributes: ['name']
         },
-        include:{
+        {
             model:Media,
             as:"ProductImage",
             attributes:['url']
         }
+        ]
+    })
+
+    return products
+}
+
+const search = async (params) => {
+    const products = await Product.findAndCountAll({
+        attributes: ['id', 'name', 'merchantId', 'price'],
+        where: {id: params},
+        include:[{
+            model: Category,
+            as: 'category',
+            attributes: ['name']
+        },
+        {
+            model:Media,
+            as:"ProductImage",
+            attributes:['url']
+        }
+        ]
     })
 
     return products
@@ -22,16 +43,17 @@ const findById = async (productId) => {
     const product = await Product.findByPk(productId,
         {
             attributes: ['name', 'price', 'description', 'stock', 'merchantId'],
-            include: {
+            include:[{
                 model: Category,
                 as: 'category',
                 attributes: ['name']
             },
-            include:{
+            {
                 model:Media,
                 as:"ProductImage",
                 attributes:['url']
             }
+            ]
         })
 
     return product
@@ -80,5 +102,6 @@ module.exports = {
     findById,
     createProducts,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    search
 }

@@ -12,6 +12,7 @@ router.put('/merchant/', JWTAuth, RoleGuard('merchant'), merchantController.upda
 
 // PRODUCT //
 router.get('/products', productController.index)
+router.get('/products/search', productController.search)
 router.post('/products', JWTAuth, RoleGuard('merchant'), productController.create)
 router.get('/products/:id', productController.findOne)
 router.put('/products/:id', JWTAuth, RoleGuard('merchant'), productController.update)

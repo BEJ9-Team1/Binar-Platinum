@@ -6,6 +6,7 @@ const {BadRequestError, NotFoundError} = require('../errors')
 const index = async (req, res,next) => {
     try {
         const params = req.qs
+        //passing getAll service
         const data = await categoryService.getAll(params)
 
         return res.status(200).json({
@@ -24,6 +25,7 @@ const index = async (req, res,next) => {
 
 const find = async (req, res, next) => {
     try {
+        //passing lookup service
         const result = await categoryService.lookup(req.params.name);
         res.status(StatusCodes.OK).json({
             data: result,
@@ -38,15 +40,17 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        //validate request body
         const categoryDTO = await createCategoryDTO.validateAsync(req.body)
         
         const payload = {
             name: categoryDTO.name
         } 
-
+        //passing lookup service
         const lookup = await categoryService.lookup(payload.name)
         if(lookup) throw new BadRequestError(`${lookup.name} has been added`)
 
+        //passing createCategory service
         const result = await categoryService.createCategory(payload);
         res.status(StatusCodes.CREATED).json({
             message: "Success",
@@ -60,11 +64,13 @@ const create = async (req, res, next) => {
 
 const update = async(req, res, next) => {
     try {
+        //validate request body
         const categoryDTO = await createCategoryDTO.validateAsync(req.body)
         const categoryId = req.params.id
         const newData = {
             name: categoryDTO.name,
         }
+        //passing update service
         const result = await categoryService.update(categoryId ,newData)
         res.status(StatusCodes.OK).json({
             message: "Success",
@@ -78,6 +84,7 @@ const update = async(req, res, next) => {
 const destroy = async(req, res, next) => {
     try {
         const categoryId = req.params.id
+        //passing destroy service
         const result = await categoryService.destroy(categoryId)
         if(!result) throw new NotFoundError("Category Has Deleted")
         res.status(StatusCodes.OK).json({

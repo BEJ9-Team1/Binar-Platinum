@@ -34,4 +34,4 @@ app.use(passportAuth.initialize());
 app.use(routes);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
-module.exports = app;
+module.exports = app
