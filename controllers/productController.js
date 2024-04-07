@@ -78,7 +78,11 @@ const create = async (req, res, next) => {
     try {
 
         const userId = req.user.id
+
         const merchant = await merchant_services.lookup(userId)
+
+        if (!merchant) throw new UnauthorizedError(`you don't have any merchant, register first`)
+
         //validate request body
         const productDTO = await productValidator.createProductDTO.validateAsync(req.body)
 
